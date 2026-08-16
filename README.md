@@ -333,9 +333,12 @@ configuration. See [the CI workflow](.github/workflows/ci.yml).
 ## Deployment
 
 The demo deployment uses a Render Free Docker backend with Neon Free PostgreSQL 18.
-The public process-level health endpoint is:
+The public demo endpoints are:
 
-- [https://enterprise-rag-api-j1ang3.onrender.com/health](https://enterprise-rag-api-j1ang3.onrender.com/health)
+- [API Health](https://enterprise-rag-api-j1ang3.onrender.com/health)
+- [Swagger UI](https://enterprise-rag-api-j1ang3.onrender.com/docs)
+- [ReDoc](https://enterprise-rag-api-j1ang3.onrender.com/redoc)
+- [OpenAPI JSON](https://enterprise-rag-api-j1ang3.onrender.com/openapi.json)
 
 This deployment verifies container startup, HTTPS health access, migrations, and
 PostgreSQL-backed registration/login persistence. It does not verify a complete durable

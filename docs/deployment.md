@@ -157,7 +157,9 @@ Do not create the Render service until this workflow succeeds.
 Record the deployed Git commit and verify:
 
 ```text
-GET https://<render-service>.onrender.com/health
+GET https://enterprise-rag-api-j1ang3.onrender.com/health
+-> HTTP 200
+-> {"status":"ok"}
 -> HTTP 200
 -> {"status":"ok"}
 ```
