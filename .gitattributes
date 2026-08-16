@@ -3,3 +3,7 @@
 eval_docs/** -text
 evals/** -text
 storage/eval/** -text
+
+# Frozen runtime/security evidence is hashed byte-for-byte.
+logs/*.jsonl -text
+storage/security/** -text
