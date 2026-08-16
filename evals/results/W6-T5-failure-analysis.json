@@ -1,0 +1,1258 @@
+{
+  "task": "W6-T5",
+  "analysis_version": 1,
+  "analysis_generated_at": "2026-08-03T11:17:57.397954+00:00",
+  "source_evidence": {
+    "artifact_path": "evals\\results\\W6-T4-retrieval-evaluation.json",
+    "artifact_task": "W6-T4",
+    "artifact_version": null,
+    "artifact_generated_at": "2026-08-03T09:28:31.810161+00:00",
+    "dataset_source": "evals\\business_policy_eval.jsonl",
+    "dataset_sha256": "9ebbe2fca70b195e73d42ce3a795a01bc8bfd01680d148302bcf7442d14925e4",
+    "corpus_document_sha256": {
+      "eval_docs\\hr_policy.md": "acfdb68a3d59482de14e687beeea77a3dcb0d90543ec3d214dd9f9f21a6cbf17",
+      "eval_docs\\expense_policy.md": "b9c4573d7de4037f1e9a97a3c5cdc00448a9a389a3d14f412f5da7585c486998",
+      "eval_docs\\security_policy.md": "2ea46b3c1381b246b44ef21a7c31bc45417d09dadbe13d9769318a2d458e0e73",
+      "eval_docs\\product_faq.md": "535dc6c4de225c6de7fc69962365edc47494a760ffbfb65d7122854ab8aa6600"
+    },
+    "validation_status": "passed_with_warnings",
+    "validation_warnings": [
+      "W6-T4 source artifact does not declare artifact_version"
+    ]
+  },
+  "experiment_conditions": {
+    "document_count": 4,
+    "chunk_count": 12,
+    "query_count": 27,
+    "answerable_query_count": 23,
+    "unanswerable_query_count": 4,
+    "primary_ground_truth": "document_filename",
+    "strict_chunk_label_coverage": 3,
+    "methods": [
+      "vector",
+      "bm25",
+      "hybrid_rrf"
+    ],
+    "k_values": [
+      1,
+      3,
+      5
+    ],
+    "hybrid_candidate_depth": 5,
+    "rrf_k": 60
+  },
+  "comparison_definition": "Compare (Recall@K, reciprocal rank@K) lexicographically, matching W6-T4.",
+  "outcome_groups_by_k": {
+    "1": {
+      "groups": {
+        "bm25_better_than_vector": [],
+        "vector_better_than_bm25": [],
+        "hybrid_better_than_vector": [],
+        "hybrid_worse_than_vector": [],
+        "hybrid_equal_to_vector": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006",
+          "q007",
+          "q008",
+          "q009",
+          "q010",
+          "q011",
+          "q012",
+          "q013",
+          "q014",
+          "q015",
+          "q016",
+          "q017",
+          "q018",
+          "q019",
+          "q020",
+          "q025",
+          "q026",
+          "q027"
+        ],
+        "bm25_better_than_hybrid": [],
+        "hybrid_better_than_bm25": [],
+        "bm25_equal_to_hybrid": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006",
+          "q007",
+          "q008",
+          "q009",
+          "q010",
+          "q011",
+          "q012",
+          "q013",
+          "q014",
+          "q015",
+          "q016",
+          "q017",
+          "q018",
+          "q019",
+          "q020",
+          "q025",
+          "q026",
+          "q027"
+        ],
+        "all_methods_succeed": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006",
+          "q007",
+          "q008",
+          "q009",
+          "q010",
+          "q011",
+          "q012",
+          "q013",
+          "q014",
+          "q015",
+          "q016",
+          "q017",
+          "q018",
+          "q019",
+          "q020",
+          "q025",
+          "q026"
+        ],
+        "all_methods_miss": [],
+        "multi_relevant_partially_recalled": [
+          {
+            "query_id": "q027",
+            "methods": [
+              "vector",
+              "bm25",
+              "hybrid_rrf"
+            ]
+          }
+        ]
+      },
+      "empty_groups": [
+        "bm25_better_than_vector",
+        "vector_better_than_bm25",
+        "hybrid_better_than_vector",
+        "hybrid_worse_than_vector",
+        "bm25_better_than_hybrid",
+        "hybrid_better_than_bm25",
+        "all_methods_miss"
+      ]
+    },
+    "3": {
+      "groups": {
+        "bm25_better_than_vector": [
+          "q027"
+        ],
+        "vector_better_than_bm25": [],
+        "hybrid_better_than_vector": [],
+        "hybrid_worse_than_vector": [],
+        "hybrid_equal_to_vector": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006",
+          "q007",
+          "q008",
+          "q009",
+          "q010",
+          "q011",
+          "q012",
+          "q013",
+          "q014",
+          "q015",
+          "q016",
+          "q017",
+          "q018",
+          "q019",
+          "q020",
+          "q025",
+          "q026",
+          "q027"
+        ],
+        "bm25_better_than_hybrid": [
+          "q027"
+        ],
+        "hybrid_better_than_bm25": [],
+        "bm25_equal_to_hybrid": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006",
+          "q007",
+          "q008",
+          "q009",
+          "q010",
+          "q011",
+          "q012",
+          "q013",
+          "q014",
+          "q015",
+          "q016",
+          "q017",
+          "q018",
+          "q019",
+          "q020",
+          "q025",
+          "q026"
+        ],
+        "all_methods_succeed": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006",
+          "q007",
+          "q008",
+          "q009",
+          "q010",
+          "q011",
+          "q012",
+          "q013",
+          "q014",
+          "q015",
+          "q016",
+          "q017",
+          "q018",
+          "q019",
+          "q020",
+          "q025",
+          "q026"
+        ],
+        "all_methods_miss": [],
+        "multi_relevant_partially_recalled": [
+          {
+            "query_id": "q027",
+            "methods": [
+              "vector",
+              "hybrid_rrf"
+            ]
+          }
+        ]
+      },
+      "empty_groups": [
+        "vector_better_than_bm25",
+        "hybrid_better_than_vector",
+        "hybrid_worse_than_vector",
+        "hybrid_better_than_bm25",
+        "all_methods_miss"
+      ]
+    },
+    "5": {
+      "groups": {
+        "bm25_better_than_vector": [],
+        "vector_better_than_bm25": [],
+        "hybrid_better_than_vector": [],
+        "hybrid_worse_than_vector": [],
+        "hybrid_equal_to_vector": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006",
+          "q007",
+          "q008",
+          "q009",
+          "q010",
+          "q011",
+          "q012",
+          "q013",
+          "q014",
+          "q015",
+          "q016",
+          "q017",
+          "q018",
+          "q019",
+          "q020",
+          "q025",
+          "q026",
+          "q027"
+        ],
+        "bm25_better_than_hybrid": [],
+        "hybrid_better_than_bm25": [],
+        "bm25_equal_to_hybrid": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006",
+          "q007",
+          "q008",
+          "q009",
+          "q010",
+          "q011",
+          "q012",
+          "q013",
+          "q014",
+          "q015",
+          "q016",
+          "q017",
+          "q018",
+          "q019",
+          "q020",
+          "q025",
+          "q026",
+          "q027"
+        ],
+        "all_methods_succeed": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006",
+          "q007",
+          "q008",
+          "q009",
+          "q010",
+          "q011",
+          "q012",
+          "q013",
+          "q014",
+          "q015",
+          "q016",
+          "q017",
+          "q018",
+          "q019",
+          "q020",
+          "q025",
+          "q026",
+          "q027"
+        ],
+        "all_methods_miss": [],
+        "multi_relevant_partially_recalled": []
+      },
+      "empty_groups": [
+        "bm25_better_than_vector",
+        "vector_better_than_bm25",
+        "hybrid_better_than_vector",
+        "hybrid_worse_than_vector",
+        "bm25_better_than_hybrid",
+        "hybrid_better_than_bm25",
+        "all_methods_miss",
+        "multi_relevant_partially_recalled"
+      ]
+    }
+  },
+  "query_mechanism_annotations": [
+    {
+      "query_id": "q001",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "hr_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q002",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "hr_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q003",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "hr_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q004",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "hr_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q005",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "hr_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q006",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "expense_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q007",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "expense_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q008",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "expense_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q009",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "expense_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q010",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "expense_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q011",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "security_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q012",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "security_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q013",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "security_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q014",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "security_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q015",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "security_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q016",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "product_faq"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q017",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "product_faq"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q018",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "product_faq"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q019",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "product_faq"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q020",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "product_faq"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q021",
+      "assigned_type": "no_answer",
+      "reason": "Dataset explicitly marks should_answer=false with no relevant documents.",
+      "evidence": {
+        "should_answer": false,
+        "relevant_document_count": 0
+      },
+      "confidence": "high",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "W6-T4 fields derived from the original dataset"
+    },
+    {
+      "query_id": "q022",
+      "assigned_type": "no_answer",
+      "reason": "Dataset explicitly marks should_answer=false with no relevant documents.",
+      "evidence": {
+        "should_answer": false,
+        "relevant_document_count": 0
+      },
+      "confidence": "high",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "W6-T4 fields derived from the original dataset"
+    },
+    {
+      "query_id": "q023",
+      "assigned_type": "no_answer",
+      "reason": "Dataset explicitly marks should_answer=false with no relevant documents.",
+      "evidence": {
+        "should_answer": false,
+        "relevant_document_count": 0
+      },
+      "confidence": "high",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "W6-T4 fields derived from the original dataset"
+    },
+    {
+      "query_id": "q024",
+      "assigned_type": "no_answer",
+      "reason": "Dataset explicitly marks should_answer=false with no relevant documents.",
+      "evidence": {
+        "should_answer": false,
+        "relevant_document_count": 0
+      },
+      "confidence": "high",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "W6-T4 fields derived from the original dataset"
+    },
+    {
+      "query_id": "q025",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "hr_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q026",
+      "assigned_type": "unclassified",
+      "reason": "The dataset has no independent retrieval-mechanism label for this query.",
+      "evidence": {
+        "dataset_category": "security_policy"
+      },
+      "confidence": "not_applicable",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "analysis boundary; no mechanism annotation available"
+    },
+    {
+      "query_id": "q027",
+      "assigned_type": "multi_document",
+      "reason": "The Ground Truth explicitly requires more than one relevant document.",
+      "evidence": {
+        "relevant_document_count": 2,
+        "relevant_document_labels": [
+          "hr_policy.md",
+          "security_policy.md"
+        ]
+      },
+      "confidence": "high",
+      "review_status": "deterministic_from_recorded_fields",
+      "annotation_source": "W6-T4 relevance labels"
+    }
+  ],
+  "rank_movements": {
+    "scope": "strict chunk-labelled queries only",
+    "query_count": 3,
+    "relevant_chunk_count": 4,
+    "items": [
+      {
+        "query_id": "q025",
+        "chunk_id": "eval-hr-policy-1",
+        "ranks": {
+          "vector": 1,
+          "bm25": 1,
+          "hybrid_rrf": 1
+        },
+        "comparisons_by_k": {
+          "vector_to_bm25": {
+            "1": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "3": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "5": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            }
+          },
+          "vector_to_hybrid": {
+            "1": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "3": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "5": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            }
+          },
+          "bm25_to_hybrid": {
+            "1": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "3": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "5": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            }
+          }
+        }
+      },
+      {
+        "query_id": "q026",
+        "chunk_id": "eval-security-policy-3",
+        "ranks": {
+          "vector": 1,
+          "bm25": 1,
+          "hybrid_rrf": 1
+        },
+        "comparisons_by_k": {
+          "vector_to_bm25": {
+            "1": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "3": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "5": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            }
+          },
+          "vector_to_hybrid": {
+            "1": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "3": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "5": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            }
+          },
+          "bm25_to_hybrid": {
+            "1": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "3": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "5": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            }
+          }
+        }
+      },
+      {
+        "query_id": "q027",
+        "chunk_id": "eval-hr-policy-2",
+        "ranks": {
+          "vector": 5,
+          "bm25": 3,
+          "hybrid_rrf": 4
+        },
+        "comparisons_by_k": {
+          "vector_to_bm25": {
+            "1": {
+              "direction": "improved",
+              "cutoff_effect": "moved_up_but_did_not_cross_cutoff"
+            },
+            "3": {
+              "direction": "improved",
+              "cutoff_effect": "crossed_into_top_k"
+            },
+            "5": {
+              "direction": "improved",
+              "cutoff_effect": "moved_up_within_top_k"
+            }
+          },
+          "vector_to_hybrid": {
+            "1": {
+              "direction": "improved",
+              "cutoff_effect": "moved_up_but_did_not_cross_cutoff"
+            },
+            "3": {
+              "direction": "improved",
+              "cutoff_effect": "moved_up_but_did_not_cross_cutoff"
+            },
+            "5": {
+              "direction": "improved",
+              "cutoff_effect": "moved_up_within_top_k"
+            }
+          },
+          "bm25_to_hybrid": {
+            "1": {
+              "direction": "declined",
+              "cutoff_effect": "moved_down_outside_top_k"
+            },
+            "3": {
+              "direction": "declined",
+              "cutoff_effect": "crossed_out_of_top_k"
+            },
+            "5": {
+              "direction": "declined",
+              "cutoff_effect": "moved_down_within_top_k"
+            }
+          }
+        }
+      },
+      {
+        "query_id": "q027",
+        "chunk_id": "eval-security-policy-2",
+        "ranks": {
+          "vector": 1,
+          "bm25": 1,
+          "hybrid_rrf": 1
+        },
+        "comparisons_by_k": {
+          "vector_to_bm25": {
+            "1": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "3": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "5": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            }
+          },
+          "vector_to_hybrid": {
+            "1": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "3": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "5": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            }
+          },
+          "bm25_to_hybrid": {
+            "1": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "3": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            },
+            "5": {
+              "direction": "unchanged",
+              "cutoff_effect": "unchanged_inside_top_k"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "failure_stages": {
+    "source_recall_gap": {
+      "status": "not_observed",
+      "evidence": [],
+      "scope": "document relevance within recorded depth 5"
+    },
+    "ranking_cutoff_failure": {
+      "status": "observed",
+      "evidence": [
+        {
+          "query_id": "q027",
+          "method": "vector",
+          "k": 1
+        },
+        {
+          "query_id": "q027",
+          "method": "vector",
+          "k": 3
+        },
+        {
+          "query_id": "q027",
+          "method": "bm25",
+          "k": 1
+        },
+        {
+          "query_id": "q027",
+          "method": "hybrid_rrf",
+          "k": 1
+        },
+        {
+          "query_id": "q027",
+          "method": "hybrid_rrf",
+          "k": 3
+        }
+      ]
+    },
+    "fusion_did_not_cross_cutoff": {
+      "status": "observed",
+      "evidence": [
+        {
+          "query_id": "q027",
+          "chunk_id": "eval-hr-policy-2",
+          "k": 1,
+          "vector_rank": 5,
+          "hybrid_rank": 4
+        },
+        {
+          "query_id": "q027",
+          "chunk_id": "eval-hr-policy-2",
+          "k": 3,
+          "vector_rank": 5,
+          "hybrid_rank": 4
+        }
+      ]
+    },
+    "multi_relevant_completeness_failure": {
+      "status": "observed",
+      "evidence": [
+        {
+          "query_id": "q027",
+          "method": "vector",
+          "k": 1
+        },
+        {
+          "query_id": "q027",
+          "method": "vector",
+          "k": 3
+        },
+        {
+          "query_id": "q027",
+          "method": "bm25",
+          "k": 1
+        },
+        {
+          "query_id": "q027",
+          "method": "hybrid_rrf",
+          "k": 1
+        },
+        {
+          "query_id": "q027",
+          "method": "hybrid_rrf",
+          "k": 3
+        }
+      ]
+    },
+    "metric_saturation": {
+      "status": "observed",
+      "evidence": [
+        {
+          "method": "vector",
+          "k": 1
+        },
+        {
+          "method": "vector",
+          "k": 3
+        },
+        {
+          "method": "vector",
+          "k": 5
+        },
+        {
+          "method": "bm25",
+          "k": 1
+        },
+        {
+          "method": "bm25",
+          "k": 3
+        },
+        {
+          "method": "bm25",
+          "k": 5
+        },
+        {
+          "method": "hybrid_rrf",
+          "k": 1
+        },
+        {
+          "method": "hybrid_rrf",
+          "k": 3
+        },
+        {
+          "method": "hybrid_rrf",
+          "k": 5
+        }
+      ],
+      "explanation": "Hit Rate and MRR are 1.0 for every method and K."
+    },
+    "label_granularity_limitation": {
+      "status": "observed",
+      "evidence": {
+        "primary_label_type": "document_filename",
+        "strict_chunk_label_coverage": 3
+      }
+    },
+    "dataset_coverage_limitation": {
+      "status": "observed",
+      "evidence": {
+        "document_count": 4,
+        "chunk_count": 12,
+        "query_count": 27,
+        "mechanism_labels_available": false
+      }
+    },
+    "unanswerable_evaluation_gap": {
+      "status": "observed",
+      "evidence": {
+        "query_count": 4,
+        "core_metrics_status": "not_applicable_no_relevant_documents"
+      }
+    }
+  },
+  "representative_cases": {
+    "q027": {
+      "query_id": "q027",
+      "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+      "dataset_category": "multi_policy",
+      "analysis_mechanism_type": "multi_document",
+      "relevant_document_labels": [
+        "hr_policy.md",
+        "security_policy.md"
+      ],
+      "relevant_chunk_ids": [
+        "eval-hr-policy-2",
+        "eval-security-policy-2"
+      ],
+      "methods": {
+        "vector": {
+          "retrieved_chunk_ids": [
+            "eval-security-policy-2",
+            "eval-expense-policy-2",
+            "eval-security-policy-1",
+            "eval-security-policy-3",
+            "eval-hr-policy-2"
+          ],
+          "strict_relevant_chunk_ranks": {
+            "eval-hr-policy-2": 5,
+            "eval-security-policy-2": 1
+          },
+          "metrics_at_3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "bm25": {
+          "retrieved_chunk_ids": [
+            "eval-security-policy-2",
+            "eval-security-policy-1",
+            "eval-hr-policy-2",
+            "eval-expense-policy-2",
+            "eval-expense-policy-3"
+          ],
+          "strict_relevant_chunk_ranks": {
+            "eval-hr-policy-2": 3,
+            "eval-security-policy-2": 1
+          },
+          "metrics_at_3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md",
+              "security_policy.md"
+            ]
+          }
+        },
+        "hybrid_rrf": {
+          "retrieved_chunk_ids": [
+            "eval-security-policy-2",
+            "eval-security-policy-1",
+            "eval-expense-policy-2",
+            "eval-hr-policy-2",
+            "eval-security-policy-3"
+          ],
+          "strict_relevant_chunk_ranks": {
+            "eval-hr-policy-2": 4,
+            "eval-security-policy-2": 1
+          },
+          "metrics_at_3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        }
+      },
+      "observed_stage": [
+        "ranking_cutoff_failure",
+        "fusion_did_not_cross_cutoff",
+        "multi_relevant_completeness_failure",
+        "metric_saturation"
+      ],
+      "causal_attribution": "insufficient evidence: the artifact stores rankings and scores, not per-term BM25 contributions or model reasoning"
+    }
+  },
+  "observed_findings": {
+    "bm25_strict_advantage_by_k": {
+      "1": [],
+      "3": [
+        "q027"
+      ],
+      "5": []
+    },
+    "vector_strict_advantage_by_k": {
+      "1": [],
+      "3": [],
+      "5": []
+    },
+    "hybrid_strict_advantage_over_vector_by_k": {
+      "1": [],
+      "3": [],
+      "5": []
+    },
+    "hybrid_strict_regression_vs_vector_by_k": {
+      "1": [],
+      "3": [],
+      "5": []
+    },
+    "all_methods_miss_by_k": {
+      "1": [],
+      "3": [],
+      "5": []
+    },
+    "hybrid_equal_to_vector_by_k": {
+      "1": [
+        "q001",
+        "q002",
+        "q003",
+        "q004",
+        "q005",
+        "q006",
+        "q007",
+        "q008",
+        "q009",
+        "q010",
+        "q011",
+        "q012",
+        "q013",
+        "q014",
+        "q015",
+        "q016",
+        "q017",
+        "q018",
+        "q019",
+        "q020",
+        "q025",
+        "q026",
+        "q027"
+      ],
+      "3": [
+        "q001",
+        "q002",
+        "q003",
+        "q004",
+        "q005",
+        "q006",
+        "q007",
+        "q008",
+        "q009",
+        "q010",
+        "q011",
+        "q012",
+        "q013",
+        "q014",
+        "q015",
+        "q016",
+        "q017",
+        "q018",
+        "q019",
+        "q020",
+        "q025",
+        "q026",
+        "q027"
+      ],
+      "5": [
+        "q001",
+        "q002",
+        "q003",
+        "q004",
+        "q005",
+        "q006",
+        "q007",
+        "q008",
+        "q009",
+        "q010",
+        "q011",
+        "q012",
+        "q013",
+        "q014",
+        "q015",
+        "q016",
+        "q017",
+        "q018",
+        "q019",
+        "q020",
+        "q025",
+        "q026",
+        "q027"
+      ]
+    },
+    "hybrid_aggregate_relationship": "equal_to_vector_at_every_evaluated_k"
+  },
+  "evidence_limitations": [
+    "Primary relevance is document-filename level, not full strict chunk relevance.",
+    "Only three queries have strict chunk labels.",
+    "The corpus has four documents and twelve chunks.",
+    "Twenty-two of twenty-three answerable queries have one relevant document.",
+    "No independent exact-term, identifier, abbreviation, or semantic-paraphrase labels exist.",
+    "Four unanswerable queries are outside ordinary Hit/Recall/MRR macro-averages.",
+    "The source artifact does not declare an explicit artifact version."
+  ],
+  "unverified_hypotheses": [
+    {
+      "status": "unverified",
+      "hypothesis": "A larger semantic-paraphrase subset may expose Vector advantages not present here."
+    },
+    {
+      "status": "unverified",
+      "hypothesis": "Corpus size or lexical overlap may contribute to the absence of Vector-better cases."
+    },
+    {
+      "status": "unverified",
+      "hypothesis": "A content-aware reranker may move q027's HR chunk into top 3, but improvement is not guaranteed."
+    },
+    {
+      "status": "unverified",
+      "hypothesis": "Different fusion parameters could change ranks; W6-T5 does not tune or test them."
+    }
+  ]
+}

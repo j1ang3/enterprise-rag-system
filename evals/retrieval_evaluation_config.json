@@ -1,0 +1,90 @@
+{
+  "manifest_version": 1,
+  "task": "W7-T3",
+  "experiment_id": "W7-T3-heldout-retrieval-evaluation-v1",
+  "created_before_heldout_results": true,
+  "repository_commit_at_freeze": "4093f3764d0384b4730fb68dbbdd364f499ba2a6",
+  "source_w7_t2_artifact": {
+    "path": "evals/results/W7-T2-retrieval-configuration.json",
+    "sha256": "13620ba452961676fde43bc74d902db3f94ea53821c973a3ab2655de48cbdbdc"
+  },
+  "dataset": {
+    "path": "evals/business_policy_eval.jsonl",
+    "sha256": "9ebbe2fca70b195e73d42ce3a795a01bc8bfd01680d148302bcf7442d14925e4",
+    "total_query_count": 27,
+    "answerable_query_count": 23,
+    "unanswerable_query_count": 4,
+    "primary_ground_truth": "document_filename",
+    "strict_chunk_labeled_query_count": 3
+  },
+  "split": {
+    "path": "evals/retrieval_configuration_split.json",
+    "sha256": "cbb47a716313058d0fd460cdb932d026d6d1688e9d988479701b3304c008b1d1",
+    "evaluation_query_ids": ["q005", "q010", "q015", "q020", "q027"],
+    "excluded_tuning_query_count": 18,
+    "excluded_unanswerable_query_ids": ["q021", "q022", "q023", "q024"]
+  },
+  "corpus": {
+    "chunk_size": 500,
+    "chunk_overlap": 100,
+    "indexed_chunk_count": 12,
+    "documents": [
+      {
+        "path": "eval_docs/hr_policy.md",
+        "sha256": "acfdb68a3d59482de14e687beeea77a3dcb0d90543ec3d214dd9f9f21a6cbf17"
+      },
+      {
+        "path": "eval_docs/expense_policy.md",
+        "sha256": "b9c4573d7de4037f1e9a97a3c5cdc00448a9a389a3d14f412f5da7585c486998"
+      },
+      {
+        "path": "eval_docs/security_policy.md",
+        "sha256": "2ea46b3c1381b246b44ef21a7c31bc45417d09dadbe13d9769318a2d458e0e73"
+      },
+      {
+        "path": "eval_docs/product_faq.md",
+        "sha256": "535dc6c4de225c6de7fc69962365edc47494a760ffbfb65d7122854ab8aa6600"
+      }
+    ],
+    "chunk_index": {
+      "path": "storage/eval/week07_tuning_chunks.json",
+      "sha256": "7c12feae418a799e77d1c11cdfe492dd5e6c4428e4c7647200b5a57601b86e01"
+    },
+    "vector_index": {
+      "path": "storage/eval/week07_tuning_vectors.json",
+      "sha256": "69102a909062460f573dbe21e864661d736663f8c38816043225a7eec4ad0cb1"
+    },
+    "faiss_index": {
+      "path": "storage/eval/week07_tuning_vectors.faiss",
+      "sha256": "5f40b73f9db109bb0bad4f056017977d21c947e0038e6044ef12459fe577a743"
+    },
+    "faiss_metadata": {
+      "path": "storage/eval/week07_tuning_vectors.faiss.metadata.json",
+      "sha256": "ae7d2b445f89f97a914bd5c303af399eb512fdc095f986dc20f6e450b670c22e"
+    }
+  },
+  "methods": ["vector", "hybrid_rrf", "hybrid_reranker"],
+  "resolved_configuration": {
+    "selected_w7_t2_config_id": "ps05-r060-n03-k02",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "vector_store_backend": "faiss",
+    "vector_similarity": "inner_product_on_normalized_embeddings",
+    "vector_min_score": 0.0,
+    "bm25_k1": 1.5,
+    "bm25_b": 0.75,
+    "per_source_candidate_depth": 5,
+    "rrf_k": 60,
+    "rrf_output_count": 3,
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "reranker_local_files_only": true,
+    "reranker_candidate_count": 3,
+    "operational_final_top_k": 2,
+    "offline_evaluation_depth": 3,
+    "metric_k_values": [1, 2, 3]
+  },
+  "fairness_rule": "Hybrid and Hybrid + Reranker must share the exact same RRF candidate list; the only ranking difference is the fixed reranker stage.",
+  "comparison_rule": "At each K, compare (Recall@K, MRR@K) lexicographically; exact ties are equal. The rule is declared before heldout results.",
+  "rank_delta_definition": "rank_delta = pre_rerank_rank - post_rerank_rank; positive values mean promotion.",
+  "evaluation_depth_rationale": "K=1 and K=3 preserve W6 cutoffs; K=2 is the W7-T2 operational final_top_k. K=5 is excluded because the frozen reranker candidate budget is 3 and must not be enlarged during W7-T3.",
+  "unanswerable_policy": "Unanswerable queries are excluded from standard relevance aggregates and are not evaluated for abstention or generation in W7-T3."
+}

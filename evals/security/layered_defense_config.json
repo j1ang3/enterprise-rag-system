@@ -1,0 +1,95 @@
+{
+  "artifact_version": 1,
+  "task": "W9-T4",
+  "configuration_id": "w9-t4-layered-defenses.v1",
+  "application_default_mode": "layered",
+  "historical_evaluation_default_mode": "baseline",
+  "modes": {
+    "baseline": {
+      "policy_version": "w9-t2-t3-baseline.v1",
+      "system_prompt_source": "app.services.prompts.SYSTEM_PROMPT",
+      "system_prompt_sha256": "5255b0fbfa95bbceb0610ddc474e4c5cc4f17b621a4d8a847332003c54126418",
+      "defenses_enabled": []
+    },
+    "layered": {
+      "policy_version": "w9-t4-layered-defenses.v1",
+      "system_prompt_source": "app.services.prompts.LAYERED_SYSTEM_PROMPT",
+      "system_prompt_sha256": "2de645cdfa58d620240f0f92e9a374c35dbb305cb7c074a9ba55efd106dfc43d",
+      "defenses_enabled": [
+        "DEF-PROMPT-001",
+        "DEF-CONTEXT-001",
+        "DEF-SIGNAL-001",
+        "DEF-OUTPUT-001",
+        "DEF-LOG-001"
+      ]
+    }
+  },
+  "defense_registry": [
+    {
+      "defense_id": "DEF-PROMPT-001",
+      "threat_ids": ["DPI-001", "IPI-001", "SPL-001"],
+      "action": "trusted_instruction_hierarchy"
+    },
+    {
+      "defense_id": "DEF-CONTEXT-001",
+      "threat_ids": ["IPI-001", "MD-001", "SIL-001"],
+      "action": "full_text_untrusted_context_framing"
+    },
+    {
+      "defense_id": "DEF-SIGNAL-001",
+      "threat_ids": ["IPI-001", "MD-001", "LOG-001"],
+      "action": "observe_only_instruction_like_signal"
+    },
+    {
+      "defense_id": "DEF-OUTPUT-001",
+      "threat_ids": ["SPL-001", "SIL-001", "CI-001"],
+      "action": "fail_closed_deterministic_output_validation"
+    },
+    {
+      "defense_id": "DEF-LOG-001",
+      "threat_ids": ["DPI-001", "IPI-001", "LOG-001"],
+      "action": "content_minimized_security_logging"
+    }
+  ],
+  "input_signal_policy": {
+    "decision_role": "observability_only",
+    "removes_or_rewrites_context": false,
+    "changes_retrieval_score_or_order": false,
+    "absence_of_signal_means_trusted": false
+  },
+  "output_validation_policy": {
+    "fail_closed_on": [
+      "protected_output_canary",
+      "two_or_more_exact_protected_prompt_clauses",
+      "invalid_answer_or_citation_contract",
+      "context_serializing_local_fallback",
+      "validator_internal_error"
+    ],
+    "safe_response_echoes_blocked_output": false,
+    "protected_canaries_are_test_side_only": true
+  },
+  "comparability": {
+    "same_rag_service": true,
+    "same_retrieval_pipeline": true,
+    "same_context_selection": true,
+    "same_citation_builder": true,
+    "mode_changes_prompt_framing_and_post_generation_validation_only": true,
+    "formal_model": "qwen3:8b",
+    "formal_provider": "ollama",
+    "temperature": 0.2,
+    "max_tokens": 512
+  },
+  "historical_evidence": {
+    "w9_t2_dataset_sha256": "7425d548eb3a25e8151589de10425f7aaedbe6ca8342ced7229a068a23c6da50",
+    "w9_t2_reviewed_artifact_sha256": "33a1c186c0bfefa1fea4bef0b21908b41d4581ed0b08e73f3386207f4038df22",
+    "w9_t3_dataset_sha256": "ffc29de0f0680d887a94547616f903cc7b350500a45cf5fcaf7122f5482bfc06",
+    "w9_t3_artifact_sha256": "ce8f5aaef458e301bddf402130ee590f980ff21d60051506eaa8ff26117ce736",
+    "w7_manifest_sha256": "34f276165081d127c7307e6ac4cf2660ba68bfedba22f3ca44a49fc3a28bbb4a"
+  },
+  "claims_boundary": {
+    "w9_t4_targeted_acceptance_is_not_formal_security_evaluation": true,
+    "no_before_after_asr_in_this_task": true,
+    "authorization_is_out_of_scope_until_w10": true,
+    "context_poisoning_by_plausible_false_evidence_remains": true
+  }
+}

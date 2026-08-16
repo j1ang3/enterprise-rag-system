@@ -1,0 +1,125 @@
+{
+  "manifest_version": 1,
+  "task": "W8-T4",
+  "analysis_version": "w8-t4-failure-analysis.v1",
+  "purpose": "Freeze source identities, deterministic case selection, and human evidence assessments before producing the derived W8-T4 classification artifact.",
+  "source_evaluation_artifact": {
+    "path": "evals/results/evaluation_runs/w8-t1-20260805T135615169893Z-qwen3-8b.json",
+    "sha256": "50cb97bfad1db4104b5ac563e464e61383aad342852b70738f831ff186e47d29",
+    "run_id": "w8-t1-20260805T135615169893Z-qwen3-8b"
+  },
+  "source_unanswerable_artifact": {
+    "path": "evals/results/unanswerable_runs/w8-t2-20260805T163627033704Z-qwen3-8b.json",
+    "sha256": "a60785baf3e2f5ea85494707bf7963e77feab38b8fb585a1bd967bd0e047b13f",
+    "run_id": "w8-t2-20260805T163627033704Z-qwen3-8b"
+  },
+  "source_runtime_logs": [
+    {
+      "path": "logs/w8-t3-gemma-20260806.jsonl",
+      "sha256": "42b544df73cf8fa45ccaffcb113e82677493adae02ea4c0fa2c8ad359a07bda7",
+      "role": "development_acceptance",
+      "provider": "ollama",
+      "model": "gemma3:4b"
+    },
+    {
+      "path": "logs/w8-t3-qwen-formal-20260806.jsonl",
+      "sha256": "4c8f08ea3dc3a6226276b4e1fedb3c7f3e9be258dbd683a6c99c69d4e96c99aa",
+      "role": "formal_model_acceptance",
+      "provider": "ollama",
+      "model": "qwen3:8b"
+    }
+  ],
+  "selection": {
+    "rule": "Analyze every W8-T1 answerable case with a saved execution, retrieval-recall, required-keyword, document-citation, or strict-chunk-citation signal; analyze every W8-T2 non-correct-abstention or execution-failure case; add three answerable and two unanswerable success controls.",
+    "w8_t1_observed_signal_query_ids": [
+      "q005",
+      "q006",
+      "q015",
+      "q017",
+      "q019",
+      "q020",
+      "q027"
+    ],
+    "w8_t2_observed_failure_query_ids": [],
+    "w8_t1_success_control_query_ids": [
+      "q001",
+      "q025",
+      "q026"
+    ],
+    "w8_t2_unanswerable_control_query_ids": [
+      "q021",
+      "w8t2-u001"
+    ]
+  },
+  "manual_evidence_review_method": {
+    "reviewer": "W8-T4 implementation review",
+    "method": "Compare expected answer and labels with the saved answer, candidate/final/context identities and contents, and pipeline citations. Record answer/citation assessments only; do not pre-assign failure labels.",
+    "llm_judge": false,
+    "ground_truth_modified": false
+  },
+  "manual_evidence_reviews": [
+    {
+      "query_id": "q005",
+      "observed_problem": "The required-keyword proxy missed the literal label '3-month'.",
+      "answer_quality": "acceptable",
+      "citation_quality": "acceptable",
+      "answer_notes": "The saved answer says '3 months', which is semantically equivalent to the expected 3-month probation period and includes the review timing supported by the HR context.",
+      "citation_notes": "All response-level pipeline citations point to hr_policy.md, the only expected supporting document.",
+      "citation_failure_subtype": null
+    },
+    {
+      "query_id": "q006",
+      "observed_problem": "The keyword proxy omitted the question-supplied scope phrase and the pipeline citation set includes an unrelated HR document.",
+      "answer_quality": "acceptable",
+      "citation_quality": "incorrect",
+      "answer_notes": "The answer gives 60 USD for the domestic daily meal limit; 'domestic' is already fixed by the question, so omission of the phrase 'domestic travel' is not a material answer error.",
+      "citation_notes": "expense_policy.md supports the claim, while mechanically attached hr_policy.md contexts do not support the meal reimbursement limit.",
+      "citation_failure_subtype": "unsupported_extra_source"
+    },
+    {
+      "query_id": "q015",
+      "observed_problem": "The answer is correct but the pipeline citation set includes expense_policy.md.",
+      "answer_quality": "acceptable",
+      "citation_quality": "incorrect",
+      "answer_notes": "The saved answer exactly states the expected 90-day vendor-account review rule from security_policy.md.",
+      "citation_notes": "The attached expense policy contexts do not support the vendor-account review claim.",
+      "citation_failure_subtype": "unsupported_extra_source"
+    },
+    {
+      "query_id": "q017",
+      "observed_problem": "The answer is correct but the pipeline citation set includes security_policy.md.",
+      "answer_quality": "acceptable",
+      "citation_quality": "incorrect",
+      "answer_notes": "The saved answer exactly states the expected four-hour source-folder check interval from product_faq.md.",
+      "citation_notes": "The attached security policy contexts do not support the source-folder synchronization interval.",
+      "citation_failure_subtype": "unsupported_extra_source"
+    },
+    {
+      "query_id": "q019",
+      "observed_problem": "The answer is correct but the pipeline citation set includes hr_policy.md.",
+      "answer_quality": "acceptable",
+      "citation_quality": "incorrect",
+      "answer_notes": "The saved answer exactly states that permission changes apply during the next synchronization cycle.",
+      "citation_notes": "The attached HR policy contexts do not support the product permission-change claim.",
+      "citation_failure_subtype": "unsupported_extra_source"
+    },
+    {
+      "query_id": "q020",
+      "observed_problem": "The answer is correct but the pipeline citation set includes expense_policy.md.",
+      "answer_quality": "acceptable",
+      "citation_quality": "incorrect",
+      "answer_notes": "The saved answer exactly states the expected 25 MB document-size recommendation from product_faq.md.",
+      "citation_notes": "The attached expense policy contexts do not support the product document-size claim.",
+      "citation_failure_subtype": "unsupported_extra_source"
+    },
+    {
+      "query_id": "q027",
+      "observed_problem": "The answer abstains even though the frozen corpus contains two required policy facts; the HR fact and strict HR chunk never entered the candidate set.",
+      "answer_quality": "unacceptable",
+      "citation_quality": "incorrect",
+      "answer_notes": "The answer says no reliable answer exists, but the expected answer requires both the HR approval/timing rule and the Security Restricted classification rule present in the frozen corpus.",
+      "citation_notes": "The pipeline citations cover only security_policy.md and omit the required hr_policy.md / eval-hr-policy-2 evidence.",
+      "citation_failure_subtype": "missing_required_source"
+    }
+  ]
+}

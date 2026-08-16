@@ -1,0 +1,5589 @@
+{
+  "artifact_version": 1,
+  "task": "W7-T3",
+  "experiment_id": "W7-T3-heldout-retrieval-evaluation-v1",
+  "generated_at": "2026-08-04T17:50:05.061424+00:00",
+  "scope": "Heldout retrieval/ranking quality only: Vector vs Hybrid RRF vs Hybrid RRF + fixed Reranker. No LLM generation and no tuning.",
+  "repository_state": {
+    "commit": "4093f3764d0384b4730fb68dbbdd364f499ba2a6",
+    "branch": "main",
+    "working_tree_dirty": true
+  },
+  "frozen_manifest": {
+    "path": "evals/retrieval_evaluation_config.json",
+    "sha256": "34f276165081d127c7307e6ac4cf2660ba68bfedba22f3ca44a49fc3a28bbb4a",
+    "created_before_heldout_results": true
+  },
+  "source_artifacts": {
+    "w7_t2": {
+      "path": "evals/results/W7-T2-retrieval-configuration.json",
+      "sha256": "13620ba452961676fde43bc74d902db3f94ea53821c973a3ab2655de48cbdbdc"
+    },
+    "split": {
+      "path": "evals/retrieval_configuration_split.json",
+      "sha256": "cbb47a716313058d0fd460cdb932d026d6d1688e9d988479701b3304c008b1d1"
+    }
+  },
+  "dataset_identity": {
+    "path": "evals/business_policy_eval.jsonl",
+    "sha256": "9ebbe2fca70b195e73d42ce3a795a01bc8bfd01680d148302bcf7442d14925e4",
+    "total_query_count": 27,
+    "answerable_query_count": 23,
+    "unanswerable_query_count": 4,
+    "primary_ground_truth": "document_filename",
+    "strict_chunk_labeled_query_count": 3,
+    "evaluation_query_ids": [
+      "q005",
+      "q010",
+      "q015",
+      "q020",
+      "q027"
+    ],
+    "primary_evaluation_query_count": 5,
+    "primary_evaluation_scope": "heldout_answerable_only"
+  },
+  "split_identity": {
+    "path": "evals/retrieval_configuration_split.json",
+    "sha256": "cbb47a716313058d0fd460cdb932d026d6d1688e9d988479701b3304c008b1d1",
+    "evaluation_query_ids": [
+      "q005",
+      "q010",
+      "q015",
+      "q020",
+      "q027"
+    ],
+    "excluded_tuning_query_count": 18,
+    "excluded_unanswerable_query_ids": [
+      "q021",
+      "q022",
+      "q023",
+      "q024"
+    ],
+    "tuning_results_included": false,
+    "unanswerable_results_included": false
+  },
+  "corpus_identity": {
+    "chunk_size": 500,
+    "chunk_overlap": 100,
+    "indexed_chunk_count": 12,
+    "documents": [
+      {
+        "path": "eval_docs/hr_policy.md",
+        "sha256": "acfdb68a3d59482de14e687beeea77a3dcb0d90543ec3d214dd9f9f21a6cbf17"
+      },
+      {
+        "path": "eval_docs/expense_policy.md",
+        "sha256": "b9c4573d7de4037f1e9a97a3c5cdc00448a9a389a3d14f412f5da7585c486998"
+      },
+      {
+        "path": "eval_docs/security_policy.md",
+        "sha256": "2ea46b3c1381b246b44ef21a7c31bc45417d09dadbe13d9769318a2d458e0e73"
+      },
+      {
+        "path": "eval_docs/product_faq.md",
+        "sha256": "535dc6c4de225c6de7fc69962365edc47494a760ffbfb65d7122854ab8aa6600"
+      }
+    ],
+    "chunk_index": {
+      "path": "storage/eval/week07_tuning_chunks.json",
+      "sha256": "7c12feae418a799e77d1c11cdfe492dd5e6c4428e4c7647200b5a57601b86e01"
+    },
+    "vector_index": {
+      "path": "storage/eval/week07_tuning_vectors.json",
+      "sha256": "69102a909062460f573dbe21e864661d736663f8c38816043225a7eec4ad0cb1"
+    },
+    "faiss_index": {
+      "path": "storage/eval/week07_tuning_vectors.faiss",
+      "sha256": "5f40b73f9db109bb0bad4f056017977d21c947e0038e6044ef12459fe577a743"
+    },
+    "faiss_metadata": {
+      "path": "storage/eval/week07_tuning_vectors.faiss.metadata.json",
+      "sha256": "ae7d2b445f89f97a914bd5c303af399eb512fdc095f986dc20f6e450b670c22e"
+    }
+  },
+  "resolved_configuration": {
+    "selected_w7_t2_config_id": "ps05-r060-n03-k02",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "vector_store_backend": "faiss",
+    "vector_similarity": "inner_product_on_normalized_embeddings",
+    "vector_min_score": 0.0,
+    "bm25_k1": 1.5,
+    "bm25_b": 0.75,
+    "per_source_candidate_depth": 5,
+    "rrf_k": 60,
+    "rrf_output_count": 3,
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "reranker_local_files_only": true,
+    "reranker_candidate_count": 3,
+    "operational_final_top_k": 2,
+    "offline_evaluation_depth": 3,
+    "metric_k_values": [
+      1,
+      2,
+      3
+    ]
+  },
+  "method_configurations": {
+    "vector": {
+      "flow": "VectorRetriever -> ranked results",
+      "evaluation_depth": 3,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "vector_store_backend": "faiss",
+      "similarity": "inner_product_on_normalized_embeddings",
+      "min_score": 0.0
+    },
+    "hybrid_rrf": {
+      "flow": "VectorRetriever + BM25Retriever -> RRF -> ranked results",
+      "per_source_candidate_depth": 5,
+      "rrf_k": 60,
+      "rrf_output_count": 3,
+      "reranker_used": false
+    },
+    "hybrid_reranker": {
+      "flow": "same Hybrid RRF candidates -> fixed Cross-Encoder -> ranked results",
+      "per_source_candidate_depth": 5,
+      "rrf_k": 60,
+      "reranker_candidate_count": 3,
+      "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "offline_output_depth": 3,
+      "operational_final_top_k": 2
+    }
+  },
+  "metric_definition": {
+    "label_type": "document_filename",
+    "k_values": [
+      1,
+      2,
+      3
+    ],
+    "hit_rate": "at least one relevant document occurs in Top-K",
+    "recall": "unique relevant documents in Top-K / all relevant documents",
+    "mrr": "reciprocal rank of the first relevant document within Top-K",
+    "comparison_rule": "At each K, compare (Recall@K, MRR@K) lexicographically; exact ties are equal. The rule is declared before heldout results."
+  },
+  "aggregate_results": {
+    "vector": {
+      "query_count": 5,
+      "evaluated_query_count": 5,
+      "not_applicable_query_count": 0,
+      "metrics_by_k": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "2": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        }
+      },
+      "latency_ms": {
+        "mean": 8.661339999525808,
+        "median": 9.129199999733828,
+        "sample_count": 5
+      }
+    },
+    "hybrid_rrf": {
+      "query_count": 5,
+      "evaluated_query_count": 5,
+      "not_applicable_query_count": 0,
+      "metrics_by_k": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "2": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        }
+      },
+      "latency_ms": {
+        "mean": 8.599039999535307,
+        "median": 9.180900000501424,
+        "sample_count": 5
+      }
+    },
+    "hybrid_reranker": {
+      "query_count": 5,
+      "evaluated_query_count": 5,
+      "not_applicable_query_count": 0,
+      "metrics_by_k": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "2": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        }
+      },
+      "latency_ms": {
+        "mean": 35.35155999852577,
+        "median": 35.59780000068713,
+        "sample_count": 5
+      }
+    }
+  },
+  "strict_chunk_labeled_subset": {
+    "label_type": "chunk_id",
+    "query_count": 1,
+    "query_ids": [
+      "q027"
+    ],
+    "summary": {
+      "vector": {
+        "query_count": 1,
+        "evaluated_query_count": 1,
+        "not_applicable_query_count": 0,
+        "metrics_by_k": {
+          "1": {
+            "hit_rate": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0
+          },
+          "2": {
+            "hit_rate": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0
+          },
+          "3": {
+            "hit_rate": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0
+          }
+        },
+        "latency_ms": {
+          "mean": 9.129199999733828,
+          "median": 9.129199999733828,
+          "sample_count": 1
+        }
+      },
+      "hybrid_rrf": {
+        "query_count": 1,
+        "evaluated_query_count": 1,
+        "not_applicable_query_count": 0,
+        "metrics_by_k": {
+          "1": {
+            "hit_rate": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0
+          },
+          "2": {
+            "hit_rate": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0
+          },
+          "3": {
+            "hit_rate": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0
+          }
+        },
+        "latency_ms": {
+          "mean": 10.26369999453891,
+          "median": 10.26369999453891,
+          "sample_count": 1
+        }
+      },
+      "hybrid_reranker": {
+        "query_count": 1,
+        "evaluated_query_count": 1,
+        "not_applicable_query_count": 0,
+        "metrics_by_k": {
+          "1": {
+            "hit_rate": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0
+          },
+          "2": {
+            "hit_rate": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0
+          },
+          "3": {
+            "hit_rate": 1.0,
+            "recall": 0.5,
+            "mrr": 1.0
+          }
+        },
+        "latency_ms": {
+          "mean": 35.977599989564624,
+          "median": 35.977599989564624,
+          "sample_count": 1
+        }
+      }
+    },
+    "limitation": "Diagnostic only: the heldout subset has strict chunk labels only for q027."
+  },
+  "pairwise_comparisons": {
+    "comparison_definition": "At each K compare (Recall@K, MRR@K) lexicographically; exact ties are equal.",
+    "comparisons": {
+      "vector_vs_hybrid": {
+        "baseline_method": "vector",
+        "challenger_method": "hybrid_rrf",
+        "by_k": {
+          "1": {
+            "challenger_better": [],
+            "challenger_worse": [],
+            "equal": [
+              {
+                "query_id": "q005",
+                "query": "How long is the probation period for new employees?",
+                "category": "hr_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q010",
+                "query": "How many missing receipt declarations can be used per quarter?",
+                "category": "expense_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-security-policy-3",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q015",
+                "query": "How often must vendor accounts be reviewed?",
+                "category": "security_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              },
+              {
+                "query_id": "q020",
+                "query": "What is the recommended single document size limit?",
+                "category": "product_faq",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-security-policy-1",
+                  "eval-product-faq-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q027",
+                "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+                "category": "multi_policy",
+                "baseline_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              }
+            ],
+            "empty_groups": [
+              "challenger_better",
+              "challenger_worse"
+            ]
+          },
+          "2": {
+            "challenger_better": [],
+            "challenger_worse": [],
+            "equal": [
+              {
+                "query_id": "q005",
+                "query": "How long is the probation period for new employees?",
+                "category": "hr_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q010",
+                "query": "How many missing receipt declarations can be used per quarter?",
+                "category": "expense_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-security-policy-3",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q015",
+                "query": "How often must vendor accounts be reviewed?",
+                "category": "security_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              },
+              {
+                "query_id": "q020",
+                "query": "What is the recommended single document size limit?",
+                "category": "product_faq",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-security-policy-1",
+                  "eval-product-faq-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q027",
+                "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+                "category": "multi_policy",
+                "baseline_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              }
+            ],
+            "empty_groups": [
+              "challenger_better",
+              "challenger_worse"
+            ]
+          },
+          "3": {
+            "challenger_better": [],
+            "challenger_worse": [],
+            "equal": [
+              {
+                "query_id": "q005",
+                "query": "How long is the probation period for new employees?",
+                "category": "hr_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q010",
+                "query": "How many missing receipt declarations can be used per quarter?",
+                "category": "expense_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-security-policy-3",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q015",
+                "query": "How often must vendor accounts be reviewed?",
+                "category": "security_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              },
+              {
+                "query_id": "q020",
+                "query": "What is the recommended single document size limit?",
+                "category": "product_faq",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-security-policy-1",
+                  "eval-product-faq-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q027",
+                "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+                "category": "multi_policy",
+                "baseline_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              }
+            ],
+            "empty_groups": [
+              "challenger_better",
+              "challenger_worse"
+            ]
+          }
+        }
+      },
+      "vector_vs_hybrid_reranker": {
+        "baseline_method": "vector",
+        "challenger_method": "hybrid_reranker",
+        "by_k": {
+          "1": {
+            "challenger_better": [],
+            "challenger_worse": [],
+            "equal": [
+              {
+                "query_id": "q005",
+                "query": "How long is the probation period for new employees?",
+                "category": "hr_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q010",
+                "query": "How many missing receipt declarations can be used per quarter?",
+                "category": "expense_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-security-policy-3",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q015",
+                "query": "How often must vendor accounts be reviewed?",
+                "category": "security_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q020",
+                "query": "What is the recommended single document size limit?",
+                "category": "product_faq",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-security-policy-1",
+                  "eval-product-faq-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q027",
+                "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+                "category": "multi_policy",
+                "baseline_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              }
+            ],
+            "empty_groups": [
+              "challenger_better",
+              "challenger_worse"
+            ]
+          },
+          "2": {
+            "challenger_better": [],
+            "challenger_worse": [],
+            "equal": [
+              {
+                "query_id": "q005",
+                "query": "How long is the probation period for new employees?",
+                "category": "hr_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q010",
+                "query": "How many missing receipt declarations can be used per quarter?",
+                "category": "expense_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-security-policy-3",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q015",
+                "query": "How often must vendor accounts be reviewed?",
+                "category": "security_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q020",
+                "query": "What is the recommended single document size limit?",
+                "category": "product_faq",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-security-policy-1",
+                  "eval-product-faq-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q027",
+                "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+                "category": "multi_policy",
+                "baseline_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              }
+            ],
+            "empty_groups": [
+              "challenger_better",
+              "challenger_worse"
+            ]
+          },
+          "3": {
+            "challenger_better": [],
+            "challenger_worse": [],
+            "equal": [
+              {
+                "query_id": "q005",
+                "query": "How long is the probation period for new employees?",
+                "category": "hr_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q010",
+                "query": "How many missing receipt declarations can be used per quarter?",
+                "category": "expense_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-security-policy-3",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q015",
+                "query": "How often must vendor accounts be reviewed?",
+                "category": "security_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q020",
+                "query": "What is the recommended single document size limit?",
+                "category": "product_faq",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-security-policy-1",
+                  "eval-product-faq-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q027",
+                "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+                "category": "multi_policy",
+                "baseline_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              }
+            ],
+            "empty_groups": [
+              "challenger_better",
+              "challenger_worse"
+            ]
+          }
+        }
+      },
+      "hybrid_vs_hybrid_reranker": {
+        "baseline_method": "hybrid_rrf",
+        "challenger_method": "hybrid_reranker",
+        "by_k": {
+          "1": {
+            "challenger_better": [],
+            "challenger_worse": [],
+            "equal": [
+              {
+                "query_id": "q005",
+                "query": "How long is the probation period for new employees?",
+                "category": "hr_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q010",
+                "query": "How many missing receipt declarations can be used per quarter?",
+                "category": "expense_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q015",
+                "query": "How often must vendor accounts be reviewed?",
+                "category": "security_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q020",
+                "query": "What is the recommended single document size limit?",
+                "category": "product_faq",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q027",
+                "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+                "category": "multi_policy",
+                "baseline_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              }
+            ],
+            "empty_groups": [
+              "challenger_better",
+              "challenger_worse"
+            ]
+          },
+          "2": {
+            "challenger_better": [],
+            "challenger_worse": [],
+            "equal": [
+              {
+                "query_id": "q005",
+                "query": "How long is the probation period for new employees?",
+                "category": "hr_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q010",
+                "query": "How many missing receipt declarations can be used per quarter?",
+                "category": "expense_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q015",
+                "query": "How often must vendor accounts be reviewed?",
+                "category": "security_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q020",
+                "query": "What is the recommended single document size limit?",
+                "category": "product_faq",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q027",
+                "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+                "category": "multi_policy",
+                "baseline_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              }
+            ],
+            "empty_groups": [
+              "challenger_better",
+              "challenger_worse"
+            ]
+          },
+          "3": {
+            "challenger_better": [],
+            "challenger_worse": [],
+            "equal": [
+              {
+                "query_id": "q005",
+                "query": "How long is the probation period for new employees?",
+                "category": "hr_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-hr-policy-2",
+                  "eval-hr-policy-3",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q010",
+                "query": "How many missing receipt declarations can be used per quarter?",
+                "category": "expense_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-expense-policy-3",
+                  "eval-expense-policy-1",
+                  "eval-hr-policy-1"
+                ]
+              },
+              {
+                "query_id": "q015",
+                "query": "How often must vendor accounts be reviewed?",
+                "category": "security_policy",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-3",
+                  "eval-expense-policy-2",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q020",
+                "query": "What is the recommended single document size limit?",
+                "category": "product_faq",
+                "baseline_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 1.0,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-product-faq-3",
+                  "eval-expense-policy-1",
+                  "eval-security-policy-1"
+                ]
+              },
+              {
+                "query_id": "q027",
+                "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+                "category": "multi_policy",
+                "baseline_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "challenger_quality": {
+                  "recall": 0.5,
+                  "mrr": 1.0
+                },
+                "baseline_first_relevant_rank": 1,
+                "challenger_first_relevant_rank": 1,
+                "baseline_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ],
+                "challenger_chunk_ids": [
+                  "eval-security-policy-2",
+                  "eval-security-policy-1",
+                  "eval-expense-policy-2"
+                ]
+              }
+            ],
+            "empty_groups": [
+              "challenger_better",
+              "challenger_worse"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "reranker_effect": {
+    "rank_delta_definition": "pre_rerank_rank - post_rerank_rank; positive values mean promotion",
+    "items": [
+      {
+        "query_id": "q005",
+        "query": "How long is the probation period for new employees?",
+        "category": "hr_policy",
+        "pre_rerank_chunk_ids": [
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1"
+        ],
+        "post_rerank_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-hr-policy-3",
+          "eval-hr-policy-1"
+        ],
+        "ordering_changed": true,
+        "quality_equal_by_k": {
+          "1": true,
+          "2": true,
+          "3": true
+        },
+        "rank_changed_but_metric_unchanged_by_k": {
+          "1": true,
+          "2": true,
+          "3": true
+        },
+        "candidate_recall_failure_document_level": false,
+        "document_level_movements": [
+          {
+            "relevant_id": "hr_policy.md",
+            "pre_rerank_ranks": [
+              1,
+              2,
+              3
+            ],
+            "post_rerank_ranks": [
+              1,
+              2,
+              3
+            ],
+            "pre_rerank_first_rank": 1,
+            "post_rerank_first_rank": 1,
+            "rank_delta": 0,
+            "candidate_retrieved": true,
+            "movement_by_k": {
+              "1": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "2": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "3": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              }
+            }
+          }
+        ],
+        "strict_chunk_level_movements": []
+      },
+      {
+        "query_id": "q010",
+        "query": "How many missing receipt declarations can be used per quarter?",
+        "category": "expense_policy",
+        "pre_rerank_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "post_rerank_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "ordering_changed": false,
+        "quality_equal_by_k": {
+          "1": true,
+          "2": true,
+          "3": true
+        },
+        "rank_changed_but_metric_unchanged_by_k": {
+          "1": false,
+          "2": false,
+          "3": false
+        },
+        "candidate_recall_failure_document_level": false,
+        "document_level_movements": [
+          {
+            "relevant_id": "expense_policy.md",
+            "pre_rerank_ranks": [
+              1,
+              2
+            ],
+            "post_rerank_ranks": [
+              1,
+              2
+            ],
+            "pre_rerank_first_rank": 1,
+            "post_rerank_first_rank": 1,
+            "rank_delta": 0,
+            "candidate_retrieved": true,
+            "movement_by_k": {
+              "1": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "2": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "3": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              }
+            }
+          }
+        ],
+        "strict_chunk_level_movements": []
+      },
+      {
+        "query_id": "q015",
+        "query": "How often must vendor accounts be reviewed?",
+        "category": "security_policy",
+        "pre_rerank_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "post_rerank_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-expense-policy-2",
+          "eval-security-policy-1"
+        ],
+        "ordering_changed": true,
+        "quality_equal_by_k": {
+          "1": true,
+          "2": true,
+          "3": true
+        },
+        "rank_changed_but_metric_unchanged_by_k": {
+          "1": true,
+          "2": true,
+          "3": true
+        },
+        "candidate_recall_failure_document_level": false,
+        "document_level_movements": [
+          {
+            "relevant_id": "security_policy.md",
+            "pre_rerank_ranks": [
+              1,
+              2
+            ],
+            "post_rerank_ranks": [
+              1,
+              3
+            ],
+            "pre_rerank_first_rank": 1,
+            "post_rerank_first_rank": 1,
+            "rank_delta": 0,
+            "candidate_retrieved": true,
+            "movement_by_k": {
+              "1": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "2": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "3": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              }
+            }
+          }
+        ],
+        "strict_chunk_level_movements": []
+      },
+      {
+        "query_id": "q020",
+        "query": "What is the recommended single document size limit?",
+        "category": "product_faq",
+        "pre_rerank_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-1"
+        ],
+        "post_rerank_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-1"
+        ],
+        "ordering_changed": false,
+        "quality_equal_by_k": {
+          "1": true,
+          "2": true,
+          "3": true
+        },
+        "rank_changed_but_metric_unchanged_by_k": {
+          "1": false,
+          "2": false,
+          "3": false
+        },
+        "candidate_recall_failure_document_level": false,
+        "document_level_movements": [
+          {
+            "relevant_id": "product_faq.md",
+            "pre_rerank_ranks": [
+              1
+            ],
+            "post_rerank_ranks": [
+              1
+            ],
+            "pre_rerank_first_rank": 1,
+            "post_rerank_first_rank": 1,
+            "rank_delta": 0,
+            "candidate_retrieved": true,
+            "movement_by_k": {
+              "1": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "2": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "3": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              }
+            }
+          }
+        ],
+        "strict_chunk_level_movements": []
+      },
+      {
+        "query_id": "q027",
+        "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+        "category": "multi_policy",
+        "pre_rerank_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "post_rerank_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "ordering_changed": false,
+        "quality_equal_by_k": {
+          "1": true,
+          "2": true,
+          "3": true
+        },
+        "rank_changed_but_metric_unchanged_by_k": {
+          "1": false,
+          "2": false,
+          "3": false
+        },
+        "candidate_recall_failure_document_level": true,
+        "document_level_movements": [
+          {
+            "relevant_id": "hr_policy.md",
+            "pre_rerank_ranks": [],
+            "post_rerank_ranks": [],
+            "pre_rerank_first_rank": null,
+            "post_rerank_first_rank": null,
+            "rank_delta": null,
+            "candidate_retrieved": false,
+            "movement_by_k": {
+              "1": {
+                "direction": "not_observed_in_either",
+                "cutoff_effect": "insufficient_evidence_outside_observed_depth"
+              },
+              "2": {
+                "direction": "not_observed_in_either",
+                "cutoff_effect": "insufficient_evidence_outside_observed_depth"
+              },
+              "3": {
+                "direction": "not_observed_in_either",
+                "cutoff_effect": "insufficient_evidence_outside_observed_depth"
+              }
+            }
+          },
+          {
+            "relevant_id": "security_policy.md",
+            "pre_rerank_ranks": [
+              1,
+              2
+            ],
+            "post_rerank_ranks": [
+              1,
+              2
+            ],
+            "pre_rerank_first_rank": 1,
+            "post_rerank_first_rank": 1,
+            "rank_delta": 0,
+            "candidate_retrieved": true,
+            "movement_by_k": {
+              "1": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "2": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "3": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              }
+            }
+          }
+        ],
+        "strict_chunk_level_movements": [
+          {
+            "relevant_id": "eval-hr-policy-2",
+            "pre_rerank_ranks": [],
+            "post_rerank_ranks": [],
+            "pre_rerank_first_rank": null,
+            "post_rerank_first_rank": null,
+            "rank_delta": null,
+            "candidate_retrieved": false,
+            "movement_by_k": {
+              "1": {
+                "direction": "not_observed_in_either",
+                "cutoff_effect": "insufficient_evidence_outside_observed_depth"
+              },
+              "2": {
+                "direction": "not_observed_in_either",
+                "cutoff_effect": "insufficient_evidence_outside_observed_depth"
+              },
+              "3": {
+                "direction": "not_observed_in_either",
+                "cutoff_effect": "insufficient_evidence_outside_observed_depth"
+              }
+            }
+          },
+          {
+            "relevant_id": "eval-security-policy-2",
+            "pre_rerank_ranks": [
+              1
+            ],
+            "post_rerank_ranks": [
+              1
+            ],
+            "pre_rerank_first_rank": 1,
+            "post_rerank_first_rank": 1,
+            "rank_delta": 0,
+            "candidate_retrieved": true,
+            "movement_by_k": {
+              "1": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "2": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              },
+              "3": {
+                "direction": "unchanged",
+                "cutoff_effect": "unchanged_inside_top_k"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "query_count": 5,
+      "ordering_changed_query_ids": [
+        "q005",
+        "q015"
+      ],
+      "no_ranking_change_query_ids": [
+        "q010",
+        "q020",
+        "q027"
+      ],
+      "candidate_recall_failure_query_ids": [
+        "q027"
+      ],
+      "rank_changed_but_metric_unchanged_query_ids_by_k": {
+        "1": [
+          "q005",
+          "q015"
+        ],
+        "2": [
+          "q005",
+          "q015"
+        ],
+        "3": [
+          "q005",
+          "q015"
+        ]
+      },
+      "document_relevant_item_direction_counts": {
+        "unchanged": 5,
+        "candidate_not_retrieved": 1
+      },
+      "strict_chunk_relevant_item_direction_counts": {
+        "candidate_not_retrieved": 1,
+        "unchanged": 1
+      },
+      "cutoff_effect_counts_by_k": {
+        "1": {
+          "unchanged_inside_top_k": 5,
+          "insufficient_evidence_outside_observed_depth": 1
+        },
+        "2": {
+          "unchanged_inside_top_k": 5,
+          "insufficient_evidence_outside_observed_depth": 1
+        },
+        "3": {
+          "unchanged_inside_top_k": 5,
+          "insufficient_evidence_outside_observed_depth": 1
+        }
+      }
+    }
+  },
+  "multi_relevant_queries": [
+    {
+      "query_id": "q027",
+      "relevant_document_labels": [
+        "hr_policy.md",
+        "security_policy.md"
+      ],
+      "relevant_chunk_ids": [
+        "eval-hr-policy-2",
+        "eval-security-policy-2"
+      ],
+      "methods": {
+        "vector": {
+          "retrieved_chunk_ids": [
+            "eval-security-policy-2",
+            "eval-expense-policy-2",
+            "eval-security-policy-1"
+          ],
+          "relevant_document_ranks": {
+            "hr_policy.md": [],
+            "security_policy.md": [
+              1,
+              3
+            ]
+          },
+          "relevant_chunk_ranks": {
+            "eval-hr-policy-2": [],
+            "eval-security-policy-2": [
+              1
+            ]
+          },
+          "metrics_by_k": {
+            "1": {
+              "k": 1,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "security_policy.md"
+              ]
+            },
+            "2": {
+              "k": 2,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "security_policy.md"
+              ]
+            },
+            "3": {
+              "k": 3,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "security_policy.md"
+              ]
+            }
+          },
+          "strict_chunk_metrics_by_k": {
+            "1": {
+              "k": 1,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "eval-security-policy-2"
+              ]
+            },
+            "2": {
+              "k": 2,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "eval-security-policy-2"
+              ]
+            },
+            "3": {
+              "k": 3,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "eval-security-policy-2"
+              ]
+            }
+          }
+        },
+        "hybrid_rrf": {
+          "retrieved_chunk_ids": [
+            "eval-security-policy-2",
+            "eval-security-policy-1",
+            "eval-expense-policy-2"
+          ],
+          "relevant_document_ranks": {
+            "hr_policy.md": [],
+            "security_policy.md": [
+              1,
+              2
+            ]
+          },
+          "relevant_chunk_ranks": {
+            "eval-hr-policy-2": [],
+            "eval-security-policy-2": [
+              1
+            ]
+          },
+          "metrics_by_k": {
+            "1": {
+              "k": 1,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "security_policy.md"
+              ]
+            },
+            "2": {
+              "k": 2,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "security_policy.md"
+              ]
+            },
+            "3": {
+              "k": 3,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "security_policy.md"
+              ]
+            }
+          },
+          "strict_chunk_metrics_by_k": {
+            "1": {
+              "k": 1,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "eval-security-policy-2"
+              ]
+            },
+            "2": {
+              "k": 2,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "eval-security-policy-2"
+              ]
+            },
+            "3": {
+              "k": 3,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "eval-security-policy-2"
+              ]
+            }
+          }
+        },
+        "hybrid_reranker": {
+          "retrieved_chunk_ids": [
+            "eval-security-policy-2",
+            "eval-security-policy-1",
+            "eval-expense-policy-2"
+          ],
+          "relevant_document_ranks": {
+            "hr_policy.md": [],
+            "security_policy.md": [
+              1,
+              2
+            ]
+          },
+          "relevant_chunk_ranks": {
+            "eval-hr-policy-2": [],
+            "eval-security-policy-2": [
+              1
+            ]
+          },
+          "metrics_by_k": {
+            "1": {
+              "k": 1,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "security_policy.md"
+              ]
+            },
+            "2": {
+              "k": 2,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "security_policy.md"
+              ]
+            },
+            "3": {
+              "k": 3,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "security_policy.md"
+              ]
+            }
+          },
+          "strict_chunk_metrics_by_k": {
+            "1": {
+              "k": 1,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "eval-security-policy-2"
+              ]
+            },
+            "2": {
+              "k": 2,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "eval-security-policy-2"
+              ]
+            },
+            "3": {
+              "k": 3,
+              "hit": true,
+              "recall": 0.5,
+              "reciprocal_rank": 1.0,
+              "first_relevant_rank": 1,
+              "matched_relevant_ids": [
+                "eval-security-policy-2"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "per_query_results": {
+    "vector": [
+      {
+        "query_id": "q005",
+        "query": "How long is the probation period for new employees?",
+        "method": "vector",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "hr_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "hr_policy.md": [
+            1,
+            2,
+            3
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-hr-policy-3",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.6486,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190465+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-hr-policy-2",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.4691,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190404+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-hr-policy-1",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.3824,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190311+00:00",
+            "metadata": null
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 7.237099998746999,
+        "stage_latency_sanity_ms": {
+          "vector": 7.237099998746999
+        }
+      },
+      {
+        "query_id": "q010",
+        "query": "How many missing receipt declarations can be used per quarter?",
+        "method": "vector",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-security-policy-3",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "security_policy.md",
+          "hr_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "expense_policy.md": [
+            1
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-expense-policy-3",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.496,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937791+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-security-policy-3",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.3118,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001869+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-hr-policy-1",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.3017,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190311+00:00",
+            "metadata": null
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 10.00969999586232,
+        "stage_latency_sanity_ms": {
+          "vector": 10.00969999586232
+        }
+      },
+      {
+        "query_id": "q015",
+        "query": "How often must vendor accounts be reviewed?",
+        "method": "vector",
+        "category": "security_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "security_policy.md": [
+            1
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-security-policy-3",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.5136,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001869+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-expense-policy-3",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.3623,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937791+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-expense-policy-2",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.327,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937708+00:00",
+            "metadata": null
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 9.793299999728333,
+        "stage_latency_sanity_ms": {
+          "vector": 9.793299999728333
+        }
+      },
+      {
+        "query_id": "q020",
+        "query": "What is the recommended single document size limit?",
+        "method": "vector",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-security-policy-1",
+          "eval-product-faq-1"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "security_policy.md",
+          "product_faq.md"
+        ],
+        "relevant_document_ranks": {
+          "product_faq.md": [
+            1,
+            3
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-product-faq-3",
+            "document_id": "eval-product-faq",
+            "filename": "product_faq.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.7172,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.071734+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.3561,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-product-faq-1",
+            "document_id": "eval-product-faq",
+            "filename": "product_faq.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.2041,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.071583+00:00",
+            "metadata": null
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 7.137400003557559,
+        "stage_latency_sanity_ms": {
+          "vector": 7.137400003557559
+        }
+      },
+      {
+        "query_id": "q027",
+        "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+        "method": "vector",
+        "category": "multi_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-security-policy-2"
+        ],
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-expense-policy-2",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "expense_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "hr_policy.md": [],
+          "security_policy.md": [
+            1,
+            3
+          ]
+        },
+        "relevant_chunk_ranks": {
+          "eval-hr-policy-2": [],
+          "eval-security-policy-2": [
+            1
+          ]
+        },
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-security-policy-2",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.4442,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001801+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-expense-policy-2",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.3678,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937708+00:00",
+            "metadata": null
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": null,
+            "retrieval_mode": "vector",
+            "score": 0.3257,
+            "fused_score": null,
+            "rerank_score": null,
+            "matched_sources": null,
+            "source_ranks": null,
+            "source_scores": null,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": null
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "eval-security-policy-2"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "eval-security-policy-2"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "eval-security-policy-2"
+            ]
+          }
+        },
+        "latency_ms": 9.129199999733828,
+        "stage_latency_sanity_ms": {
+          "vector": 9.129199999733828
+        }
+      }
+    ],
+    "hybrid_rrf": [
+      {
+        "query_id": "q005",
+        "query": "How long is the probation period for new employees?",
+        "method": "hybrid_rrf",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "hr_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "hr_policy.md": [
+            1,
+            2,
+            3
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-hr-policy-3",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03252247488101534,
+            "fused_score": 0.03252247488101534,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.6486,
+              "bm25": 5.703833
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190465+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 48,
+              "created_at": "2026-08-04T16:58:57.190465+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-hr-policy-2",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03252247488101534,
+            "fused_score": 0.03252247488101534,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 2,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.4691,
+              "bm25": 6.970644
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190404+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 74,
+              "created_at": "2026-08-04T16:58:57.190404+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-hr-policy-1",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031746031746031744,
+            "fused_score": 0.031746031746031744,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 3
+            },
+            "source_scores": {
+              "vector": 0.3824,
+              "bm25": 3.118041
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190311+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 77,
+              "created_at": "2026-08-04T16:58:57.190311+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 7.30209999892395,
+        "stage_latency_sanity_ms": {
+          "hybrid_retrieval_and_fusion": 7.30209999892395
+        }
+      },
+      {
+        "query_id": "q010",
+        "query": "How many missing receipt declarations can be used per quarter?",
+        "method": "hybrid_rrf",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "expense_policy.md": [
+            1,
+            2
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-expense-policy-3",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.496,
+              "bm25": 11.931869
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937791+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 53,
+              "created_at": "2026-08-04T16:59:03.937791+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-expense-policy-1",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031754032258064516,
+            "fused_score": 0.031754032258064516,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 4,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.2584,
+              "bm25": 3.203982
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937603+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 59,
+              "created_at": "2026-08-04T16:59:03.937603+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-hr-policy-1",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031746031746031744,
+            "fused_score": 0.031746031746031744,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 3
+            },
+            "source_scores": {
+              "vector": 0.3017,
+              "bm25": 2.557028
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190311+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 77,
+              "created_at": "2026-08-04T16:58:57.190311+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 9.930500003974885,
+        "stage_latency_sanity_ms": {
+          "hybrid_retrieval_and_fusion": 9.930500003974885
+        }
+      },
+      {
+        "query_id": "q015",
+        "query": "How often must vendor accounts be reviewed?",
+        "method": "hybrid_rrf",
+        "category": "security_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "security_policy.md": [
+            1,
+            2
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-security-policy-3",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.5136,
+              "bm25": 8.952556
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001869+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 53,
+              "created_at": "2026-08-04T16:59:04.001869+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031754032258064516,
+            "fused_score": 0.031754032258064516,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 4,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.3051,
+              "bm25": 3.320924
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.001716+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-expense-policy-2",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03149801587301587,
+            "fused_score": 0.03149801587301587,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 4
+            },
+            "source_scores": {
+              "vector": 0.327,
+              "bm25": 1.177194
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937708+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 64,
+              "created_at": "2026-08-04T16:59:03.937708+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 9.180900000501424,
+        "stage_latency_sanity_ms": {
+          "hybrid_retrieval_and_fusion": 9.180900000501424
+        }
+      },
+      {
+        "query_id": "q020",
+        "query": "What is the recommended single document size limit?",
+        "method": "hybrid_rrf",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "expense_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "product_faq.md": [
+            1
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-product-faq-3",
+            "document_id": "eval-product-faq",
+            "filename": "product_faq.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.7172,
+              "bm25": 12.727527
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.071734+00:00",
+            "metadata": {
+              "document_id": "eval-product-faq",
+              "filename": "product_faq.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.071734+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-expense-policy-1",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03149801587301587,
+            "fused_score": 0.03149801587301587,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 4,
+              "bm25": 3
+            },
+            "source_scores": {
+              "vector": 0.2032,
+              "bm25": 1.331336
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937603+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 59,
+              "created_at": "2026-08-04T16:59:03.937603+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.016129032258064516,
+            "fused_score": 0.016129032258064516,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector"
+            ],
+            "source_ranks": {
+              "vector": 2
+            },
+            "source_scores": {
+              "vector": 0.3561
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.001716+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 6.317999999737367,
+        "stage_latency_sanity_ms": {
+          "hybrid_retrieval_and_fusion": 6.317999999737367
+        }
+      },
+      {
+        "query_id": "q027",
+        "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+        "method": "hybrid_rrf",
+        "category": "multi_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-security-policy-2"
+        ],
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "hr_policy.md": [],
+          "security_policy.md": [
+            1,
+            2
+          ]
+        },
+        "relevant_chunk_ranks": {
+          "eval-hr-policy-2": [],
+          "eval-security-policy-2": [
+            1
+          ]
+        },
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-security-policy-2",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.4442,
+              "bm25": 8.285543
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001801+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 47,
+              "created_at": "2026-08-04T16:59:04.001801+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03200204813108039,
+            "fused_score": 0.03200204813108039,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.3257,
+              "bm25": 6.402885
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.001716+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-expense-policy-2",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031754032258064516,
+            "fused_score": 0.031754032258064516,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 2,
+              "bm25": 4
+            },
+            "source_scores": {
+              "vector": 0.3678,
+              "bm25": 1.89871
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937708+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 64,
+              "created_at": "2026-08-04T16:59:03.937708+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "eval-security-policy-2"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "eval-security-policy-2"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "eval-security-policy-2"
+            ]
+          }
+        },
+        "latency_ms": 10.26369999453891,
+        "stage_latency_sanity_ms": {
+          "hybrid_retrieval_and_fusion": 10.26369999453891
+        }
+      }
+    ],
+    "hybrid_reranker": [
+      {
+        "query_id": "q005",
+        "query": "How long is the probation period for new employees?",
+        "method": "hybrid_reranker",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-hr-policy-3",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "hr_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "hr_policy.md": [
+            1,
+            2,
+            3
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-hr-policy-2",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03252247488101534,
+            "fused_score": 0.03252247488101534,
+            "rerank_score": 5.406909942626953,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 2,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.4691,
+              "bm25": 6.970644
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190404+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 74,
+              "created_at": "2026-08-04T16:58:57.190404+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-hr-policy-3",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03252247488101534,
+            "fused_score": 0.03252247488101534,
+            "rerank_score": 5.292314529418945,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.6486,
+              "bm25": 5.703833
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190465+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 48,
+              "created_at": "2026-08-04T16:58:57.190465+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-hr-policy-1",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031746031746031744,
+            "fused_score": 0.031746031746031744,
+            "rerank_score": -1.425102949142456,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 3
+            },
+            "source_scores": {
+              "vector": 0.3824,
+              "bm25": 3.118041
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190311+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 77,
+              "created_at": "2026-08-04T16:58:57.190311+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 35.59780000068713,
+        "stage_latency_sanity_ms": {
+          "shared_hybrid_retrieval_and_fusion": 7.30209999892395,
+          "reranking": 28.29570000176318
+        },
+        "pre_rerank_chunk_ids": [
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1"
+        ],
+        "pre_rerank_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-hr-policy-3",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03252247488101534,
+            "fused_score": 0.03252247488101534,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.6486,
+              "bm25": 5.703833
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190465+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 48,
+              "created_at": "2026-08-04T16:58:57.190465+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-hr-policy-2",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03252247488101534,
+            "fused_score": 0.03252247488101534,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 2,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.4691,
+              "bm25": 6.970644
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190404+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 74,
+              "created_at": "2026-08-04T16:58:57.190404+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-hr-policy-1",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031746031746031744,
+            "fused_score": 0.031746031746031744,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 3
+            },
+            "source_scores": {
+              "vector": 0.3824,
+              "bm25": 3.118041
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190311+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 77,
+              "created_at": "2026-08-04T16:58:57.190311+00:00"
+            }
+          }
+        ]
+      },
+      {
+        "query_id": "q010",
+        "query": "How many missing receipt declarations can be used per quarter?",
+        "method": "hybrid_reranker",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "expense_policy.md": [
+            1,
+            2
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-expense-policy-3",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": 7.046899795532227,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.496,
+              "bm25": 11.931869
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937791+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 53,
+              "created_at": "2026-08-04T16:59:03.937791+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-expense-policy-1",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031754032258064516,
+            "fused_score": 0.031754032258064516,
+            "rerank_score": -11.170954704284668,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 4,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.2584,
+              "bm25": 3.203982
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937603+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 59,
+              "created_at": "2026-08-04T16:59:03.937603+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-hr-policy-1",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031746031746031744,
+            "fused_score": 0.031746031746031744,
+            "rerank_score": -11.315868377685547,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 3
+            },
+            "source_scores": {
+              "vector": 0.3017,
+              "bm25": 2.557028
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190311+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 77,
+              "created_at": "2026-08-04T16:58:57.190311+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 36.97670000838116,
+        "stage_latency_sanity_ms": {
+          "shared_hybrid_retrieval_and_fusion": 9.930500003974885,
+          "reranking": 27.046200004406273
+        },
+        "pre_rerank_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "pre_rerank_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-expense-policy-3",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.496,
+              "bm25": 11.931869
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937791+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 53,
+              "created_at": "2026-08-04T16:59:03.937791+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-expense-policy-1",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031754032258064516,
+            "fused_score": 0.031754032258064516,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 4,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.2584,
+              "bm25": 3.203982
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937603+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 59,
+              "created_at": "2026-08-04T16:59:03.937603+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-hr-policy-1",
+            "document_id": "eval-hr-policy",
+            "filename": "hr_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031746031746031744,
+            "fused_score": 0.031746031746031744,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 3
+            },
+            "source_scores": {
+              "vector": 0.3017,
+              "bm25": 2.557028
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:58:57.190311+00:00",
+            "metadata": {
+              "document_id": "eval-hr-policy",
+              "filename": "hr_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 77,
+              "created_at": "2026-08-04T16:58:57.190311+00:00"
+            }
+          }
+        ]
+      },
+      {
+        "query_id": "q015",
+        "query": "How often must vendor accounts be reviewed?",
+        "method": "hybrid_reranker",
+        "category": "security_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-expense-policy-2",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "expense_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "security_policy.md": [
+            1,
+            3
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-security-policy-3",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": 8.226341247558594,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.5136,
+              "bm25": 8.952556
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001869+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 53,
+              "created_at": "2026-08-04T16:59:04.001869+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-expense-policy-2",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03149801587301587,
+            "fused_score": 0.03149801587301587,
+            "rerank_score": -8.482623100280762,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 4
+            },
+            "source_scores": {
+              "vector": 0.327,
+              "bm25": 1.177194
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937708+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 64,
+              "created_at": "2026-08-04T16:59:03.937708+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031754032258064516,
+            "fused_score": 0.031754032258064516,
+            "rerank_score": -9.941930770874023,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 4,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.3051,
+              "bm25": 3.320924
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.001716+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 34.92969999933848,
+        "stage_latency_sanity_ms": {
+          "shared_hybrid_retrieval_and_fusion": 9.180900000501424,
+          "reranking": 25.748799998837058
+        },
+        "pre_rerank_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "pre_rerank_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-security-policy-3",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.5136,
+              "bm25": 8.952556
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001869+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 53,
+              "created_at": "2026-08-04T16:59:04.001869+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031754032258064516,
+            "fused_score": 0.031754032258064516,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 4,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.3051,
+              "bm25": 3.320924
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.001716+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-expense-policy-2",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03149801587301587,
+            "fused_score": 0.03149801587301587,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 4
+            },
+            "source_scores": {
+              "vector": 0.327,
+              "bm25": 1.177194
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937708+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 64,
+              "created_at": "2026-08-04T16:59:03.937708+00:00"
+            }
+          }
+        ]
+      },
+      {
+        "query_id": "q020",
+        "query": "What is the recommended single document size limit?",
+        "method": "hybrid_reranker",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "expense_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "product_faq.md": [
+            1
+          ]
+        },
+        "relevant_chunk_ranks": null,
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-product-faq-3",
+            "document_id": "eval-product-faq",
+            "filename": "product_faq.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": 8.86790657043457,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.7172,
+              "bm25": 12.727527
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.071734+00:00",
+            "metadata": {
+              "document_id": "eval-product-faq",
+              "filename": "product_faq.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.071734+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-expense-policy-1",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03149801587301587,
+            "fused_score": 0.03149801587301587,
+            "rerank_score": -11.003044128417969,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 4,
+              "bm25": 3
+            },
+            "source_scores": {
+              "vector": 0.2032,
+              "bm25": 1.331336
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937603+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 59,
+              "created_at": "2026-08-04T16:59:03.937603+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.016129032258064516,
+            "fused_score": 0.016129032258064516,
+            "rerank_score": -11.223154067993164,
+            "matched_sources": [
+              "vector"
+            ],
+            "source_ranks": {
+              "vector": 2
+            },
+            "source_scores": {
+              "vector": 0.3561
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.001716+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": null,
+        "latency_ms": 33.27599999465747,
+        "stage_latency_sanity_ms": {
+          "shared_hybrid_retrieval_and_fusion": 6.317999999737367,
+          "reranking": 26.9579999949201
+        },
+        "pre_rerank_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-1"
+        ],
+        "pre_rerank_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-product-faq-3",
+            "document_id": "eval-product-faq",
+            "filename": "product_faq.md",
+            "position": 3,
+            "chunk_index": 2,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.7172,
+              "bm25": 12.727527
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.071734+00:00",
+            "metadata": {
+              "document_id": "eval-product-faq",
+              "filename": "product_faq.md",
+              "position": 3,
+              "chunk_index": 2,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.071734+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-expense-policy-1",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03149801587301587,
+            "fused_score": 0.03149801587301587,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 4,
+              "bm25": 3
+            },
+            "source_scores": {
+              "vector": 0.2032,
+              "bm25": 1.331336
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937603+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 59,
+              "created_at": "2026-08-04T16:59:03.937603+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.016129032258064516,
+            "fused_score": 0.016129032258064516,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector"
+            ],
+            "source_ranks": {
+              "vector": 2
+            },
+            "source_scores": {
+              "vector": 0.3561
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.001716+00:00"
+            }
+          }
+        ]
+      },
+      {
+        "query_id": "q027",
+        "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+        "method": "hybrid_reranker",
+        "category": "multi_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "metrics_status": "evaluated",
+        "relevance_label_type": "document_filename",
+        "relevant_document_labels": [
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-security-policy-2"
+        ],
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md"
+        ],
+        "relevant_document_ranks": {
+          "hr_policy.md": [],
+          "security_policy.md": [
+            1,
+            2
+          ]
+        },
+        "relevant_chunk_ranks": {
+          "eval-hr-policy-2": [],
+          "eval-security-policy-2": [
+            1
+          ]
+        },
+        "ranked_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-security-policy-2",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": -1.6167526245117188,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.4442,
+              "bm25": 8.285543
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001801+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 47,
+              "created_at": "2026-08-04T16:59:04.001801+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03200204813108039,
+            "fused_score": 0.03200204813108039,
+            "rerank_score": -6.5930094718933105,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.3257,
+              "bm25": 6.402885
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.001716+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-expense-policy-2",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031754032258064516,
+            "fused_score": 0.031754032258064516,
+            "rerank_score": -6.960602283477783,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 2,
+              "bm25": 4
+            },
+            "source_scores": {
+              "vector": 0.3678,
+              "bm25": 1.89871
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937708+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 64,
+              "created_at": "2026-08-04T16:59:03.937708+00:00"
+            }
+          }
+        ],
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "strict_chunk_metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "eval-security-policy-2"
+            ]
+          },
+          "2": {
+            "k": 2,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "eval-security-policy-2"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "eval-security-policy-2"
+            ]
+          }
+        },
+        "latency_ms": 35.977599989564624,
+        "stage_latency_sanity_ms": {
+          "shared_hybrid_retrieval_and_fusion": 10.26369999453891,
+          "reranking": 25.713899995025713
+        },
+        "pre_rerank_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "pre_rerank_results": [
+          {
+            "rank": 1,
+            "chunk_id": "eval-security-policy-2",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03278688524590164,
+            "fused_score": 0.03278688524590164,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 1,
+              "bm25": 1
+            },
+            "source_scores": {
+              "vector": 0.4442,
+              "bm25": 8.285543
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001801+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 47,
+              "created_at": "2026-08-04T16:59:04.001801+00:00"
+            }
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eval-security-policy-1",
+            "document_id": "eval-security-policy",
+            "filename": "security_policy.md",
+            "position": 1,
+            "chunk_index": 0,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.03200204813108039,
+            "fused_score": 0.03200204813108039,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 3,
+              "bm25": 2
+            },
+            "source_scores": {
+              "vector": 0.3257,
+              "bm25": 6.402885
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:04.001716+00:00",
+            "metadata": {
+              "document_id": "eval-security-policy",
+              "filename": "security_policy.md",
+              "position": 1,
+              "chunk_index": 0,
+              "page_number": null,
+              "token_count": 52,
+              "created_at": "2026-08-04T16:59:04.001716+00:00"
+            }
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eval-expense-policy-2",
+            "document_id": "eval-expense-policy",
+            "filename": "expense_policy.md",
+            "position": 2,
+            "chunk_index": 1,
+            "page_number": null,
+            "source": "rrf",
+            "retrieval_mode": "rrf",
+            "score": 0.031754032258064516,
+            "fused_score": 0.031754032258064516,
+            "rerank_score": null,
+            "matched_sources": [
+              "vector",
+              "bm25"
+            ],
+            "source_ranks": {
+              "vector": 2,
+              "bm25": 4
+            },
+            "source_scores": {
+              "vector": 0.3678,
+              "bm25": 1.89871
+            },
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "query_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "vector_store_backend": "faiss",
+            "created_at": "2026-08-04T16:59:03.937708+00:00",
+            "metadata": {
+              "document_id": "eval-expense-policy",
+              "filename": "expense_policy.md",
+              "position": 2,
+              "chunk_index": 1,
+              "page_number": null,
+              "token_count": 64,
+              "created_at": "2026-08-04T16:59:03.937708+00:00"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "unanswerable_handling": {
+    "query_ids": [
+      "q021",
+      "q022",
+      "q023",
+      "q024"
+    ],
+    "included_in_standard_relevance_aggregate": false,
+    "policy": "Unanswerable queries are excluded from standard relevance aggregates and are not evaluated for abstention or generation in W7-T3."
+  },
+  "timing_policy": "Warmup used one tuning query. Timing is a local sanity signal only, is not used for quality conclusions, and does not replace W7-T4.",
+  "runtime_environment": {
+    "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "sentence_transformers": "5.6.0",
+    "torch": "2.12.1",
+    "transformers": "5.12.1",
+    "faiss_cpu": "1.14.3"
+  },
+  "claim_boundary": [
+    "The run evaluates five heldout answerable queries only.",
+    "Primary metrics are document-level; q027 is the only strict chunk diagnostic.",
+    "The evaluation does not measure LLM answer quality or latency trade-offs.",
+    "The frozen configuration was not changed after heldout results."
+  ]
+}

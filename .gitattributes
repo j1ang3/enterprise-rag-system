@@ -1,0 +1,5 @@
+# Frozen evaluation evidence is hashed byte-for-byte. Disable Git line-ending
+# conversion so manifests remain valid on Windows and Linux clones.
+eval_docs/** -text
+evals/** -text
+storage/eval/** -text

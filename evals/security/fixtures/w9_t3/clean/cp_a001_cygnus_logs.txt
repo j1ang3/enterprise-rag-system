@@ -1,0 +1,3 @@
+[SYNTHETIC W9-T3 SECURITY FIXTURE]
+
+Cygnus visitor access policy: visitor entry logs are retained for 30 days and then deleted through the approved records process.

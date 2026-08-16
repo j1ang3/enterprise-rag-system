@@ -1,0 +1,75 @@
+name: Deploy database migration
+
+"on":
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Confirm the explicit Neon schema migration
+        required: true
+        type: choice
+        options:
+          - MIGRATE
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-neon-migration
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    name: Alembic upgrade on Neon
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: ${{ secrets.NEON_DIRECT_DATABASE_URL }}
+
+    steps:
+      - name: Check out the dispatched commit
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Require the direct Neon database secret
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::NEON_DIRECT_DATABASE_URL is not configured."
+            exit 1
+          fi
+
+      - name: Install exact dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Reject a pooled migration endpoint
+        run: >-
+          python -c "from sqlalchemy.engine import make_url;
+          from app.core.config import settings;
+          host = make_url(settings.database_url).host or '';
+          assert '-pooler' not in host, 'Migrations require the direct Neon endpoint';
+          print('direct_neon_endpoint=ok')"
+
+      - name: Upgrade Neon schema to Alembic head
+        run: python -m alembic upgrade head
+
+      - name: Verify Alembic head
+        run: python -m alembic current --check-heads
+
+      - name: Verify PostgreSQL 18
+        run: >-
+          python -c "from sqlalchemy import text;
+          from app.db.session import get_engine;
+          engine = get_engine();
+          connection = engine.connect();
+          version = str(connection.execute(text('SHOW server_version_num')).scalar_one());
+          connection.close(); engine.dispose();
+          assert version.startswith('18'), f'Expected PostgreSQL 18, got {version}';
+          print('postgresql_server_version_num=' + version)"
+
+      - name: Record migrated commit
+        run: echo "migrated_commit=$GITHUB_SHA"

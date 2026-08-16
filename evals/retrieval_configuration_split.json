@@ -1,0 +1,44 @@
+{
+  "manifest_version": 1,
+  "task": "W7-T2",
+  "dataset": "evals/business_policy_eval.jsonl",
+  "dataset_sha256": "9ebbe2fca70b195e73d42ce3a795a01bc8bfd01680d148302bcf7442d14925e4",
+  "created_before_experiment_results": true,
+  "strategy": "Manual stratification: reserve one answerable query from each single-document category plus the multi-policy query; isolate unanswerable queries from relevance tuning.",
+  "random_seed": null,
+  "tuning_query_ids": [
+    "q001",
+    "q002",
+    "q003",
+    "q004",
+    "q006",
+    "q007",
+    "q008",
+    "q009",
+    "q011",
+    "q012",
+    "q013",
+    "q014",
+    "q016",
+    "q017",
+    "q018",
+    "q019",
+    "q025",
+    "q026"
+  ],
+  "heldout_query_ids": [
+    "q005",
+    "q010",
+    "q015",
+    "q020",
+    "q027"
+  ],
+  "unanswerable_query_ids": [
+    "q021",
+    "q022",
+    "q023",
+    "q024"
+  ],
+  "heldout_policy": "W7-T2 must not execute or inspect retrieval/reranking results for heldout queries. They are reserved for W7-T3.",
+  "unanswerable_policy": "Excluded from ordinary relevance tuning because they have no positive relevance labels."
+}

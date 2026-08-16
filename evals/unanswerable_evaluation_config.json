@@ -1,0 +1,176 @@
+{
+  "manifest_version": 1,
+  "task": "W8-T2",
+  "experiment_id": "W8-T2-unanswerable-behavior-v1",
+  "created_before_formal_results": true,
+  "source_w8_t1_artifact": {
+    "path": "evals/results/evaluation_runs/w8-t1-20260805T135615169893Z-qwen3-8b.json",
+    "sha256": "50cb97bfad1db4104b5ac563e464e61383aad342852b70738f831ff186e47d29"
+  },
+  "stable_dataset": {
+    "path": "evals/business_policy_eval.jsonl",
+    "sha256": "9ebbe2fca70b195e73d42ce3a795a01bc8bfd01680d148302bcf7442d14925e4",
+    "stable_unanswerable_query_ids": [
+      "q021",
+      "q022",
+      "q023",
+      "q024"
+    ]
+  },
+  "case_file": {
+    "path": "evals/unanswerable_cases.jsonl",
+    "sha256": "281d4421b72b460f3f77a0df06c1cfa87c2a2a458d3950aef01be41d67260713",
+    "query_ids": [
+      "q021",
+      "q022",
+      "q023",
+      "q024",
+      "w8t2-u001",
+      "w8t2-u002",
+      "w8t2-u003",
+      "w8t2-u004"
+    ],
+    "stable_case_count": 4,
+    "supplemental_case_count": 4,
+    "supplemental_reason": "All four stable cases are intercepted by the existing production exact-evidence guard before an LLM call. Four separately identified and corpus-reviewed cases preserve those controls while allowing observation of the frozen grounded prompt with irrelevant or insufficient context."
+  },
+  "answerable_controls": {
+    "query_ids": [
+      "q001",
+      "q006",
+      "q011",
+      "q016"
+    ],
+    "selection_rule": "One unchanged easy answerable case from each of the four stable source documents, selected before the W8-T2 formal run.",
+    "purpose": "Detect blanket abstention without rerunning or replacing the complete W8-T1 answerable evaluation."
+  },
+  "frozen_w7_manifest": {
+    "path": "evals/retrieval_evaluation_config.json",
+    "sha256": "34f276165081d127c7307e6ac4cf2660ba68bfedba22f3ca44a49fc3a28bbb4a"
+  },
+  "corpus": {
+    "chunk_index": {
+      "path": "storage/eval/week07_tuning_chunks.json",
+      "sha256": "7c12feae418a799e77d1c11cdfe492dd5e6c4428e4c7647200b5a57601b86e01",
+      "chunk_count": 12
+    },
+    "documents": [
+      {
+        "path": "eval_docs/hr_policy.md",
+        "sha256": "acfdb68a3d59482de14e687beeea77a3dcb0d90543ec3d214dd9f9f21a6cbf17"
+      },
+      {
+        "path": "eval_docs/expense_policy.md",
+        "sha256": "b9c4573d7de4037f1e9a97a3c5cdc00448a9a389a3d14f412f5da7585c486998"
+      },
+      {
+        "path": "eval_docs/security_policy.md",
+        "sha256": "2ea46b3c1381b246b44ef21a7c31bc45417d09dadbe13d9769318a2d458e0e73"
+      },
+      {
+        "path": "eval_docs/product_faq.md",
+        "sha256": "535dc6c4de225c6de7fc69962365edc47494a760ffbfb65d7122854ab8aa6600"
+      }
+    ]
+  },
+  "formal_model_policy": {
+    "provider": "ollama",
+    "model": "qwen3:8b",
+    "no_fallback": true,
+    "generation_parameters_source": "W8-T1 resolved formal configuration"
+  },
+  "rubric": {
+    "version": "w8-t2-abstention-rubric.v1",
+    "classification_method": "deterministic_rule_based_proxy",
+    "llm_judge": false,
+    "manual_review_policy": "Preserve raw evidence and mark needs_review when deterministic signals do not support a reliable outcome. Rule-based labels are not independent human Ground Truth.",
+    "outcomes": {
+      "correct_abstention": "Explicitly states that the supplied context or knowledge base is insufficient, gives no specific unsupported factual answer, and does not present unrelated sources as support.",
+      "contaminated_abstention": "Contains an insufficiency statement but continues with a specific guess, external fact, or unsupported factual claim.",
+      "unsupported_answer": "Provides a specific answer without acknowledging that the knowledge base lacks supporting evidence.",
+      "needs_review": "The deterministic evidence is insufficient to distinguish abstention from unsupported answering.",
+      "execution_failure": "The RAG/provider/evaluation path failed before a valid behavioral output was available."
+    },
+    "abstention_phrases": [
+      "knowledge base does not contain",
+      "knowledge base doesn't contain",
+      "could not find relevant content",
+      "context does not contain",
+      "context doesn't contain",
+      "provided context does not",
+      "provided context doesn't",
+      "available context does not",
+      "available context doesn't",
+      "not enough information",
+      "insufficient information",
+      "cannot determine",
+      "can't determine",
+      "cannot confirm",
+      "can't confirm",
+      "unable to determine",
+      "not provided in the context",
+      "not provided in the knowledge base",
+      "no information in the context",
+      "no information in the knowledge base",
+      "does not specify",
+      "doesn't specify",
+      "not mentioned in the context",
+      "not mentioned in the knowledge base"
+    ],
+    "contamination_markers": [
+      "probably",
+      "likely",
+      "typically",
+      "generally",
+      "may be",
+      "might be",
+      "could be"
+    ],
+    "contrast_markers": [
+      "but",
+      "however",
+      "although",
+      "nevertheless",
+      "nonetheless"
+    ],
+    "direct_claim_verbs": [
+      "is",
+      "are",
+      "provides",
+      "provide",
+      "uses",
+      "use",
+      "offers",
+      "offer",
+      "requires",
+      "require",
+      "receives",
+      "receive",
+      "equals",
+      "equal"
+    ],
+    "minimum_direct_claim_words": 5,
+    "citation_policy": {
+      "origin": "Production citations are mechanically derived from final contexts, not parsed from model attribution.",
+      "misleading": "A response-level citation is a misleading-citation proxy only when an unsupported or contaminated answer is returned with one or more pipeline citations.",
+      "harmless": "Pipeline citations attached to an explicit abstention are recorded separately and are not automatically called misleading."
+    },
+    "metric_policy": {
+      "strict_abstention_denominator": "successful unanswerable system outputs",
+      "unsupported_answer_numerator": "unsupported_answer plus contaminated_abstention",
+      "misleading_citation_denominator": "successful unanswerable system outputs",
+      "ambiguous_denominator": "successful unanswerable system outputs",
+      "execution_failure_denominator": "all unanswerable cases",
+      "false_abstention_denominator": "successful answerable control outputs",
+      "llm_subset": "Report the same outcomes separately for answer_mode=llm so code-level no-context abstention is not mistaken for qwen behavior."
+    }
+  },
+  "boundaries": {
+    "no_prompt_tuning": true,
+    "no_retrieval_tuning": true,
+    "no_similarity_threshold": true,
+    "no_security_cases": true,
+    "no_structured_logging": true,
+    "no_full_failure_root_cause": true
+  }
+}

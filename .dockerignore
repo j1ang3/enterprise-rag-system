@@ -1,0 +1,42 @@
+# Source-control and local Python environments
+.git/
+.venv/
+
+# Runtime configuration and secrets; keep the versioned example available.
+.env
+.env.*
+!.env.example
+
+# Python and test caches
+**/__pycache__/
+**/*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Real or generated runtime data
+storage/
+uploads/
+logs/
+*.db
+*.sqlite
+*.sqlite3
+
+# Local model and tool caches
+.cache/
+.huggingface/
+
+# Development, evaluation, and documentation inputs are not runtime API files.
+tests/
+evals/
+eval_docs/
+scripts/
+docs/
+AGENTS.md
+README.md
+
+# Editor and operating-system artifacts
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,5415 @@
+{
+  "task": "W6-T4",
+  "generated_at": "2026-08-03T09:28:31.810161+00:00",
+  "ground_truth": {
+    "source": "evals\\business_policy_eval.jsonl",
+    "label_type": "document_filename",
+    "metric_scope": "answerable queries with one or more expected_sources",
+    "strict_chunk_label_coverage": 3,
+    "dataset_sha256": "9ebbe2fca70b195e73d42ce3a795a01bc8bfd01680d148302bcf7442d14925e4"
+  },
+  "configuration": {
+    "query_count": 27,
+    "methods": [
+      "vector",
+      "bm25",
+      "hybrid_rrf"
+    ],
+    "k_values": [
+      1,
+      3,
+      5
+    ],
+    "hybrid_candidate_depth": 5,
+    "rrf_k": 60,
+    "vector_min_score": 0.0,
+    "bootstrap_documents": [
+      "eval_docs\\hr_policy.md",
+      "eval_docs\\expense_policy.md",
+      "eval_docs\\security_policy.md",
+      "eval_docs\\product_faq.md"
+    ],
+    "bootstrap_document_sha256": {
+      "eval_docs\\hr_policy.md": "acfdb68a3d59482de14e687beeea77a3dcb0d90543ec3d214dd9f9f21a6cbf17",
+      "eval_docs\\expense_policy.md": "b9c4573d7de4037f1e9a97a3c5cdc00448a9a389a3d14f412f5da7585c486998",
+      "eval_docs\\security_policy.md": "2ea46b3c1381b246b44ef21a7c31bc45417d09dadbe13d9769318a2d458e0e73",
+      "eval_docs\\product_faq.md": "535dc6c4de225c6de7fc69962365edc47494a760ffbfb65d7122854ab8aa6600"
+    },
+    "indexed_documents": [
+      {
+        "document_id": "eval-hr-policy",
+        "filename": "hr_policy.md",
+        "chunk_count": 3
+      },
+      {
+        "document_id": "eval-expense-policy",
+        "filename": "expense_policy.md",
+        "chunk_count": 3
+      },
+      {
+        "document_id": "eval-security-policy",
+        "filename": "security_policy.md",
+        "chunk_count": 3
+      },
+      {
+        "document_id": "eval-product-faq",
+        "filename": "product_faq.md",
+        "chunk_count": 3
+      }
+    ],
+    "indexed_chunk_count": 12
+  },
+  "summary": {
+    "vector": {
+      "query_count": 27,
+      "evaluated_query_count": 23,
+      "not_applicable_query_count": 4,
+      "metrics_by_k": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.9782608695652174,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 0.9782608695652174,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_ms": {
+        "mean": 8.901544444799786,
+        "median": 7.934100001875777,
+        "sample_count": 27
+      }
+    },
+    "bm25": {
+      "query_count": 27,
+      "evaluated_query_count": 23,
+      "not_applicable_query_count": 4,
+      "metrics_by_k": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.9782608695652174,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_ms": {
+        "mean": 0.048959259099016585,
+        "median": 0.04389999958220869,
+        "sample_count": 27
+      }
+    },
+    "hybrid_rrf": {
+      "query_count": 27,
+      "evaluated_query_count": 23,
+      "not_applicable_query_count": 4,
+      "metrics_by_k": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.9782608695652174,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 0.9782608695652174,
+          "mrr": 1.0
+        },
+        "5": {
+          "hit_rate": 1.0,
+          "recall": 1.0,
+          "mrr": 1.0
+        }
+      },
+      "latency_ms": {
+        "mean": 8.835492593115541,
+        "median": 8.670000002894085,
+        "sample_count": 27
+      }
+    }
+  },
+  "comparisons_by_k": {
+    "1": {
+      "bm25_better_than_vector": [],
+      "vector_better_than_bm25": [],
+      "hybrid_better_than_vector": [],
+      "hybrid_worse_than_vector": [],
+      "all_methods_missed": []
+    },
+    "3": {
+      "bm25_better_than_vector": [
+        {
+          "query_id": "q027",
+          "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+          "category": "multi_policy",
+          "vector": {
+            "quality": [
+              0.5,
+              1.0
+            ],
+            "retrieved_chunk_ids": [
+              "eval-security-policy-2",
+              "eval-expense-policy-2",
+              "eval-security-policy-1",
+              "eval-security-policy-3",
+              "eval-hr-policy-2"
+            ]
+          },
+          "bm25": {
+            "quality": [
+              1.0,
+              1.0
+            ],
+            "retrieved_chunk_ids": [
+              "eval-security-policy-2",
+              "eval-security-policy-1",
+              "eval-hr-policy-2",
+              "eval-expense-policy-2",
+              "eval-expense-policy-3"
+            ]
+          },
+          "hybrid_rrf": {
+            "quality": [
+              0.5,
+              1.0
+            ],
+            "retrieved_chunk_ids": [
+              "eval-security-policy-2",
+              "eval-security-policy-1",
+              "eval-expense-policy-2",
+              "eval-hr-policy-2",
+              "eval-security-policy-3"
+            ]
+          }
+        }
+      ],
+      "vector_better_than_bm25": [],
+      "hybrid_better_than_vector": [],
+      "hybrid_worse_than_vector": [],
+      "all_methods_missed": []
+    },
+    "5": {
+      "bm25_better_than_vector": [],
+      "vector_better_than_bm25": [],
+      "hybrid_better_than_vector": [],
+      "hybrid_worse_than_vector": [],
+      "all_methods_missed": []
+    }
+  },
+  "strict_chunk_labeled_subset": {
+    "label_type": "chunk_id",
+    "query_count": 3,
+    "query_ids": [
+      "q025",
+      "q026",
+      "q027"
+    ],
+    "limitation": "Diagnostic only: the fixed dataset has strict chunk labels for three queries.",
+    "summary": {
+      "vector": {
+        "query_count": 3,
+        "evaluated_query_count": 3,
+        "not_applicable_query_count": 0,
+        "metrics_by_k": {
+          "1": {
+            "hit_rate": 1.0,
+            "recall": 0.8333333333333334,
+            "mrr": 1.0
+          },
+          "3": {
+            "hit_rate": 1.0,
+            "recall": 0.8333333333333334,
+            "mrr": 1.0
+          },
+          "5": {
+            "hit_rate": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0
+          }
+        },
+        "latency_ms": {
+          "mean": 8.034566667144341,
+          "median": 7.718200002273079,
+          "sample_count": 3
+        }
+      },
+      "bm25": {
+        "query_count": 3,
+        "evaluated_query_count": 3,
+        "not_applicable_query_count": 0,
+        "metrics_by_k": {
+          "1": {
+            "hit_rate": 1.0,
+            "recall": 0.8333333333333334,
+            "mrr": 1.0
+          },
+          "3": {
+            "hit_rate": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0
+          },
+          "5": {
+            "hit_rate": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0
+          }
+        },
+        "latency_ms": {
+          "mean": 0.0725666662522902,
+          "median": 0.07019999975454994,
+          "sample_count": 3
+        }
+      },
+      "hybrid_rrf": {
+        "query_count": 3,
+        "evaluated_query_count": 3,
+        "not_applicable_query_count": 0,
+        "metrics_by_k": {
+          "1": {
+            "hit_rate": 1.0,
+            "recall": 0.8333333333333334,
+            "mrr": 1.0
+          },
+          "3": {
+            "hit_rate": 1.0,
+            "recall": 0.8333333333333334,
+            "mrr": 1.0
+          },
+          "5": {
+            "hit_rate": 1.0,
+            "recall": 1.0,
+            "mrr": 1.0
+          }
+        },
+        "latency_ms": {
+          "mean": 9.406633334341072,
+          "median": 10.084700003062608,
+          "sample_count": 3
+        }
+      }
+    }
+  },
+  "results": {
+    "vector": [
+      {
+        "query_id": "q001",
+        "query": "How many annual leave days does a full-time employee receive each year?",
+        "method": "vector",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-hr-policy-3",
+          "eval-expense-policy-3",
+          "eval-expense-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.7049,
+          0.435,
+          0.2977,
+          0.2708,
+          0.1766
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 27.340700002241647
+      },
+      {
+        "query_id": "q002",
+        "query": "What is the carryover limit for unused annual leave?",
+        "method": "vector",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-expense-policy-1",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.663,
+          0.4095,
+          0.3596,
+          0.3211,
+          0.2947
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.699900001171045
+      },
+      {
+        "query_id": "q003",
+        "query": "When does sick leave require a medical certificate?",
+        "method": "vector",
+        "category": "hr_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-hr-policy-1",
+          "eval-expense-policy-3",
+          "eval-hr-policy-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.678,
+          0.5667,
+          0.2455,
+          0.2212,
+          0.1843
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.588099997927202
+      },
+      {
+        "query_id": "q004",
+        "query": "Can employees work remotely from another country without extra approval?",
+        "method": "vector",
+        "category": "hr_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-security-policy-3",
+          "eval-expense-policy-2",
+          "eval-security-policy-2",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.4158,
+          0.242,
+          0.2415,
+          0.2135,
+          0.1962
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.487499999522697
+      },
+      {
+        "query_id": "q005",
+        "query": "How long is the probation period for new employees?",
+        "method": "vector",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.6486,
+          0.4691,
+          0.3824,
+          0.2819,
+          0.2631
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.236599998577731
+      },
+      {
+        "query_id": "q006",
+        "query": "What is the domestic daily meal reimbursement limit?",
+        "method": "vector",
+        "category": "expense_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-1",
+          "eval-hr-policy-1",
+          "eval-expense-policy-3",
+          "eval-product-faq-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "product_faq.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.7119,
+          0.2554,
+          0.2508,
+          0.1707,
+          0.1638
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.8737999974691775
+      },
+      {
+        "query_id": "q007",
+        "query": "What approval is needed for a hotel exception before booking?",
+        "method": "vector",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-2",
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-3",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.4336,
+          0.3177,
+          0.2855,
+          0.2305,
+          0.2074
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.410099999513477
+      },
+      {
+        "query_id": "q008",
+        "query": "When may premium economy be booked?",
+        "method": "vector",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-2",
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-3",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.5334,
+          0.2724,
+          0.1923,
+          0.1625,
+          0.1598
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 10.758000000350876
+      },
+      {
+        "query_id": "q009",
+        "query": "How soon must expense reports be submitted after a trip ends?",
+        "method": "vector",
+        "category": "expense_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-2",
+          "eval-hr-policy-2",
+          "eval-security-policy-3",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "security_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.6865,
+          0.4582,
+          0.3767,
+          0.3767,
+          0.3424
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 6.581999998161336
+      },
+      {
+        "query_id": "q010",
+        "query": "How many missing receipt declarations can be used per quarter?",
+        "method": "vector",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-security-policy-3",
+          "eval-hr-policy-1",
+          "eval-expense-policy-1",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.496,
+          0.3118,
+          0.3017,
+          0.2584,
+          0.2358
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.26320000103442
+      },
+      {
+        "query_id": "q011",
+        "query": "How long must passwords be?",
+        "method": "vector",
+        "category": "security_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-1",
+          "eval-security-policy-3",
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-security-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.7019,
+          0.3158,
+          0.287,
+          0.2837,
+          0.2823
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.934100001875777
+      },
+      {
+        "query_id": "q012",
+        "query": "Which accounts require hardware security keys?",
+        "method": "vector",
+        "category": "security_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-1",
+          "eval-security-policy-2",
+          "eval-security-policy-3",
+          "eval-hr-policy-2",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.6122,
+          0.5959,
+          0.2969,
+          0.0842,
+          0.0833
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 8.971800001745578
+      },
+      {
+        "query_id": "q013",
+        "query": "How is customer personal data classified?",
+        "method": "vector",
+        "category": "security_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-product-faq-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "product_faq.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.5564,
+          0.3367,
+          0.257,
+          0.1381,
+          0.1186
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.301899997401051
+      },
+      {
+        "query_id": "q014",
+        "query": "How quickly must suspected security incidents be reported?",
+        "method": "vector",
+        "category": "security_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-2",
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-expense-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.6194,
+          0.3172,
+          0.2763,
+          0.2739,
+          0.2219
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.219900002790382
+      },
+      {
+        "query_id": "q015",
+        "query": "How often must vendor accounts be reviewed?",
+        "method": "vector",
+        "category": "security_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2",
+          "eval-security-policy-1",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.5136,
+          0.3623,
+          0.327,
+          0.3051,
+          0.2817
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 8.922400000301423
+      },
+      {
+        "query_id": "q016",
+        "query": "Which source formats can Acme Knowledge Assistant ingest?",
+        "method": "vector",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-1",
+          "eval-product-faq-2",
+          "eval-product-faq-3",
+          "eval-security-policy-2",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "product_faq.md",
+          "security_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.661,
+          0.3518,
+          0.2283,
+          0.1976,
+          0.1874
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 8.440699999482604
+      },
+      {
+        "query_id": "q017",
+        "query": "How often does the system check connected source folders?",
+        "method": "vector",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-2",
+          "eval-product-faq-1",
+          "eval-security-policy-3",
+          "eval-product-faq-3",
+          "eval-hr-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "security_policy.md",
+          "product_faq.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.3669,
+          0.3406,
+          0.2437,
+          0.1948,
+          0.1928
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 6.655600001977291
+      },
+      {
+        "query_id": "q018",
+        "query": "What should the assistant do if no relevant source is found?",
+        "method": "vector",
+        "category": "product_faq",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-2",
+          "eval-product-faq-1",
+          "eval-security-policy-3",
+          "eval-security-policy-2",
+          "eval-expense-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.5571,
+          0.4917,
+          0.2939,
+          0.2442,
+          0.1945
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 6.714500002999557
+      },
+      {
+        "query_id": "q019",
+        "query": "When are permission changes applied?",
+        "method": "vector",
+        "category": "product_faq",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-security-policy-2",
+          "eval-security-policy-3",
+          "eval-hr-policy-2",
+          "eval-product-faq-2"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "security_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          0.2638,
+          0.2232,
+          0.1547,
+          0.1473,
+          0.1389
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 8.281000002170913
+      },
+      {
+        "query_id": "q020",
+        "query": "What is the recommended single document size limit?",
+        "method": "vector",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-security-policy-1",
+          "eval-product-faq-1",
+          "eval-expense-policy-1",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "security_policy.md",
+          "product_faq.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.7172,
+          0.3561,
+          0.2041,
+          0.2032,
+          0.1759
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 8.018399999855319
+      },
+      {
+        "query_id": "q021",
+        "query": "What dental insurance plan does the company provide?",
+        "method": "vector",
+        "category": "no_answer",
+        "difficulty": "medium",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-expense-policy-1",
+          "eval-expense-policy-3",
+          "eval-security-policy-2",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.1834,
+          0.1736,
+          0.1476,
+          0.1455,
+          0.1252
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 6.355000001349254
+      },
+      {
+        "query_id": "q022",
+        "query": "What is the office parking reimbursement limit?",
+        "method": "vector",
+        "category": "no_answer",
+        "difficulty": "medium",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-1",
+          "eval-expense-policy-3",
+          "eval-hr-policy-1",
+          "eval-expense-policy-2",
+          "eval-product-faq-3"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          0.4393,
+          0.3451,
+          0.2773,
+          0.2684,
+          0.2398
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 11.21659999989788
+      },
+      {
+        "query_id": "q023",
+        "query": "Which CRM vendor is used by the sales team?",
+        "method": "vector",
+        "category": "no_answer",
+        "difficulty": "medium",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-product-faq-1",
+          "eval-security-policy-2",
+          "eval-expense-policy-3",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "product_faq.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.3362,
+          0.2382,
+          0.2319,
+          0.1086,
+          0.1064
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 7.554200001322897
+      },
+      {
+        "query_id": "q024",
+        "query": "What is the maximum number of vacation days for contractors?",
+        "method": "vector",
+        "category": "no_answer",
+        "difficulty": "hard",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-expense-policy-2",
+          "eval-expense-policy-3",
+          "eval-security-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.4736,
+          0.413,
+          0.2936,
+          0.29,
+          0.2438
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 7.411999999021646
+      },
+      {
+        "query_id": "q025",
+        "query": "If I join after July 1 and later carry unused leave into the next year, which two annual-leave limits apply?",
+        "method": "vector",
+        "category": "hr_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.667,
+          0.4828,
+          0.275,
+          0.274,
+          0.2719
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-hr-policy-1"
+        ],
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.718200002273079
+      },
+      {
+        "query_id": "q026",
+        "query": "If my encrypted company laptop is stolen, does the policy still require an immediate report?",
+        "method": "vector",
+        "category": "security_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-3",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.563,
+          0.413,
+          0.2994,
+          0.2379,
+          0.2203
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-security-policy-3"
+        ],
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.507999999186723
+      },
+      {
+        "query_id": "q027",
+        "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+        "method": "vector",
+        "category": "multi_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-expense-policy-2",
+          "eval-security-policy-1",
+          "eval-security-policy-3",
+          "eval-hr-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.4442,
+          0.3678,
+          0.3257,
+          0.296,
+          0.2437
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-security-policy-2"
+        ],
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md",
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 6.8774999999732245
+      }
+    ],
+    "bm25": [
+      {
+        "query_id": "q001",
+        "query": "How many annual leave days does a full-time employee receive each year?",
+        "method": "bm25",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-hr-policy-3",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          17.340664,
+          6.483237,
+          3.02019,
+          1.169936,
+          0.966105
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.11299999823677354
+      },
+      {
+        "query_id": "q002",
+        "query": "What is the carryover limit for unused annual leave?",
+        "method": "bm25",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-product-faq-3",
+          "eval-expense-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "product_faq.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          11.113546,
+          4.077749,
+          1.413869,
+          1.331336
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.05289999899105169
+      },
+      {
+        "query_id": "q003",
+        "query": "When does sick leave require a medical certificate?",
+        "method": "bm25",
+        "category": "hr_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2",
+          "eval-product-faq-3"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          9.715262,
+          8.706419,
+          2.625806,
+          1.478638,
+          1.14308
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.04819999958272092
+      },
+      {
+        "query_id": "q004",
+        "query": "Can employees work remotely from another country without extra approval?",
+        "method": "bm25",
+        "category": "hr_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-hr-policy-3",
+          "eval-product-faq-1",
+          "eval-expense-policy-3",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "product_faq.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          12.385679,
+          3.985816,
+          2.993569,
+          2.87601,
+          2.819046
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.05409999721450731
+      },
+      {
+        "query_id": "q005",
+        "query": "How long is the probation period for new employees?",
+        "method": "bm25",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-hr-policy-3",
+          "eval-hr-policy-1",
+          "eval-security-policy-1",
+          "eval-expense-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "security_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          6.970644,
+          5.703833,
+          3.118041,
+          2.209423,
+          1.085405
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.040800001443130895
+      },
+      {
+        "query_id": "q006",
+        "query": "What is the domestic daily meal reimbursement limit?",
+        "method": "bm25",
+        "category": "expense_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-1",
+          "eval-product-faq-3",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "product_faq.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          13.895601,
+          1.413869,
+          1.166033
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.029499999072868377
+      },
+      {
+        "query_id": "q007",
+        "query": "What approval is needed for a hotel exception before booking?",
+        "method": "bm25",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-1",
+          "eval-expense-policy-2",
+          "eval-hr-policy-2",
+          "eval-expense-policy-3",
+          "eval-product-faq-3"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          5.643333,
+          4.161475,
+          2.324891,
+          1.790605,
+          0.74686
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.04310000076657161
+      },
+      {
+        "query_id": "q008",
+        "query": "When may premium economy be booked?",
+        "method": "bm25",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-2",
+          "eval-hr-policy-2",
+          "eval-product-faq-3",
+          "eval-expense-policy-3",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "hr_policy.md",
+          "product_faq.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          9.542734,
+          2.443431,
+          1.73575,
+          1.085405,
+          0.94271
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.04389999958220869
+      },
+      {
+        "query_id": "q009",
+        "query": "How soon must expense reports be submitted after a trip ends?",
+        "method": "bm25",
+        "category": "expense_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-2",
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-3",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          11.750958,
+          8.633748,
+          1.672718,
+          1.660907,
+          1.415611
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.054699998145224527
+      },
+      {
+        "query_id": "q010",
+        "query": "How many missing receipt declarations can be used per quarter?",
+        "method": "bm25",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1",
+          "eval-hr-policy-3",
+          "eval-product-faq-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          11.931869,
+          3.203982,
+          2.557028,
+          2.534257,
+          2.331375
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.06910000229254365
+      },
+      {
+        "query_id": "q011",
+        "query": "How long must passwords be?",
+        "method": "bm25",
+        "category": "security_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-1",
+          "eval-security-policy-3",
+          "eval-expense-policy-2",
+          "eval-security-policy-2",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          7.269944,
+          1.660907,
+          1.177194,
+          1.069419,
+          1.032195
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.03980000110459514
+      },
+      {
+        "query_id": "q012",
+        "query": "Which accounts require hardware security keys?",
+        "method": "bm25",
+        "category": "security_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-security-policy-3",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          6.915646,
+          6.819283,
+          2.924503,
+          1.540401,
+          1.478638
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.03749999814317562
+      },
+      {
+        "query_id": "q013",
+        "query": "How is customer personal data classified?",
+        "method": "bm25",
+        "category": "security_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-security-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          8.845878,
+          3.029316,
+          1.365497
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.021299998479662463
+      },
+      {
+        "query_id": "q014",
+        "query": "How quickly must suspected security incidents be reported?",
+        "method": "bm25",
+        "category": "security_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-hr-policy-2",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          9.073981,
+          8.354149,
+          2.956012,
+          1.339841,
+          1.177194
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.0427999984822236
+      },
+      {
+        "query_id": "q015",
+        "query": "How often must vendor accounts be reviewed?",
+        "method": "bm25",
+        "category": "security_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-security-policy-2",
+          "eval-expense-policy-2",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          8.952556,
+          3.320924,
+          2.508782,
+          1.177194,
+          1.032195
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.06150000263005495
+      },
+      {
+        "query_id": "q016",
+        "query": "Which source formats can Acme Knowledge Assistant ingest?",
+        "method": "bm25",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-1",
+          "eval-product-faq-2",
+          "eval-hr-policy-3",
+          "eval-security-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "hr_policy.md",
+          "security_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          13.189899,
+          5.512262,
+          1.951902,
+          1.342531,
+          1.166033
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 0.0670000008540228
+      },
+      {
+        "query_id": "q017",
+        "query": "How often does the system check connected source folders?",
+        "method": "bm25",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-1",
+          "eval-product-faq-2",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          7.97012,
+          2.194493,
+          1.342531
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 0.04039999839733355
+      },
+      {
+        "query_id": "q018",
+        "query": "What should the assistant do if no relevant source is found?",
+        "method": "bm25",
+        "category": "product_faq",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-2",
+          "eval-product-faq-1",
+          "eval-product-faq-3",
+          "eval-security-policy-3",
+          "eval-expense-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "product_faq.md",
+          "security_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          14.449546,
+          4.08007,
+          2.482766,
+          1.365497,
+          1.342531
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 0.06009999924572185
+      },
+      {
+        "query_id": "q019",
+        "query": "When are permission changes applied?",
+        "method": "bm25",
+        "category": "product_faq",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          8.123553,
+          1.085405,
+          0.956685,
+          0.94271
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 0.03960000321967527
+      },
+      {
+        "query_id": "q020",
+        "query": "What is the recommended single document size limit?",
+        "method": "bm25",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-product-faq-2",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          12.727527,
+          1.658885,
+          1.331336,
+          1.166033
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 0.029800001357216388
+      },
+      {
+        "query_id": "q021",
+        "query": "What dental insurance plan does the company provide?",
+        "method": "bm25",
+        "category": "no_answer",
+        "difficulty": "medium",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-3",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          1.439363,
+          1.365497,
+          1.342531
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 0.019600000086938962
+      },
+      {
+        "query_id": "q022",
+        "query": "What is the office parking reimbursement limit?",
+        "method": "bm25",
+        "category": "no_answer",
+        "difficulty": "medium",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-1",
+          "eval-product-faq-3",
+          "eval-hr-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "product_faq.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          4.959468,
+          1.413869,
+          1.166033
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 0.02049999966402538
+      },
+      {
+        "query_id": "q023",
+        "query": "Which CRM vendor is used by the sales team?",
+        "method": "bm25",
+        "category": "no_answer",
+        "difficulty": "medium",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-product-faq-2",
+          "eval-security-policy-2",
+          "eval-product-faq-3",
+          "eval-product-faq-1"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "product_faq.md",
+          "security_policy.md",
+          "product_faq.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          5.394574,
+          2.172879,
+          1.808446,
+          1.776414,
+          1.568105
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 0.027400001272326335
+      },
+      {
+        "query_id": "q024",
+        "query": "What is the maximum number of vacation days for contractors?",
+        "method": "bm25",
+        "category": "no_answer",
+        "difficulty": "hard",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-hr-policy-1",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2",
+          "eval-hr-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          2.326824,
+          1.192336,
+          1.169936,
+          0.966105,
+          0.918743
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 0.047599998652003706
+      },
+      {
+        "query_id": "q025",
+        "query": "If I join after July 1 and later carry unused leave into the next year, which two annual-leave limits apply?",
+        "method": "bm25",
+        "category": "hr_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-product-faq-3",
+          "eval-product-faq-2",
+          "eval-expense-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "product_faq.md",
+          "product_faq.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          19.494546,
+          5.564495,
+          3.469904,
+          3.253314,
+          2.794432
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-hr-policy-1"
+        ],
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.08159999924828298
+      },
+      {
+        "query_id": "q026",
+        "query": "If my encrypted company laptop is stolen, does the policy still require an immediate report?",
+        "method": "bm25",
+        "category": "security_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-expense-policy-3",
+          "eval-security-policy-1",
+          "eval-expense-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          7.22543,
+          5.092355,
+          2.685063,
+          2.407689,
+          1.478638
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-security-policy-3"
+        ],
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.06589999975403771
+      },
+      {
+        "query_id": "q027",
+        "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+        "method": "bm25",
+        "category": "multi_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-hr-policy-2",
+          "eval-expense-policy-2",
+          "eval-expense-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          8.285543,
+          6.402885,
+          3.997152,
+          1.89871,
+          1.790605
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-security-policy-2"
+        ],
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md",
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md",
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 0.07019999975454994
+      }
+    ],
+    "hybrid_rrf": [
+      {
+        "query_id": "q001",
+        "query": "How many annual leave days does a full-time employee receive each year?",
+        "method": "hybrid_rrf",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-hr-policy-3",
+          "eval-expense-policy-3",
+          "eval-expense-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03225806451612903,
+          0.031746031746031744,
+          0.03125,
+          0.015384615384615385
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.361799999169307
+      },
+      {
+        "query_id": "q002",
+        "query": "What is the carryover limit for unused annual leave?",
+        "method": "hybrid_rrf",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-expense-policy-1",
+          "eval-product-faq-3",
+          "eval-expense-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "product_faq.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03225806451612903,
+          0.03149801587301587,
+          0.015873015873015872,
+          0.015625
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 10.830200000782497
+      },
+      {
+        "query_id": "q003",
+        "query": "When does sick leave require a medical certificate?",
+        "method": "hybrid_rrf",
+        "category": "hr_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-hr-policy-1",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03252247488101534,
+          0.03252247488101534,
+          0.031746031746031744,
+          0.031009615384615385,
+          0.015625
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.33420000001206
+      },
+      {
+        "query_id": "q004",
+        "query": "Can employees work remotely from another country without extra approval?",
+        "method": "hybrid_rrf",
+        "category": "hr_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-security-policy-3",
+          "eval-hr-policy-3",
+          "eval-expense-policy-2",
+          "eval-product-faq-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.016129032258064516,
+          0.016129032258064516,
+          0.015873015873015872,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.522299998934614
+      },
+      {
+        "query_id": "q005",
+        "query": "How long is the probation period for new employees?",
+        "method": "hybrid_rrf",
+        "category": "hr_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1",
+          "eval-expense-policy-3",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03252247488101534,
+          0.03252247488101534,
+          0.031746031746031744,
+          0.031009615384615385,
+          0.015625
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 11.489799999253592
+      },
+      {
+        "query_id": "q006",
+        "query": "What is the domestic daily meal reimbursement limit?",
+        "method": "hybrid_rrf",
+        "category": "expense_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-1",
+          "eval-hr-policy-1",
+          "eval-product-faq-3",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "hr_policy.md",
+          "product_faq.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03200204813108039,
+          0.031754032258064516,
+          0.015873015873015872,
+          0.015384615384615385
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.679500002675923
+      },
+      {
+        "query_id": "q007",
+        "query": "What approval is needed for a hotel exception before booking?",
+        "method": "hybrid_rrf",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-2",
+          "eval-expense-policy-1",
+          "eval-expense-policy-3",
+          "eval-hr-policy-2",
+          "eval-security-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03252247488101534,
+          0.032266458495966696,
+          0.031754032258064516,
+          0.015873015873015872,
+          0.015625
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.501500000216765
+      },
+      {
+        "query_id": "q008",
+        "query": "When may premium economy be booked?",
+        "method": "hybrid_rrf",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-2",
+          "eval-expense-policy-3",
+          "eval-hr-policy-2",
+          "eval-expense-policy-1",
+          "eval-product-faq-3"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.031754032258064516,
+          0.016129032258064516,
+          0.015873015873015872,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 10.888800003158394
+      },
+      {
+        "query_id": "q009",
+        "query": "How soon must expense reports be submitted after a trip ends?",
+        "method": "hybrid_rrf",
+        "category": "expense_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-2",
+          "eval-security-policy-3",
+          "eval-hr-policy-2",
+          "eval-expense-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03252247488101534,
+          0.03252247488101534,
+          0.03125,
+          0.015873015873015872,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 8.508599999913713
+      },
+      {
+        "query_id": "q010",
+        "query": "How many missing receipt declarations can be used per quarter?",
+        "method": "hybrid_rrf",
+        "category": "expense_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1",
+          "eval-hr-policy-3",
+          "eval-security-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.031754032258064516,
+          0.031746031746031744,
+          0.031009615384615385,
+          0.016129032258064516
+        ],
+        "relevant_document_labels": [
+          "expense_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "expense_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 8.670000002894085
+      },
+      {
+        "query_id": "q011",
+        "query": "How long must passwords be?",
+        "method": "hybrid_rrf",
+        "category": "security_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-1",
+          "eval-security-policy-3",
+          "eval-hr-policy-3",
+          "eval-security-policy-2",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "security_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03225806451612903,
+          0.03125763125763126,
+          0.031009615384615385,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.58510000014212
+      },
+      {
+        "query_id": "q012",
+        "query": "Which accounts require hardware security keys?",
+        "method": "hybrid_rrf",
+        "category": "security_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-1",
+          "eval-security-policy-2",
+          "eval-security-policy-3",
+          "eval-expense-policy-2",
+          "eval-hr-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03252247488101534,
+          0.03252247488101534,
+          0.031746031746031744,
+          0.03076923076923077,
+          0.015625
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.25600000077975
+      },
+      {
+        "query_id": "q013",
+        "query": "How is customer personal data classified?",
+        "method": "hybrid_rrf",
+        "category": "security_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-product-faq-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "product_faq.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03200204813108039,
+          0.03200204813108039,
+          0.015625,
+          0.015384615384615385
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 8.583599999838043
+      },
+      {
+        "query_id": "q014",
+        "query": "How quickly must suspected security incidents be reported?",
+        "method": "hybrid_rrf",
+        "category": "security_policy",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-2",
+          "eval-hr-policy-2",
+          "eval-hr-policy-3",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "hr_policy.md",
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03225806451612903,
+          0.03125,
+          0.015873015873015872,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 11.23340000049211
+      },
+      {
+        "query_id": "q015",
+        "query": "How often must vendor accounts be reviewed?",
+        "method": "hybrid_rrf",
+        "category": "security_policy",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-expense-policy-2",
+          "eval-hr-policy-3",
+          "eval-expense-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.031754032258064516,
+          0.03149801587301587,
+          0.03076923076923077,
+          0.016129032258064516
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 9.654100002080668
+      },
+      {
+        "query_id": "q016",
+        "query": "Which source formats can Acme Knowledge Assistant ingest?",
+        "method": "hybrid_rrf",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-1",
+          "eval-product-faq-2",
+          "eval-security-policy-1",
+          "eval-product-faq-3",
+          "eval-hr-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "security_policy.md",
+          "product_faq.md",
+          "hr_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03225806451612903,
+          0.031009615384615385,
+          0.015873015873015872,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 8.341699998709373
+      },
+      {
+        "query_id": "q017",
+        "query": "How often does the system check connected source folders?",
+        "method": "hybrid_rrf",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-2",
+          "eval-product-faq-1",
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-product-faq-3"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "security_policy.md",
+          "security_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          0.03252247488101534,
+          0.03252247488101534,
+          0.015873015873015872,
+          0.015873015873015872,
+          0.015625
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 9.310699999332428
+      },
+      {
+        "query_id": "q018",
+        "query": "What should the assistant do if no relevant source is found?",
+        "method": "hybrid_rrf",
+        "category": "product_faq",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-2",
+          "eval-product-faq-1",
+          "eval-security-policy-3",
+          "eval-expense-policy-3",
+          "eval-product-faq-3"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "product_faq.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03225806451612903,
+          0.03149801587301587,
+          0.03076923076923077,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 7.2355000011157244
+      },
+      {
+        "query_id": "q019",
+        "query": "When are permission changes applied?",
+        "method": "hybrid_rrf",
+        "category": "product_faq",
+        "difficulty": "medium",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-hr-policy-2",
+          "eval-security-policy-2",
+          "eval-expense-policy-3",
+          "eval-security-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "hr_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03149801587301587,
+          0.016129032258064516,
+          0.016129032258064516,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 6.9394999991345685
+      },
+      {
+        "query_id": "q020",
+        "query": "What is the recommended single document size limit?",
+        "method": "hybrid_rrf",
+        "category": "product_faq",
+        "difficulty": "easy",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-1",
+          "eval-product-faq-2",
+          "eval-product-faq-1"
+        ],
+        "retrieved_document_labels": [
+          "product_faq.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "product_faq.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03149801587301587,
+          0.016129032258064516,
+          0.016129032258064516,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [
+          "product_faq.md"
+        ],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "product_faq.md"
+            ]
+          }
+        },
+        "latency_ms": 8.28410000030999
+      },
+      {
+        "query_id": "q021",
+        "query": "What dental insurance plan does the company provide?",
+        "method": "hybrid_rrf",
+        "category": "no_answer",
+        "difficulty": "medium",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-2",
+          "eval-expense-policy-1",
+          "eval-expense-policy-3",
+          "eval-security-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03252247488101534,
+          0.032018442622950824,
+          0.016129032258064516,
+          0.015873015873015872,
+          0.015873015873015872
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 8.707400000275811
+      },
+      {
+        "query_id": "q022",
+        "query": "What is the office parking reimbursement limit?",
+        "method": "hybrid_rrf",
+        "category": "no_answer",
+        "difficulty": "medium",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-expense-policy-1",
+          "eval-hr-policy-1",
+          "eval-product-faq-3",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "expense_policy.md",
+          "hr_policy.md",
+          "product_faq.md",
+          "expense_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.031746031746031744,
+          0.0315136476426799,
+          0.016129032258064516,
+          0.015625
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 7.031100001768209
+      },
+      {
+        "query_id": "q023",
+        "query": "Which CRM vendor is used by the sales team?",
+        "method": "hybrid_rrf",
+        "category": "no_answer",
+        "difficulty": "medium",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-2",
+          "eval-product-faq-1",
+          "eval-product-faq-2",
+          "eval-expense-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "product_faq.md",
+          "product_faq.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.031746031746031744,
+          0.0315136476426799,
+          0.016129032258064516,
+          0.015625
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 7.292599999345839
+      },
+      {
+        "query_id": "q024",
+        "query": "What is the maximum number of vacation days for contractors?",
+        "method": "hybrid_rrf",
+        "category": "no_answer",
+        "difficulty": "hard",
+        "should_answer": false,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-expense-policy-2",
+          "eval-expense-policy-3",
+          "eval-product-faq-3"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "expense_policy.md",
+          "product_faq.md"
+        ],
+        "retrieval_scores": [
+          0.03252247488101534,
+          0.0315136476426799,
+          0.03149801587301587,
+          0.03149801587301587,
+          0.01639344262295082
+        ],
+        "relevant_document_labels": [],
+        "relevant_chunk_ids": null,
+        "relevance_label_type": "document_filename",
+        "metrics_status": "not_applicable_no_relevant_documents",
+        "metrics_by_k": {},
+        "latency_ms": 7.096900000760797
+      },
+      {
+        "query_id": "q025",
+        "query": "If I join after July 1 and later carry unused leave into the next year, which two annual-leave limits apply?",
+        "method": "hybrid_rrf",
+        "category": "hr_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-expense-policy-3",
+          "eval-product-faq-3",
+          "eval-expense-policy-2"
+        ],
+        "retrieved_document_labels": [
+          "hr_policy.md",
+          "hr_policy.md",
+          "expense_policy.md",
+          "product_faq.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03225806451612903,
+          0.03125763125763126,
+          0.015873015873015872,
+          0.015625
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-hr-policy-1"
+        ],
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 10.084700003062608
+      },
+      {
+        "query_id": "q026",
+        "query": "If my encrypted company laptop is stolen, does the policy still require an immediate report?",
+        "method": "hybrid_rrf",
+        "category": "security_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-expense-policy-3",
+          "eval-security-policy-1",
+          "eval-security-policy-2",
+          "eval-expense-policy-1"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "expense_policy.md",
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.031754032258064516,
+          0.031746031746031744,
+          0.016129032258064516,
+          0.015625
+        ],
+        "relevant_document_labels": [
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-security-policy-3"
+        ],
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 10.154899999179179
+      },
+      {
+        "query_id": "q027",
+        "query": "I plan to work abroad while carrying customer personal data. Which approval and classification rules apply?",
+        "method": "hybrid_rrf",
+        "category": "multi_policy",
+        "difficulty": "hard",
+        "should_answer": true,
+        "retrieved_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-2",
+          "eval-hr-policy-2",
+          "eval-security-policy-3"
+        ],
+        "retrieved_document_labels": [
+          "security_policy.md",
+          "security_policy.md",
+          "expense_policy.md",
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "retrieval_scores": [
+          0.03278688524590164,
+          0.03200204813108039,
+          0.031754032258064516,
+          0.03125763125763126,
+          0.015625
+        ],
+        "relevant_document_labels": [
+          "hr_policy.md",
+          "security_policy.md"
+        ],
+        "relevant_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-security-policy-2"
+        ],
+        "relevance_label_type": "document_filename",
+        "metrics_status": "evaluated",
+        "metrics_by_k": {
+          "1": {
+            "k": 1,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "3": {
+            "k": 3,
+            "hit": true,
+            "recall": 0.5,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "security_policy.md"
+            ]
+          },
+          "5": {
+            "k": 5,
+            "hit": true,
+            "recall": 1.0,
+            "reciprocal_rank": 1.0,
+            "first_relevant_rank": 1,
+            "matched_relevant_ids": [
+              "hr_policy.md",
+              "security_policy.md"
+            ]
+          }
+        },
+        "latency_ms": 7.980300000781426
+      }
+    ]
+  }
+}

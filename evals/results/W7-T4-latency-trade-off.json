@@ -1,0 +1,2478 @@
+{
+  "artifact_version": 1,
+  "task": "W7-T4",
+  "experiment_id": "W7-T4-frozen-retrieval-latency-v1",
+  "generated_at": "2026-08-05T05:06:51.483427+00:00",
+  "status": "complete",
+  "scope": "Controlled sequential retrieval/ranking latency only: Vector vs Hybrid RRF vs Hybrid RRF + fixed Reranker. No LLM generation, concurrency, throughput testing, or tuning.",
+  "repository_state": {
+    "commit": "4093f3764d0384b4730fb68dbbdd364f499ba2a6",
+    "branch": "main",
+    "working_tree_dirty": true
+  },
+  "source_artifacts": {
+    "frozen_manifest": {
+      "path": "evals/retrieval_evaluation_config.json",
+      "sha256": "34f276165081d127c7307e6ac4cf2660ba68bfedba22f3ca44a49fc3a28bbb4a"
+    },
+    "w7_t2": {
+      "path": "evals/results/W7-T2-retrieval-configuration.json",
+      "sha256": "13620ba452961676fde43bc74d902db3f94ea53821c973a3ab2655de48cbdbdc"
+    },
+    "w7_t3_quality": {
+      "path": "evals/results/W7-T3-retrieval-evaluation.json",
+      "sha256": "6c513fad336df0482f401c0f33ca6cfeb48cd749e71fe74f01d7826aea195391"
+    }
+  },
+  "dataset_identity": {
+    "path": "evals/business_policy_eval.jsonl",
+    "sha256": "9ebbe2fca70b195e73d42ce3a795a01bc8bfd01680d148302bcf7442d14925e4",
+    "total_query_count": 27,
+    "answerable_query_count": 23,
+    "unanswerable_query_count": 4,
+    "primary_ground_truth": "document_filename",
+    "strict_chunk_labeled_query_count": 3,
+    "benchmark_query_ids": [
+      "q005",
+      "q010",
+      "q015",
+      "q020",
+      "q027"
+    ],
+    "benchmark_query_count": 5
+  },
+  "corpus_identity": {
+    "chunk_size": 500,
+    "chunk_overlap": 100,
+    "indexed_chunk_count": 12,
+    "documents": [
+      {
+        "path": "eval_docs/hr_policy.md",
+        "sha256": "acfdb68a3d59482de14e687beeea77a3dcb0d90543ec3d214dd9f9f21a6cbf17"
+      },
+      {
+        "path": "eval_docs/expense_policy.md",
+        "sha256": "b9c4573d7de4037f1e9a97a3c5cdc00448a9a389a3d14f412f5da7585c486998"
+      },
+      {
+        "path": "eval_docs/security_policy.md",
+        "sha256": "2ea46b3c1381b246b44ef21a7c31bc45417d09dadbe13d9769318a2d458e0e73"
+      },
+      {
+        "path": "eval_docs/product_faq.md",
+        "sha256": "535dc6c4de225c6de7fc69962365edc47494a760ffbfb65d7122854ab8aa6600"
+      }
+    ],
+    "chunk_index": {
+      "path": "storage/eval/week07_tuning_chunks.json",
+      "sha256": "7c12feae418a799e77d1c11cdfe492dd5e6c4428e4c7647200b5a57601b86e01"
+    },
+    "vector_index": {
+      "path": "storage/eval/week07_tuning_vectors.json",
+      "sha256": "69102a909062460f573dbe21e864661d736663f8c38816043225a7eec4ad0cb1"
+    },
+    "faiss_index": {
+      "path": "storage/eval/week07_tuning_vectors.faiss",
+      "sha256": "5f40b73f9db109bb0bad4f056017977d21c947e0038e6044ef12459fe577a743"
+    },
+    "faiss_metadata": {
+      "path": "storage/eval/week07_tuning_vectors.faiss.metadata.json",
+      "sha256": "ae7d2b445f89f97a914bd5c303af399eb512fdc095f986dc20f6e450b670c22e"
+    }
+  },
+  "configuration_identity": {
+    "selected_w7_t2_config_id": "ps05-r060-n03-k02",
+    "resolved_configuration": {
+      "selected_w7_t2_config_id": "ps05-r060-n03-k02",
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "vector_store_backend": "faiss",
+      "vector_similarity": "inner_product_on_normalized_embeddings",
+      "vector_min_score": 0.0,
+      "bm25_k1": 1.5,
+      "bm25_b": 0.75,
+      "per_source_candidate_depth": 5,
+      "rrf_k": 60,
+      "rrf_output_count": 3,
+      "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "reranker_local_files_only": true,
+      "reranker_candidate_count": 3,
+      "operational_final_top_k": 2,
+      "offline_evaluation_depth": 3,
+      "metric_k_values": [
+        1,
+        2,
+        3
+      ]
+    },
+    "configuration_changed_for_latency": false
+  },
+  "method_identity": {
+    "methods": [
+      "vector",
+      "hybrid_rrf",
+      "hybrid_reranker"
+    ],
+    "vector": "VectorRetriever -> ranked results",
+    "hybrid_rrf": "VectorRetriever + BM25Retriever -> RRF -> ranked results",
+    "hybrid_reranker": "same Hybrid RRF candidates -> fixed CrossEncoder -> ranked results",
+    "shared_candidate_rule": "Within every query/pass, Hybrid and Hybrid + Reranker share the exact same RRF candidate objects and ranking."
+  },
+  "benchmark_environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+    "cpu_identifier": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+    "logical_cpu_count": 24,
+    "cuda_available": false,
+    "cuda_device_count": 0,
+    "reranker_device": "cpu",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "libraries": {
+      "sentence-transformers": "5.6.0",
+      "torch": "2.12.1",
+      "transformers": "5.12.1",
+      "faiss-cpu": "1.14.3",
+      "numpy": "2.5.0"
+    }
+  },
+  "measurement_policy": {
+    "clock": "time.perf_counter",
+    "execution": "single-process, single-request, controlled sequential",
+    "query_order": "fixed W7-T3 heldout query order in every pass",
+    "cold_start_query_id": "q001",
+    "warmup_pass_count": 1,
+    "warmup_query_count": 5,
+    "warmup_samples_in_aggregate": false,
+    "measured_pass_count": 5,
+    "measured_query_count_per_pass": 5,
+    "expected_sample_count_per_method": 25,
+    "timing_boundary": "Starts immediately before each retrieval/rerank component call and stops immediately after it returns. Metric computation, result validation, JSON serialization, file I/O, and LLM work are outside the timed interval. Hybrid + Reranker total is the sum of its shared Hybrid stage and rerank stage.",
+    "percentile_method": "linear interpolation at (n - 1) * percentile over sorted samples"
+  },
+  "cold_start": {
+    "component_construction_ms": 0.9740999998939515,
+    "lazy_model_was_unloaded_before_first_request": true,
+    "fixed_stage_order": [
+      "vector",
+      "hybrid_rrf",
+      "hybrid_reranker"
+    ],
+    "vector_first_call_ms_including_embedding_initialization": 10525.937999999769,
+    "hybrid_first_call_after_vector_initialization_ms": 10.789800000111427,
+    "first_rerank_call_ms_including_lazy_model_load": 207.80539999987013,
+    "first_hybrid_reranker_sequential_total_ms": 218.59519999998156,
+    "interpretation": "The first rerank call includes lazy model loading, tokenizer/framework initialization, and first inference; it is not a pure model-load-only measurement and is excluded from warm aggregates. Cold stages ran in the recorded fixed order, so their values are initialization diagnostics and are not a fair cross-method cold latency comparison.",
+    "samples": [
+      {
+        "query_id": "q001",
+        "method": "vector",
+        "run_id": "cold-start-1",
+        "phase": "cold_start",
+        "status": "success",
+        "total_retrieval_ms": 10525.937999999769,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "vector_ms": 10525.937999999769
+        },
+        "result_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-hr-policy-3"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q001",
+        "method": "hybrid_rrf",
+        "run_id": "cold-start-1",
+        "phase": "cold_start",
+        "status": "success",
+        "total_retrieval_ms": 10.789800000111427,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "hybrid_retrieval_and_fusion_ms": 10.789800000111427
+        },
+        "result_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-hr-policy-3"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q001",
+        "method": "hybrid_reranker",
+        "run_id": "cold-start-1",
+        "phase": "cold_start",
+        "status": "success",
+        "total_retrieval_ms": 218.59519999998156,
+        "rerank_ms": 207.80539999987013,
+        "stage_latency_ms": {
+          "shared_hybrid_retrieval_and_fusion_ms": 10.789800000111427,
+          "rerank_ms": 207.80539999987013
+        },
+        "result_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-hr-policy-3"
+        ],
+        "pre_rerank_chunk_ids": [
+          "eval-hr-policy-1",
+          "eval-hr-policy-2",
+          "eval-hr-policy-3"
+        ],
+        "error": null
+      }
+    ]
+  },
+  "warmup": {
+    "excluded_from_aggregate": true,
+    "samples": [
+      {
+        "query_id": "q005",
+        "method": "vector",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 14.345900000080292,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "vector_ms": 14.345900000080292
+        },
+        "result_chunk_ids": [
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q005",
+        "method": "hybrid_rrf",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 13.989699999910954,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "hybrid_retrieval_and_fusion_ms": 13.989699999910954
+        },
+        "result_chunk_ids": [
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q005",
+        "method": "hybrid_reranker",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 59.99279999969076,
+        "rerank_ms": 46.003099999779806,
+        "stage_latency_ms": {
+          "shared_hybrid_retrieval_and_fusion_ms": 13.989699999910954,
+          "rerank_ms": 46.003099999779806
+        },
+        "result_chunk_ids": [
+          "eval-hr-policy-2",
+          "eval-hr-policy-3",
+          "eval-hr-policy-1"
+        ],
+        "pre_rerank_chunk_ids": [
+          "eval-hr-policy-3",
+          "eval-hr-policy-2",
+          "eval-hr-policy-1"
+        ],
+        "error": null
+      },
+      {
+        "query_id": "q010",
+        "method": "vector",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 15.352099999745406,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "vector_ms": 15.352099999745406
+        },
+        "result_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-security-policy-3",
+          "eval-hr-policy-1"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q010",
+        "method": "hybrid_rrf",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 18.13670000001366,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "hybrid_retrieval_and_fusion_ms": 18.13670000001366
+        },
+        "result_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q010",
+        "method": "hybrid_reranker",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 61.183900000287395,
+        "rerank_ms": 43.04720000027373,
+        "stage_latency_ms": {
+          "shared_hybrid_retrieval_and_fusion_ms": 18.13670000001366,
+          "rerank_ms": 43.04720000027373
+        },
+        "result_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "pre_rerank_chunk_ids": [
+          "eval-expense-policy-3",
+          "eval-expense-policy-1",
+          "eval-hr-policy-1"
+        ],
+        "error": null
+      },
+      {
+        "query_id": "q015",
+        "method": "vector",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 13.442899999972724,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "vector_ms": 13.442899999972724
+        },
+        "result_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-expense-policy-3",
+          "eval-expense-policy-2"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q015",
+        "method": "hybrid_rrf",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 14.609999999720458,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "hybrid_retrieval_and_fusion_ms": 14.609999999720458
+        },
+        "result_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q015",
+        "method": "hybrid_reranker",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 61.40709999954197,
+        "rerank_ms": 46.79709999982151,
+        "stage_latency_ms": {
+          "shared_hybrid_retrieval_and_fusion_ms": 14.609999999720458,
+          "rerank_ms": 46.79709999982151
+        },
+        "result_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-expense-policy-2",
+          "eval-security-policy-1"
+        ],
+        "pre_rerank_chunk_ids": [
+          "eval-security-policy-3",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "error": null
+      },
+      {
+        "query_id": "q020",
+        "method": "vector",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 20.71220000016183,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "vector_ms": 20.71220000016183
+        },
+        "result_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-security-policy-1",
+          "eval-product-faq-1"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q020",
+        "method": "hybrid_rrf",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 15.514899999743648,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "hybrid_retrieval_and_fusion_ms": 15.514899999743648
+        },
+        "result_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-1"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q020",
+        "method": "hybrid_reranker",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 64.02029999981096,
+        "rerank_ms": 48.50540000006731,
+        "stage_latency_ms": {
+          "shared_hybrid_retrieval_and_fusion_ms": 15.514899999743648,
+          "rerank_ms": 48.50540000006731
+        },
+        "result_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-1"
+        ],
+        "pre_rerank_chunk_ids": [
+          "eval-product-faq-3",
+          "eval-expense-policy-1",
+          "eval-security-policy-1"
+        ],
+        "error": null
+      },
+      {
+        "query_id": "q027",
+        "method": "vector",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 15.658799999982875,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "vector_ms": 15.658799999982875
+        },
+        "result_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-expense-policy-2",
+          "eval-security-policy-1"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q027",
+        "method": "hybrid_rrf",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 14.742500000011205,
+        "rerank_ms": null,
+        "stage_latency_ms": {
+          "hybrid_retrieval_and_fusion_ms": 14.742500000011205
+        },
+        "result_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "pre_rerank_chunk_ids": null,
+        "error": null
+      },
+      {
+        "query_id": "q027",
+        "method": "hybrid_reranker",
+        "run_id": "warmup-pass-1",
+        "phase": "warmup",
+        "status": "success",
+        "total_retrieval_ms": 68.41060000033394,
+        "rerank_ms": 53.66810000032274,
+        "stage_latency_ms": {
+          "shared_hybrid_retrieval_and_fusion_ms": 14.742500000011205,
+          "rerank_ms": 53.66810000032274
+        },
+        "result_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "pre_rerank_chunk_ids": [
+          "eval-security-policy-2",
+          "eval-security-policy-1",
+          "eval-expense-policy-2"
+        ],
+        "error": null
+      }
+    ]
+  },
+  "per_sample_results": [
+    {
+      "query_id": "q005",
+      "method": "vector",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.1317999997882,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 17.1317999997882
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 12.567100000069331,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 12.567100000069331
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 60.798200000135694,
+      "rerank_ms": 48.23110000006636,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 12.567100000069331,
+        "rerank_ms": 48.23110000006636
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-2",
+        "eval-hr-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "vector",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 15.189900000223133,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 15.189900000223133
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-security-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 15.104400000382157,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 15.104400000382157
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 65.40200000017649,
+      "rerank_ms": 50.29759999979433,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 15.104400000382157,
+        "rerank_ms": 50.29759999979433
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "vector",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 11.657900000045629,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 11.657900000045629
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-3",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 12.28690000016286,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 12.28690000016286
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 59.68350000011924,
+      "rerank_ms": 47.39659999995638,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 12.28690000016286,
+        "rerank_ms": 47.39659999995638
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "vector",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 12.51830000001064,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 12.51830000001064
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-security-policy-1",
+        "eval-product-faq-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 16.13820000011401,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 16.13820000011401
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 64.58329999986745,
+      "rerank_ms": 48.44509999975344,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 16.13820000011401,
+        "rerank_ms": 48.44509999975344
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "vector",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 15.991999999641848,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 15.991999999641848
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.32739999988553,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 17.32739999988553
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-1",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 64.24269999979515,
+      "rerank_ms": 46.91529999990962,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 17.32739999988553,
+        "rerank_ms": 46.91529999990962
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "vector",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 16.77190000009432,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 16.77190000009432
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 14.464800000041578,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 14.464800000041578
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 62.67969999998968,
+      "rerank_ms": 48.2148999999481,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 14.464800000041578,
+        "rerank_ms": 48.2148999999481
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-2",
+        "eval-hr-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "vector",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 16.589599999861093,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 16.589599999861093
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-security-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 14.193099999829428,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 14.193099999829428
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 63.56419999974605,
+      "rerank_ms": 49.37109999991662,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 14.193099999829428,
+        "rerank_ms": 49.37109999991662
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "vector",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 13.965000000098371,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 13.965000000098371
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-3",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 14.03840000011769,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 14.03840000011769
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 59.71460000000661,
+      "rerank_ms": 45.67619999988892,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 14.03840000011769,
+        "rerank_ms": 45.67619999988892
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "vector",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 14.42059999999401,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 14.42059999999401
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-security-policy-1",
+        "eval-product-faq-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.18360000040775,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 17.18360000040775
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 60.79530000033628,
+      "rerank_ms": 43.61169999992853,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 17.18360000040775,
+        "rerank_ms": 43.61169999992853
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "vector",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 14.010100000177772,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 14.010100000177772
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 16.55720000007932,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 16.55720000007932
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-2",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 65.55690000004688,
+      "rerank_ms": 48.99969999996756,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 16.55720000007932,
+        "rerank_ms": 48.99969999996756
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "vector",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 11.540699999841308,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 11.540699999841308
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 12.571400000069843,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 12.571400000069843
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 62.29830000029324,
+      "rerank_ms": 49.726900000223395,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 12.571400000069843,
+        "rerank_ms": 49.726900000223395
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-2",
+        "eval-hr-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "vector",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.179999999825668,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 17.179999999825668
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-security-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 19.242800000029092,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 19.242800000029092
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 68.67139999985739,
+      "rerank_ms": 49.42859999982829,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 19.242800000029092,
+        "rerank_ms": 49.42859999982829
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "vector",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 18.49709999987681,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 18.49709999987681
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-3",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 16.019199999846023,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 16.019199999846023
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 60.12289999989662,
+      "rerank_ms": 44.103700000050594,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 16.019199999846023,
+        "rerank_ms": 44.103700000050594
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "vector",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 15.087000000221451,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 15.087000000221451
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-security-policy-1",
+        "eval-product-faq-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 16.4785000001757,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 16.4785000001757
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 62.57900000036898,
+      "rerank_ms": 46.10050000019328,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 16.4785000001757,
+        "rerank_ms": 46.10050000019328
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "vector",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 19.600699999955395,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 19.600699999955395
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.925800000284653,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 17.925800000284653
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-3",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 68.15980000010313,
+      "rerank_ms": 50.23399999981848,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 17.925800000284653,
+        "rerank_ms": 50.23399999981848
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "vector",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 16.541099999813014,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 16.541099999813014
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 16.866599999957543,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 16.866599999957543
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 67.47760000007474,
+      "rerank_ms": 50.6110000001172,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 16.866599999957543,
+        "rerank_ms": 50.6110000001172
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-2",
+        "eval-hr-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "vector",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 13.001599999824975,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 13.001599999824975
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-security-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 15.046299999994517,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 15.046299999994517
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 66.5065000002869,
+      "rerank_ms": 51.46020000029239,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 15.046299999994517,
+        "rerank_ms": 51.46020000029239
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "vector",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.054199999620323,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 17.054199999620323
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-3",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.29010000008202,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 17.29010000008202
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 64.17069999997693,
+      "rerank_ms": 46.88059999989491,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 17.29010000008202,
+        "rerank_ms": 46.88059999989491
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "vector",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 12.489900000218768,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 12.489900000218768
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-security-policy-1",
+        "eval-product-faq-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 12.617400000181078,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 12.617400000181078
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 64.3515000001571,
+      "rerank_ms": 51.734099999976024,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 12.617400000181078,
+        "rerank_ms": 51.734099999976024
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "vector",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 15.78609999978653,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 15.78609999978653
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.811100000017177,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 17.811100000017177
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-4",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 62.26700000024721,
+      "rerank_ms": 44.45590000023003,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 17.811100000017177,
+        "rerank_ms": 44.45590000023003
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "vector",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 14.177100000324572,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 14.177100000324572
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.87689999991926,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 17.87689999991926
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q005",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 67.82810000004247,
+      "rerank_ms": 49.95120000012321,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 17.87689999991926,
+        "rerank_ms": 49.95120000012321
+      },
+      "result_chunk_ids": [
+        "eval-hr-policy-2",
+        "eval-hr-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-hr-policy-3",
+        "eval-hr-policy-2",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "vector",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 14.61169999993217,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 14.61169999993217
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-security-policy-3",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 12.958000000253378,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 12.958000000253378
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q010",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 98.4269000000495,
+      "rerank_ms": 85.46889999979612,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 12.958000000253378,
+        "rerank_ms": 85.46889999979612
+      },
+      "result_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-expense-policy-3",
+        "eval-expense-policy-1",
+        "eval-hr-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "vector",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 13.720200000079785,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 13.720200000079785
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-3",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 18.59439999998358,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 18.59439999998358
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q015",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 66.83470000007219,
+      "rerank_ms": 48.24030000008861,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 18.59439999998358,
+        "rerank_ms": 48.24030000008861
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-3",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "vector",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 16.024800000195683,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 16.024800000195683
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-security-policy-1",
+        "eval-product-faq-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 12.931799999932991,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 12.931799999932991
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q020",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 66.05910000007498,
+      "rerank_ms": 53.127300000141986,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 12.931799999932991,
+        "rerank_ms": 53.127300000141986
+      },
+      "result_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-product-faq-3",
+        "eval-expense-policy-1",
+        "eval-security-policy-1"
+      ],
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "vector",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 17.504200000075798,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "vector_ms": 17.504200000075798
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-expense-policy-2",
+        "eval-security-policy-1"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_rrf",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 18.428400000175316,
+      "rerank_ms": null,
+      "stage_latency_ms": {
+        "hybrid_retrieval_and_fusion_ms": 18.428400000175316
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": null,
+      "error": null
+    },
+    {
+      "query_id": "q027",
+      "method": "hybrid_reranker",
+      "run_id": "measured-pass-5",
+      "phase": "measured",
+      "status": "success",
+      "total_retrieval_ms": 69.23090000009324,
+      "rerank_ms": 50.80249999991793,
+      "stage_latency_ms": {
+        "shared_hybrid_retrieval_and_fusion_ms": 18.428400000175316,
+        "rerank_ms": 50.80249999991793
+      },
+      "result_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "pre_rerank_chunk_ids": [
+        "eval-security-policy-2",
+        "eval-security-policy-1",
+        "eval-expense-policy-2"
+      ],
+      "error": null
+    }
+  ],
+  "aggregate_results": {
+    "vector": {
+      "sample_count": 25,
+      "mean_ms": 15.24253999998109,
+      "p50_ms": 15.189900000223133,
+      "p95_ms": 18.298519999916603,
+      "min_ms": 11.540699999841308,
+      "max_ms": 19.600699999955395,
+      "attempted_sample_count": 25,
+      "failed_sample_count": 0
+    },
+    "hybrid_rrf": {
+      "sample_count": 25,
+      "mean_ms": 15.700792000079673,
+      "p50_ms": 16.13820000011401,
+      "p95_ms": 18.561200000021927,
+      "min_ms": 12.28690000016286,
+      "max_ms": 19.242800000029092,
+      "attempted_sample_count": 25,
+      "failed_sample_count": 0
+    },
+    "hybrid_reranker": {
+      "sample_count": 25,
+      "mean_ms": 65.68019200007257,
+      "p50_ms": 64.3515000001571,
+      "p95_ms": 69.11900000004607,
+      "min_ms": 59.68350000011924,
+      "max_ms": 98.4269000000495,
+      "attempted_sample_count": 25,
+      "failed_sample_count": 0
+    }
+  },
+  "reranker_stage_latency": {
+    "sample_count": 25,
+    "mean_ms": 49.97939999999289,
+    "p50_ms": 48.99969999996756,
+    "p95_ms": 52.84866000010879,
+    "min_ms": 43.61169999992853,
+    "max_ms": 85.46889999979612
+  },
+  "per_query_latency": {
+    "q005": {
+      "vector": {
+        "sample_count": 5,
+        "mean_ms": 15.232519999972283,
+        "p50_ms": 16.541099999813014,
+        "p95_ms": 17.059819999849424,
+        "min_ms": 11.540699999841308,
+        "max_ms": 17.1317999997882
+      },
+      "hybrid_rrf": {
+        "sample_count": 5,
+        "mean_ms": 14.869360000011511,
+        "p50_ms": 14.464800000041578,
+        "p95_ms": 17.674839999926917,
+        "min_ms": 12.567100000069331,
+        "max_ms": 17.87689999991926
+      },
+      "hybrid_reranker": {
+        "sample_count": 5,
+        "mean_ms": 64.21638000010716,
+        "p50_ms": 62.67969999998968,
+        "p95_ms": 67.75800000004892,
+        "min_ms": 60.798200000135694,
+        "max_ms": 67.82810000004247
+      }
+    },
+    "q010": {
+      "vector": {
+        "sample_count": 5,
+        "mean_ms": 15.314559999933408,
+        "p50_ms": 15.189900000223133,
+        "p95_ms": 17.061919999832753,
+        "min_ms": 13.001599999824975,
+        "max_ms": 17.179999999825668
+      },
+      "hybrid_rrf": {
+        "sample_count": 5,
+        "mean_ms": 15.308920000097714,
+        "p50_ms": 15.046299999994517,
+        "p95_ms": 18.415120000099705,
+        "min_ms": 12.958000000253378,
+        "max_ms": 19.242800000029092
+      },
+      "hybrid_reranker": {
+        "sample_count": 5,
+        "mean_ms": 72.51420000002327,
+        "p50_ms": 66.5065000002869,
+        "p95_ms": 92.47580000001108,
+        "min_ms": 63.56419999974605,
+        "max_ms": 98.4269000000495
+      }
+    },
+    "q015": {
+      "vector": {
+        "sample_count": 5,
+        "mean_ms": 14.978879999944184,
+        "p50_ms": 13.965000000098371,
+        "p95_ms": 18.208519999825512,
+        "min_ms": 11.657900000045629,
+        "max_ms": 18.49709999987681
+      },
+      "hybrid_rrf": {
+        "sample_count": 5,
+        "mean_ms": 15.645800000038435,
+        "p50_ms": 16.019199999846023,
+        "p95_ms": 18.333540000003268,
+        "min_ms": 12.28690000016286,
+        "max_ms": 18.59439999998358
+      },
+      "hybrid_reranker": {
+        "sample_count": 5,
+        "mean_ms": 62.10528000001432,
+        "p50_ms": 60.12289999989662,
+        "p95_ms": 66.30190000005314,
+        "min_ms": 59.68350000011924,
+        "max_ms": 66.83470000007219
+      }
+    },
+    "q020": {
+      "vector": {
+        "sample_count": 5,
+        "mean_ms": 14.10812000012811,
+        "p50_ms": 14.42059999999401,
+        "p95_ms": 15.837240000200836,
+        "min_ms": 12.489900000218768,
+        "max_ms": 16.024800000195683
+      },
+      "hybrid_rrf": {
+        "sample_count": 5,
+        "mean_ms": 15.069900000162306,
+        "p50_ms": 16.13820000011401,
+        "p95_ms": 17.04258000036134,
+        "min_ms": 12.617400000181078,
+        "max_ms": 17.18360000040775
+      },
+      "hybrid_reranker": {
+        "sample_count": 5,
+        "mean_ms": 63.67364000016096,
+        "p50_ms": 64.3515000001571,
+        "p95_ms": 65.76394000003347,
+        "min_ms": 60.79530000033628,
+        "max_ms": 66.05910000007498
+      }
+    },
+    "q027": {
+      "vector": {
+        "sample_count": 5,
+        "mean_ms": 16.57861999992747,
+        "p50_ms": 15.991999999641848,
+        "p95_ms": 19.181399999979476,
+        "min_ms": 14.010100000177772,
+        "max_ms": 19.600699999955395
+      },
+      "hybrid_rrf": {
+        "sample_count": 5,
+        "mean_ms": 17.6099800000884,
+        "p50_ms": 17.811100000017177,
+        "p95_ms": 18.327880000197183,
+        "min_ms": 16.55720000007932,
+        "max_ms": 18.428400000175316
+      },
+      "hybrid_reranker": {
+        "sample_count": 5,
+        "mean_ms": 65.89146000005712,
+        "p50_ms": 65.55690000004688,
+        "p95_ms": 69.01668000009522,
+        "min_ms": 62.26700000024721,
+        "max_ms": 69.23090000009324
+      }
+    }
+  },
+  "latency_deltas": {
+    "vector_to_hybrid": {
+      "mean_ms": {
+        "absolute_delta_ms": 0.45825200009858236,
+        "relative_delta_percent": 3.006401820819567
+      },
+      "p50_ms": {
+        "absolute_delta_ms": 0.9482999998908781,
+        "relative_delta_percent": 6.242964074002778
+      },
+      "p95_ms": {
+        "absolute_delta_ms": 0.26268000010532333,
+        "relative_delta_percent": 1.4355259338270008
+      }
+    },
+    "hybrid_to_hybrid_reranker": {
+      "mean_ms": {
+        "absolute_delta_ms": 49.97939999999289,
+        "relative_delta_percent": 318.3240692554826
+      },
+      "p50_ms": {
+        "absolute_delta_ms": 48.21330000004309,
+        "relative_delta_percent": 298.7526489924681
+      },
+      "p95_ms": {
+        "absolute_delta_ms": 50.557800000024145,
+        "relative_delta_percent": 272.3843285992523
+      }
+    }
+  },
+  "quality_evidence": {
+    "source_task": "W7-T3",
+    "primary_k": 2,
+    "metrics_by_method_and_k": {
+      "vector": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "2": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        }
+      },
+      "hybrid_rrf": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "2": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        }
+      },
+      "hybrid_reranker": {
+        "1": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "2": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        },
+        "3": {
+          "hit_rate": 1.0,
+          "recall": 0.9,
+          "mrr": 1.0
+        }
+      }
+    },
+    "primary_metrics_by_method": {
+      "vector": {
+        "hit_rate": 1.0,
+        "recall": 0.9,
+        "mrr": 1.0
+      },
+      "hybrid_rrf": {
+        "hit_rate": 1.0,
+        "recall": 0.9,
+        "mrr": 1.0
+      },
+      "hybrid_reranker": {
+        "hit_rate": 1.0,
+        "recall": 0.9,
+        "mrr": 1.0
+      }
+    },
+    "quality_deltas": {
+      "vector_to_hybrid": {
+        "hit_rate": 0.0,
+        "recall": 0.0,
+        "mrr": 0.0
+      },
+      "hybrid_to_hybrid_reranker": {
+        "hit_rate": 0.0,
+        "recall": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "reranker_effect_summary": {
+      "query_count": 5,
+      "ordering_changed_query_ids": [
+        "q005",
+        "q015"
+      ],
+      "no_ranking_change_query_ids": [
+        "q010",
+        "q020",
+        "q027"
+      ],
+      "candidate_recall_failure_query_ids": [
+        "q027"
+      ],
+      "rank_changed_but_metric_unchanged_query_ids_by_k": {
+        "1": [
+          "q005",
+          "q015"
+        ],
+        "2": [
+          "q005",
+          "q015"
+        ],
+        "3": [
+          "q005",
+          "q015"
+        ]
+      },
+      "document_relevant_item_direction_counts": {
+        "unchanged": 5,
+        "candidate_not_retrieved": 1
+      },
+      "strict_chunk_relevant_item_direction_counts": {
+        "candidate_not_retrieved": 1,
+        "unchanged": 1
+      },
+      "cutoff_effect_counts_by_k": {
+        "1": {
+          "unchanged_inside_top_k": 5,
+          "insufficient_evidence_outside_observed_depth": 1
+        },
+        "2": {
+          "unchanged_inside_top_k": 5,
+          "insufficient_evidence_outside_observed_depth": 1
+        },
+        "3": {
+          "unchanged_inside_top_k": 5,
+          "insufficient_evidence_outside_observed_depth": 1
+        }
+      }
+    }
+  },
+  "tradeoff_summary": {
+    "primary_quality_k": 2,
+    "hybrid_quality": {
+      "hit_rate": 1.0,
+      "recall": 0.9,
+      "mrr": 1.0
+    },
+    "hybrid_reranker_quality": {
+      "hit_rate": 1.0,
+      "recall": 0.9,
+      "mrr": 1.0
+    },
+    "quality_delta": {
+      "hit_rate": 0.0,
+      "recall": 0.0,
+      "mrr": 0.0
+    },
+    "hybrid_p50_ms": 16.13820000011401,
+    "hybrid_reranker_p50_ms": 64.3515000001571,
+    "p50_delta_ms": 48.21330000004309,
+    "p50_delta_percent": 298.7526489924681,
+    "hybrid_p95_ms": 18.561200000021927,
+    "hybrid_reranker_p95_ms": 69.11900000004607,
+    "p95_delta_ms": 50.557800000024145,
+    "p95_delta_percent": 272.3843285992523,
+    "rerank_stage_p50_ms": 48.99969999996756,
+    "measured_failure_count": 0
+  },
+  "complexity_and_cost_boundary": {
+    "local_reranker": true,
+    "external_api_fee_introduced": false,
+    "monetary_cost_measured": false,
+    "local_compute_and_memory_required": true,
+    "memory_usage_measured": false,
+    "latency_sla_available": false
+  },
+  "claim_boundary": [
+    "These measurements characterize the current local environment, not a production SLA.",
+    "Concurrency, throughput, saturation, and multi-worker behavior were not evaluated.",
+    "LLM generation and end-to-end RAG answer latency were not measured.",
+    "The five-query heldout quality set and local sequential workload limit generalization.",
+    "No ranking parameter, model, batch behavior, corpus, or index was changed."
+  ]
+}

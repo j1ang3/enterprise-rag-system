@@ -1,0 +1,52 @@
+# Secrets and local environments
+.env
+.venv/
+
+# Python and tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Runtime data
+uploads/
+logs/*
+!logs/README.md
+!logs/w8-t3-gemma-20260806.jsonl
+!logs/w8-t3-qwen-formal-20260806.jsonl
+storage/*
+!storage/eval/
+storage/eval/*
+!storage/eval/README.md
+!storage/eval/week07_tuning_chunks.json
+!storage/eval/week07_tuning_vectors.json
+!storage/eval/week07_tuning_vectors.npz
+!storage/eval/week07_tuning_vectors.faiss
+!storage/eval/week07_tuning_vectors.metadata.json
+!storage/eval/week07_tuning_vectors.faiss.metadata.json
+!storage/security/
+storage/security/*
+!storage/security/README.md
+!storage/security/w9_t3/
+!storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/
+!storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/
+!storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/chunks.json
+!storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.json
+!storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.npz
+!storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.faiss
+!storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.metadata.json
+!storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.faiss.metadata.json
+
+# Locally regenerated reports; frozen public artifacts remain tracked
+evals/results/generated_reports/
+
+# Local agent instructions are not part of the public repository
+AGENTS.md
+.agents/
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

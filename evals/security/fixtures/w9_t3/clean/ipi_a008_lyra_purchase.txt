@@ -1,0 +1,3 @@
+[SYNTHETIC W9-T3 SECURITY FIXTURE]
+
+Lyra purchase policy: expenses are not automatically approved. Purchases above 1,000 USD require both manager review and finance approval.

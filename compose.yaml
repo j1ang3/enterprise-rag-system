@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: postgres:18.4
+    environment:
+      POSTGRES_DB: ${COMPOSE_POSTGRES_DB:-enterprise_rag}
+      POSTGRES_USER: ${COMPOSE_POSTGRES_USER:-enterprise_rag}
+      POSTGRES_PASSWORD: ${COMPOSE_POSTGRES_PASSWORD:?Set COMPOSE_POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: enterprise-rag-system:w11-t1
+    environment:
+      DATABASE_URL: ${COMPOSE_DATABASE_URL:?Set COMPOSE_DATABASE_URL}
+      JWT_SECRET_KEY: ${COMPOSE_JWT_SECRET_KEY:?Set COMPOSE_JWT_SECRET_KEY}
+      LLM_PROVIDER: ${COMPOSE_LLM_PROVIDER:-ollama}
+      LLM_API_KEY: ${COMPOSE_LLM_API_KEY:-ollama}
+      LLM_BASE_URL: ${COMPOSE_LLM_BASE_URL:-http://host.docker.internal:11434/v1}
+      LLM_MODEL: ${COMPOSE_LLM_MODEL:-gemma3:4b}
+    ports:
+      - "${COMPOSE_BACKEND_PORT:-8000}:8000"
+    volumes:
+      - rag_storage:/app/storage
+      - rag_logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  postgres_data:
+  rag_storage:
+  rag_logs:

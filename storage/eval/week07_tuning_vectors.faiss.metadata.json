@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "dimensions": 384,
+  "entries": [
+    {
+      "chunk_id": "eval-hr-policy-1",
+      "document_id": "eval-hr-policy",
+      "filename": "hr_policy.md",
+      "position": 1,
+      "chunk_index": 0,
+      "page_number": null,
+      "content": "# HR Policy Handbook\n\n## Annual Leave\n\nFull-time employees receive 15 paid annual leave days per calendar year. New employees who join after July 1 receive 7 annual leave days for that first calendar year. Unused annual leave can carry over to the next year, but the carryover limit is 5 days.\n\n## Sick Leave\n\nEmployees receive 10 paid sick leave days per calendar year. A medical certificate is required when sick leave lasts more than 2 consecutive workdays.",
+      "token_count": 77,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:58:57.190311+00:00"
+    },
+    {
+      "chunk_id": "eval-hr-policy-2",
+      "document_id": "eval-hr-policy",
+      "filename": "hr_policy.md",
+      "position": 2,
+      "chunk_index": 1,
+      "page_number": null,
+      "content": "dar year. A medical certificate is required when sick leave lasts more than 2 consecutive workdays. Sick leave does not reduce annual leave balance.\n\n## Remote Work\n\nEmployees may work remotely up to 2 days per week with manager approval. Remote work from another country requires approval from HR and Security at least 10 business days before travel.\n\n## Probation\n\nNew employees have a 3-month probation period. The manager must complete a probation review before the end of the third month.",
+      "token_count": 74,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:58:57.190404+00:00"
+    },
+    {
+      "chunk_id": "eval-hr-policy-3",
+      "document_id": "eval-hr-policy",
+      "filename": "hr_policy.md",
+      "position": 3,
+      "chunk_index": 2,
+      "page_number": null,
+      "content": "h probation period. The manager must complete a probation review before the end of the third month. Probation can be extended once for up to 2 additional months.\n\n## Employment Verification\n\nEmployees can request employment verification letters from HR Operations. Standard letters are issued within 3 business days. Letters that include salary details require written employee consent.",
+      "token_count": 48,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:58:57.190465+00:00"
+    },
+    {
+      "chunk_id": "eval-expense-policy-1",
+      "document_id": "eval-expense-policy",
+      "filename": "expense_policy.md",
+      "position": 1,
+      "chunk_index": 0,
+      "page_number": null,
+      "content": "# Expense Reimbursement Policy\n\n## Meal Expenses\n\nMeal reimbursement requires an itemized receipt. The daily meal limit is 60 USD for domestic travel and 90 USD for international travel. Alcohol is not reimbursable unless pre-approved for a client event.\n\n## Lodging\n\nHotel reimbursement is capped at 220 USD per night for domestic travel and 300 USD per night for international travel. Exceptions require director approval before booking.\n\n## Transportation",
+      "token_count": 59,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:59:03.937603+00:00"
+    },
+    {
+      "chunk_id": "eval-expense-policy-2",
+      "document_id": "eval-expense-policy",
+      "filename": "expense_policy.md",
+      "position": 2,
+      "chunk_index": 1,
+      "page_number": null,
+      "content": "for international travel. Exceptions require director approval before booking.\n\n## Transportation\n\nEconomy class is required for flights under 6 hours. Premium economy may be booked for flights of 6 hours or more with manager approval. Business class requires VP approval regardless of flight duration.\n\n## Submission Deadline\n\nExpense reports must be submitted within 30 calendar days after the trip ends. Reports submitted after 30 days require finance manager approval.",
+      "token_count": 64,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:59:03.937708+00:00"
+    },
+    {
+      "chunk_id": "eval-expense-policy-3",
+      "document_id": "eval-expense-policy",
+      "filename": "expense_policy.md",
+      "position": 3,
+      "chunk_index": 2,
+      "page_number": null,
+      "content": "alendar days after the trip ends. Reports submitted after 30 days require finance manager approval. Reimbursements are usually paid within 7 business days after approval.\n\n## Missing Receipts\n\nIf a receipt is missing, employees must submit a missing receipt declaration. Declarations are limited to 3 uses per quarter. Expenses above 100 USD still require finance approval when the original receipt is unavailable.",
+      "token_count": 53,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:59:03.937791+00:00"
+    },
+    {
+      "chunk_id": "eval-security-policy-1",
+      "document_id": "eval-security-policy",
+      "filename": "security_policy.md",
+      "position": 1,
+      "chunk_index": 0,
+      "page_number": null,
+      "content": "# Information Security Policy\n\n## Passwords\n\nPasswords must be at least 14 characters long. Passwords must not be reused across company and personal accounts. Password managers are approved for storing work credentials.\n\n## Multi-Factor Authentication\n\nMulti-factor authentication is required for email, VPN, source code repositories, finance systems, and production infrastructure. Hardware security keys are required for privileged administrator accounts.\n\n## Data Classification",
+      "token_count": 52,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:59:04.001716+00:00"
+    },
+    {
+      "chunk_id": "eval-security-policy-2",
+      "document_id": "eval-security-policy",
+      "filename": "security_policy.md",
+      "position": 2,
+      "chunk_index": 1,
+      "page_number": null,
+      "content": "Hardware security keys are required for privileged administrator accounts.\n\n## Data Classification\n\nCompany data is classified as Public, Internal, Confidential, or Restricted. Customer personal data is Restricted. Product roadmap documents are Confidential unless explicitly approved for public release.\n\n## Incident Reporting\n\nSuspected security incidents must be reported to the Security team within 1 hour.",
+      "token_count": 47,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:59:04.001801+00:00"
+    },
+    {
+      "chunk_id": "eval-security-policy-3",
+      "document_id": "eval-security-policy",
+      "filename": "security_policy.md",
+      "position": 3,
+      "chunk_index": 2,
+      "page_number": null,
+      "content": "cident Reporting\n\nSuspected security incidents must be reported to the Security team within 1 hour. Lost or stolen company devices must be reported immediately, even if the device is encrypted.\n\n## Vendor Access\n\nVendor access to internal systems requires a named business owner, a signed data processing agreement, and an expiration date. Vendor accounts must be reviewed every 90 days.",
+      "token_count": 53,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:59:04.001869+00:00"
+    },
+    {
+      "chunk_id": "eval-product-faq-1",
+      "document_id": "eval-product-faq",
+      "filename": "product_faq.md",
+      "position": 1,
+      "chunk_index": 0,
+      "page_number": null,
+      "content": "# Acme Knowledge Assistant FAQ\n\n## Supported Sources\n\nAcme Knowledge Assistant can ingest Markdown, plain text, PDF files with embedded text, and DOCX documents. Scanned PDFs are not supported unless OCR is performed before upload.\n\n## Synchronization\n\nThe system checks connected source folders every 4 hours. Manual synchronization can be started by an administrator from the admin console. Deleted source files are removed from search results after the next successful sync.\n\n## Answer Citations",
+      "token_count": 62,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:59:04.071583+00:00"
+    },
+    {
+      "chunk_id": "eval-product-faq-2",
+      "document_id": "eval-product-faq",
+      "filename": "product_faq.md",
+      "position": 2,
+      "chunk_index": 1,
+      "page_number": null,
+      "content": "source files are removed from search results after the next successful sync.\n\n## Answer Citations\n\nEvery generated answer should include citations to the source chunks used. If no relevant source is found, the assistant should say that the knowledge base does not contain a reliable answer.\n\n## Access Control\n\nSearch results must respect document permissions. Users should only retrieve chunks from documents they are allowed to view.",
+      "token_count": 58,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:59:04.071671+00:00"
+    },
+    {
+      "chunk_id": "eval-product-faq-3",
+      "document_id": "eval-product-faq",
+      "filename": "product_faq.md",
+      "position": 3,
+      "chunk_index": 2,
+      "page_number": null,
+      "content": "ct document permissions. Users should only retrieve chunks from documents they are allowed to view. Permission changes are applied during the next synchronization cycle.\n\n## Limits\n\nThe recommended single document size limit is 25 MB. The recommended maximum chunk size is 800 tokens. Very large documents should be split by section before upload when possible.",
+      "token_count": 52,
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "created_at": "2026-08-04T16:59:04.071734+00:00"
+    }
+  ]
+}

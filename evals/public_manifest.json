@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "artifact_variant": "public-redacted",
+  "source_scope": "evals/ from the private project archive",
+  "guarantees": {
+    "machine_local_user_paths_removed": true,
+    "internal_process_report_paths_removed": true,
+    "loader_compatible_path_hash_records_preserved": true,
+    "included_path_hash_references_consistent": true,
+    "answers_metrics_case_labels_and_attack_outcomes_modified": false
+  },
+  "transformations": [
+    "replaced local Python executable paths with python",
+    "redirected historical process-document identities to concise public provenance notes",
+    "propagated new public SHA-256 values through dependent manifests and result artifacts"
+  ],
+  "deleted_non_final_files": [
+    "evals/rag_eval_seed.jsonl",
+    "evals/results/W2-T2-gemma3-4b-ollama-smoke.json",
+    "evals/results/W5-T1-qwen3-8b-ollama-acceptance.json",
+    "evals/results/W5-T6-qwen3-8b-generation-baseline.json",
+    "evals/results/security/direct_prompt_injection_runs/w9-t2-20260808T124643049639Z-qwen3-8b.json",
+    "evals/results/security/layered_defense_acceptance_runs/w9-t4-20260808T171559792756Z-qwen3-8b.json"
+  ],
+  "added_provenance_files": [
+    "evals/provenance/direct-prompt-injection-evaluation-note.md",
+    "evals/provenance/direct-prompt-injection-implementation-note.md",
+    "evals/provenance/pre-authorization-threat-model.md",
+    "evals/provenance/threat-model-design-note.md"
+  ],
+  "modified_file_count": 18,
+  "modified_files": [
+    {
+      "path": "evals/failure_analysis_config.json",
+      "original_sha256": "62a32f54c61de9ccc71d703641bcfc84ed63830e847a6eb641626be5be1c175d",
+      "public_sha256": "27d368aa8256eaa8f15b0b477a3491d64fe79f8007d2d381482882b0a8fc989a",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/evaluation_runs/w8-t1-20260805T135615169893Z-qwen3-8b.json",
+      "original_sha256": "664d848abef05a3272b386e9e0af971af5a8de611ce024b939848029f1ebb8ce",
+      "public_sha256": "50cb97bfad1db4104b5ac563e464e61383aad342852b70738f831ff186e47d29",
+      "changes": [
+        "redacted machine-local paths or redirected historical process-document references"
+      ]
+    },
+    {
+      "path": "evals/results/failure_analysis_runs/w8-t4-20260806T084416807510Z-qwen3-8b.json",
+      "original_sha256": "23f2afeddaf21c3daa3a77a3c3e31c349ced0f2aa10e0df723166bb8576dd964",
+      "public_sha256": "ad145d4148f4342f15bf1eb2ac32f444e441fcba22f9cd7a5da0c6958cc36e05",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/direct_prompt_injection_runs/w9-t2-20260808T125129897292Z-qwen3-8b-reviewed.json",
+      "original_sha256": "33a1c186c0bfefa1fea4bef0b21908b41d4581ed0b08e73f3386207f4038df22",
+      "public_sha256": "e7a7d94da597a15650dbe7c35cfa7bddde612ca2fc2ad2995edcca267764ade5",
+      "changes": [
+        "redacted machine-local paths or redirected historical process-document references",
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/direct_prompt_injection_runs/w9-t2-20260808T125129897292Z-qwen3-8b.json",
+      "original_sha256": "71464faae7c5b08d0666c39fa34ee5ceeb93b7b7913f507fdb262648a63fcb36",
+      "public_sha256": "696c398ac6136791dfa1fe0f0b7f33d1406a21e87ae5f23f86dec960e4070c22",
+      "changes": [
+        "redacted machine-local paths or redirected historical process-document references",
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/indirect_prompt_injection_runs/w9-t3-20260808T145444621311Z-qwen3-8b.json",
+      "original_sha256": "ce8f5aaef458e301bddf402130ee590f980ff21d60051506eaa8ff26117ce736",
+      "public_sha256": "03ab62c2efc9c6fd27ca5dfc7833e508fba06e797d8395a9c1b34f7021f73830",
+      "changes": [
+        "redacted machine-local paths or redirected historical process-document references",
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/security_evaluation_runs/w9-t5-20260808T182607179698Z-qwen3-8b/baseline-benign.json",
+      "original_sha256": "6ba9137766caf412f95637fbe9a7bea42c5f887f8464cbac2e0249cfae1dc970",
+      "public_sha256": "df381db781b794347a2a28cd2d69e8b6493e664ef6c77dfc44acbeba5011f928",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/security_evaluation_runs/w9-t5-20260808T182607179698Z-qwen3-8b/baseline-direct.json",
+      "original_sha256": "4cd2fed42bcfca0ecf82be68b3cb38c20104eac7a5129a1fc9b47f9edaaf6e02",
+      "public_sha256": "e8fbf461a45bda42bf1f1fc60dfefa9d58f74d10a7736e536998debb904b9102",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/security_evaluation_runs/w9-t5-20260808T182607179698Z-qwen3-8b/baseline-indirect.json",
+      "original_sha256": "2ae5bcba90e955f3dc65117dd6cad90785664743ace0dc26e45e7e5745989317",
+      "public_sha256": "b48fb88744aae72d0e9c104ecf58f836d9936ba09f816b54dd491c112f042c9c",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/security_evaluation_runs/w9-t5-20260808T182607179698Z-qwen3-8b/comparison.json",
+      "original_sha256": "d35e38902a32d5fe4ed0a45789f6cebb3915378deb8c696e7d6521d9de7cb545",
+      "public_sha256": "c5d30c0f39f0c13622026ae53b46f16bb1ffcc56e05e43683d8708e5a12711e5",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/security_evaluation_runs/w9-t5-20260808T182607179698Z-qwen3-8b/layered-benign.json",
+      "original_sha256": "926440f588b61360deed20b528ec6323077df248b2a51a23361c6a5901a4c44a",
+      "public_sha256": "61522280c4a555675dec5a3d3077c56191e54a1baaec39783bd0fb1ada19bb93",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/security_evaluation_runs/w9-t5-20260808T182607179698Z-qwen3-8b/layered-direct.json",
+      "original_sha256": "73eacefb87623ff348a06859545eb88581e59d675e396030eaf02ff3c3aa3d70",
+      "public_sha256": "baa473e89b7df8c1b65d52bfb6b7f4f4844cc2fe4a02df744dcea14f525aacc5",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/security/security_evaluation_runs/w9-t5-20260808T182607179698Z-qwen3-8b/layered-indirect.json",
+      "original_sha256": "643055e600a3e877f57bf9e34a88579b016af887e60da2e319d607b45912e8b2",
+      "public_sha256": "5d830d79495024c87513e997013486dbef8b9b6e32cf1b26e6380b663d74d7de",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/results/unanswerable_runs/w8-t2-20260805T163627033704Z-qwen3-8b.json",
+      "original_sha256": "3aa4f9547607c2ed07b588ff1bcca5ea92f3e454a4a26bb3b78590b60e463cd6",
+      "public_sha256": "a60785baf3e2f5ea85494707bf7963e77feab38b8fb585a1bd967bd0e047b13f",
+      "changes": [
+        "redacted machine-local paths or redirected historical process-document references",
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/security/direct_prompt_injection_config.json",
+      "original_sha256": "4378d7569b7409e3cc50422552d2a76fcebfa84f0bc1a2becc601e0378520a69",
+      "public_sha256": "4727d2fe8c6b9652c1d4bc65c815aea6220c40ee486d53cc70766fff761e87e8",
+      "changes": [
+        "redacted machine-local paths or redirected historical process-document references",
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/security/indirect_prompt_injection_config.json",
+      "original_sha256": "d8f9bfa69f895e31d4884539610ed21858536e285dcddddf22ea044121d2bc26",
+      "public_sha256": "ccc5085dde0597925d7cb4189e4a2a37ad066a0629ba2fd114893b0e3f39aecb",
+      "changes": [
+        "redacted machine-local paths or redirected historical process-document references",
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/security/security_evaluation_config.json",
+      "original_sha256": "f8995de53679650be1a9b0319019bf9d963fc9f9860feb0cd03fb6fbabeec65f",
+      "public_sha256": "4c328ef7cd19344a98664dc7bb074da9181c44f042903bbbdebc5d43defe3764",
+      "changes": [
+        "redacted machine-local paths or redirected historical process-document references",
+        "updated dependent SHA-256 references"
+      ]
+    },
+    {
+      "path": "evals/unanswerable_evaluation_config.json",
+      "original_sha256": "4b5c44d0f10ada4888f638e43cc5ddb8f3315eb3abfa88ce1d5b03367c562367",
+      "public_sha256": "e09ef0eeb56f3b18fc80dd3bb55651c4aa9f33894a6a387140c768680a46615d",
+      "changes": [
+        "updated dependent SHA-256 references"
+      ]
+    }
+  ]
+}

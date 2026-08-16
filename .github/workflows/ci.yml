@@ -1,0 +1,120 @@
+name: CI
+
+"on":
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Python and PostgreSQL gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      POSTGRES_PASSWORD: w11-t4-ci-only-postgres-password
+      DATABASE_URL: postgresql+psycopg://enterprise_rag_ci:w11-t4-ci-only-postgres-password@127.0.0.1:5432/enterprise_rag_ci
+      TEST_DATABASE_URL: postgresql+psycopg://enterprise_rag_ci:w11-t4-ci-only-postgres-password@127.0.0.1:5432/enterprise_rag_ci_test
+      JWT_SECRET_KEY: w11-t4-ci-only-jwt-secret-key-not-for-production
+      LLM_PROVIDER: ollama
+      LLM_API_KEY: ollama
+      LLM_BASE_URL: http://127.0.0.1:9/v1
+      LLM_MODEL: gemma3:4b
+      LOCAL_EMBEDDING_LOCAL_FILES_ONLY: "true"
+    services:
+      postgres:
+        image: postgres:18.4
+        env:
+          POSTGRES_DB: enterprise_rag_ci
+          POSTGRES_USER: enterprise_rag_ci
+          POSTGRES_PASSWORD: w11-t4-ci-only-postgres-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U enterprise_rag_ci -d enterprise_rag_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install exact dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Create isolated test database
+        run: >-
+          python -c "import os, psycopg;
+          connection = psycopg.connect(host='127.0.0.1', port=5432,
+          dbname='enterprise_rag_ci', user='enterprise_rag_ci',
+          password=os.environ['POSTGRES_PASSWORD']);
+          connection.autocommit = True;
+          connection.execute('CREATE DATABASE enterprise_rag_ci_test');
+          connection.close()"
+
+      - name: Upgrade application database to Alembic head
+        run: python -m alembic upgrade head
+
+      - name: Verify application database is at Alembic head
+        run: python -m alembic current --check-heads
+
+      - name: Run deterministic pytest suite
+        run: python -m pytest -q
+
+      - name: Verify PostgreSQL metadata persistence
+        run: python scripts/verify_postgresql_metadata.py
+
+      - name: Verify PostgreSQL user persistence
+        run: python scripts/verify_postgresql_users.py
+
+      - name: Verify PostgreSQL authentication
+        run: python scripts/verify_postgresql_authentication.py
+
+      - name: Verify PostgreSQL ownership
+        run: python scripts/verify_postgresql_ownership.py
+
+      - name: Verify PostgreSQL ACL
+        run: python scripts/verify_postgresql_acl.py
+
+      - name: Verify permission-aware PostgreSQL retrieval
+        run: python scripts/verify_postgresql_permission_retrieval.py
+
+  docker:
+    name: Docker and Compose gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Build backend image
+        run: docker build --tag enterprise-rag-system:ci .
+
+      - name: Validate Compose configuration
+        env:
+          COMPOSE_POSTGRES_DB: enterprise_rag_ci
+          COMPOSE_POSTGRES_USER: enterprise_rag_ci
+          COMPOSE_POSTGRES_PASSWORD: w11-t4-ci-only-postgres-password
+          COMPOSE_DATABASE_URL: postgresql+psycopg://enterprise_rag_ci:w11-t4-ci-only-postgres-password@postgres:5432/enterprise_rag_ci
+          COMPOSE_JWT_SECRET_KEY: w11-t4-ci-only-jwt-secret-key-not-for-production
+          COMPOSE_LLM_PROVIDER: ollama
+          COMPOSE_LLM_API_KEY: ollama
+          COMPOSE_LLM_BASE_URL: http://host.docker.internal:11434/v1
+          COMPOSE_LLM_MODEL: gemma3:4b
+          COMPOSE_BACKEND_PORT: "8000"
+        run: docker compose config --quiet

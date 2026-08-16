@@ -1,0 +1,173 @@
+{
+  "manifest_version": 1,
+  "task": "W9-T5",
+  "evaluation_version": "w9-t5-security-evaluation.v1",
+  "experiment_id": "W9-T5-security-before-after-v1",
+  "created_before_formal_results": true,
+  "purpose": "Freeze the six-cell baseline-versus-layered security evaluation before any W9-T5 qwen3:8b result is observed.",
+  "experimental_design": {
+    "primary_variable": "security_mode",
+    "modes": [
+      "baseline",
+      "layered"
+    ],
+    "run_order": [
+      "baseline_benign",
+      "baseline_direct",
+      "baseline_indirect",
+      "layered_benign",
+      "layered_direct",
+      "layered_indirect"
+    ],
+    "same_model": true,
+    "same_dataset": true,
+    "same_corpus": true,
+    "same_retrieval_and_reranker": true,
+    "same_generation_parameters": true,
+    "same_deterministic_rubrics": true,
+    "no_defense_tuning_after_freeze": true
+  },
+  "formal_model_policy": {
+    "provider": "ollama",
+    "model": "qwen3:8b",
+    "expected_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "temperature": 0.2,
+    "max_tokens": 512,
+    "seed": 42,
+    "retries": 0,
+    "no_fallback": true,
+    "no_model_mix": true,
+    "reproducibility_note": "A fixed seed reduces one source of generation variance but is not a bit-for-bit guarantee across runtime or model changes."
+  },
+  "case_selection": {
+    "direct": "all 14 frozen W9-T2 attack cases",
+    "indirect": "all 9 frozen W9-T3 attack cases against the frozen W9-T3 malicious corpus",
+    "answerable_benign": "all 23 answerable cases in the frozen W8 stable dataset",
+    "unanswerable_benign": "all 8 frozen W8-T2 unanswerable cases",
+    "answerable_expected_count": 23,
+    "unanswerable_expected_count": 8
+  },
+  "frozen_identities": {
+    "direct_cases": {
+      "path": "evals/security/direct_prompt_injection_cases.jsonl",
+      "sha256": "7425d548eb3a25e8151589de10425f7aaedbe6ca8342ced7229a068a23c6da50"
+    },
+    "direct_manifest": {
+      "path": "evals/security/direct_prompt_injection_config.json",
+      "sha256": "4727d2fe8c6b9652c1d4bc65c815aea6220c40ee486d53cc70766fff761e87e8"
+    },
+    "indirect_cases": {
+      "path": "evals/security/indirect_prompt_injection_cases.jsonl",
+      "sha256": "ffc29de0f0680d887a94547616f903cc7b350500a45cf5fcaf7122f5482bfc06"
+    },
+    "indirect_manifest": {
+      "path": "evals/security/indirect_prompt_injection_config.json",
+      "sha256": "ccc5085dde0597925d7cb4189e4a2a37ad066a0629ba2fd114893b0e3f39aecb"
+    },
+    "layered_defense_manifest": {
+      "path": "evals/security/layered_defense_config.json",
+      "sha256": "e040f7f1a03051e4e602a3e422dadda8b3d127ff8f50181745eaf7b28b8ac889"
+    },
+    "stable_dataset": {
+      "path": "evals/business_policy_eval.jsonl",
+      "sha256": "9ebbe2fca70b195e73d42ce3a795a01bc8bfd01680d148302bcf7442d14925e4"
+    },
+    "unanswerable_cases": {
+      "path": "evals/unanswerable_cases.jsonl",
+      "sha256": "281d4421b72b460f3f77a0df06c1cfa87c2a2a458d3950aef01be41d67260713"
+    },
+    "unanswerable_manifest": {
+      "path": "evals/unanswerable_evaluation_config.json",
+      "sha256": "e09ef0eeb56f3b18fc80dd3bb55651c4aa9f33894a6a387140c768680a46615d"
+    },
+    "w7_manifest": {
+      "path": "evals/retrieval_evaluation_config.json",
+      "sha256": "34f276165081d127c7307e6ac4cf2660ba68bfedba22f3ca44a49fc3a28bbb4a"
+    },
+    "normal_chunks": {
+      "path": "storage/eval/week07_tuning_chunks.json",
+      "sha256": "7c12feae418a799e77d1c11cdfe492dd5e6c4428e4c7647200b5a57601b86e01"
+    },
+    "normal_vectors_json": {
+      "path": "storage/eval/week07_tuning_vectors.json",
+      "sha256": "69102a909062460f573dbe21e864661d736663f8c38816043225a7eec4ad0cb1"
+    },
+    "normal_vectors_npz": {
+      "path": "storage/eval/week07_tuning_vectors.npz",
+      "sha256": "cf67dd8e3566592728a1fbcc466fe2dc6b9c0ec9204e502e88e809291ff03474"
+    },
+    "normal_vectors_faiss": {
+      "path": "storage/eval/week07_tuning_vectors.faiss",
+      "sha256": "5f40b73f9db109bb0bad4f056017977d21c947e0038e6044ef12459fe577a743"
+    },
+    "normal_vectors_metadata": {
+      "path": "storage/eval/week07_tuning_vectors.metadata.json",
+      "sha256": "3ba9b220fe6d1d377f13254baeb000588f352e62bdce6992adb15a84ac99e7b9"
+    },
+    "normal_faiss_metadata": {
+      "path": "storage/eval/week07_tuning_vectors.faiss.metadata.json",
+      "sha256": "ae7d2b445f89f97a914bd5c303af399eb512fdc095f986dc20f6e450b670c22e"
+    },
+    "attack_chunks": {
+      "path": "storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/chunks.json",
+      "sha256": "3a1932376bc7636be37d16ec96ac9bc58f7e896a5aa81e2c3a406c2a84085047"
+    },
+    "attack_vectors_json": {
+      "path": "storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.json",
+      "sha256": "444091e21c06c56810145c4aa3d92ed5c92dc27bb49b95e1c2812c2062da7771"
+    },
+    "attack_vectors_npz": {
+      "path": "storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.npz",
+      "sha256": "a2c7c1cc54a9ebfa5e8d36bb9c5377980a3b814b6776013377a493fa7483da79"
+    },
+    "attack_vectors_faiss": {
+      "path": "storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.faiss",
+      "sha256": "7247c3c4de20c3b3a1fd1b1245143cf9cf859b95dade20f3a1c71c9012693f37"
+    },
+    "attack_vectors_metadata": {
+      "path": "storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.metadata.json",
+      "sha256": "16cf41626910b60a968db38519b073b8d96fde2c44956b2efa8e7c84bc44ec76"
+    },
+    "attack_faiss_metadata": {
+      "path": "storage/security/w9_t3/w9-t3-20260808T145444621311Z-qwen3-8b/attack/vectors.faiss.metadata.json",
+      "sha256": "112c2caf06f5bbb7e2c1f89b64e169067e4e54d76f4982902ffd9120b86ab196"
+    },
+    "w9_t2_reviewed_artifact": {
+      "path": "evals/results/security/direct_prompt_injection_runs/w9-t2-20260808T125129897292Z-qwen3-8b-reviewed.json",
+      "sha256": "e7a7d94da597a15650dbe7c35cfa7bddde612ca2fc2ad2995edcca267764ade5"
+    },
+    "w9_t3_artifact": {
+      "path": "evals/results/security/indirect_prompt_injection_runs/w9-t3-20260808T145444621311Z-qwen3-8b.json",
+      "sha256": "03ab62c2efc9c6fd27ca5dfc7833e508fba06e797d8395a9c1b34f7021f73830"
+    },
+    "threat_model": {
+      "path": "evals/provenance/pre-authorization-threat-model.md",
+      "sha256": "c01dcd99c8a104893d7336450211d119ce6f7ff54827b9a1c7b9efd973c82f71"
+    }
+  },
+  "prompt_identities": {
+    "baseline": {
+      "source": "app.services.prompts.SYSTEM_PROMPT",
+      "sha256": "5255b0fbfa95bbceb0610ddc474e4c5cc4f17b621a4d8a847332003c54126418"
+    },
+    "layered": {
+      "source": "app.services.prompts.LAYERED_SYSTEM_PROMPT",
+      "sha256": "2de645cdfa58d620240f0f92e9a374c35dbb305cb7c074a9ba55efd106dfc43d"
+    }
+  },
+  "metrics": {
+    "execution_failures_excluded_from_behavior_denominators": true,
+    "zero_conditional_denominator": "N/A",
+    "protected_prompt_canary": "N/A because neither frozen trusted prompt contains one",
+    "document_canary_is_not_a_protected_prompt_canary": true,
+    "manual_review": "Ambiguous frozen-rubric outcomes remain ambiguous and are not counted as successful."
+  },
+  "claims_boundary": {
+    "descriptive_small_dataset": true,
+    "known_attack_suite_used_during_defense_design": true,
+    "no_statistical_significance_claim": true,
+    "no_unseen_attack_generalization_claim": true,
+    "prompt_injection_not_proven_solved": true,
+    "authorization_not_implemented": true
+  }
+}

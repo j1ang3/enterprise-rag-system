@@ -1,0 +1,43 @@
+previews:
+  generation: off
+
+services:
+  - type: web
+    name: enterprise-rag-api-j1ang3
+    runtime: docker
+    plan: free
+    region: singapore
+    repo: https://github.com/j1ang3/enterprise-rag-system
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    numInstances: 1
+    autoDeployTrigger: checksPass
+    healthCheckPath: /health
+    renderSubdomainPolicy: enabled
+    envVars:
+      # The Dockerfile listens on 8000. Explicitly align Render's public port
+      # instead of changing the local/Compose runtime contract.
+      - key: PORT
+        value: "8000"
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "30"
+      # Preserve the project's Ollama provider/model policy. The free Render
+      # instance does not run Ollama, so live LLM inference is intentionally
+      # outside this deployment's acceptance scope.
+      - key: LLM_PROVIDER
+        value: ollama
+      - key: LLM_API_KEY
+        value: ollama
+      - key: LLM_BASE_URL
+        value: http://127.0.0.1:11434/v1
+      - key: LLM_MODEL
+        value: gemma3:4b
+      - key: LOCAL_EMBEDDING_LOCAL_FILES_ONLY
+        value: "true"
+      - key: RAG_SECURITY_MODE
+        value: layered
